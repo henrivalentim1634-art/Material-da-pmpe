@@ -1,0 +1,469 @@
+{
+  "concurso": "PMPE — Soldado",
+  "atualizado_em": "2026-09-24",
+  "observacao": "Questões inéditas, elaboradas para fins de estudo. Revise cada questão com a legislação vigente e com o edital oficial antes de vender.",
+  "disciplinas": [
+    "Língua Portuguesa",
+    "Raciocínio Lógico",
+    "Informática",
+    "Direito Constitucional",
+    "Direitos Humanos",
+    "História de Pernambuco",
+    "Legislação Especial"
+  ],
+  "questoes": [
+    {
+      "id": "POR-001",
+      "disciplina": "Língua Portuguesa",
+      "assunto": "Crase",
+      "dificuldade": "fácil",
+      "enunciado": "Assinale a alternativa em que o acento indicativo de crase foi empregado corretamente, de acordo com a norma-padrão.",
+      "alternativas": [
+        "O soldado se referiu à uma ocorrência registrada no mês passado.",
+        "A viatura chegou à tempo de impedir o assalto.",
+        "O comandante entregou o relatório à delegada de plantão.",
+        "Os policiais começaram à patrulhar o bairro ao anoitecer.",
+        "O agente ficou frente à frente com o suspeito."
+      ],
+      "correta": "C",
+      "comentario": "C: o verbo \"entregar\" exige a preposição \"a\" (entregar algo a alguém) e \"delegada\" é palavra feminina que admite o artigo \"a\": preposição + artigo = crase. Erros: A) não há crase antes de artigo indefinido (\"uma\"); B) \"a tempo\" é locução com palavra masculina, sem crase; D) não há crase antes de verbo; E) expressões com palavras repetidas (\"frente a frente\", \"cara a cara\") não levam crase.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "POR-002",
+      "disciplina": "Língua Portuguesa",
+      "assunto": "Concordância verbal",
+      "dificuldade": "média",
+      "enunciado": "Assinale a alternativa que está de acordo com a norma-padrão quanto à concordância verbal.",
+      "alternativas": [
+        "Fazem dois anos que o último concurso foi realizado.",
+        "Houveram muitas ocorrências durante o carnaval.",
+        "Existem candidatos que estudam mais de seis horas por dia.",
+        "Vende-se apostilas atualizadas para o concurso.",
+        "Faltou dois candidatos na aplicação da prova."
+      ],
+      "correta": "C",
+      "comentario": "C: \"existir\" é verbo pessoal e concorda com o sujeito \"candidatos\" (plural). Erros: A) \"fazer\" indicando tempo decorrido é impessoal: \"Faz dois anos\"; B) \"haver\" no sentido de existir/ocorrer é impessoal: \"Houve muitas ocorrências\"; D) na voz passiva sintética, o verbo concorda com o sujeito \"apostilas\": \"Vendem-se apostilas\"; E) o sujeito é \"dois candidatos\": \"Faltaram dois candidatos\".",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "POR-003",
+      "disciplina": "Língua Portuguesa",
+      "assunto": "Compreensão e interpretação de texto",
+      "dificuldade": "fácil",
+      "texto_base": "O policiamento comunitário parte de uma ideia simples: a segurança pública não se constrói apenas com viaturas e armamentos, mas também com confiança. Quando o morador conhece o policial que atua em seu bairro, a troca de informações se torna mais frequente, e problemas que antes chegavam à polícia apenas depois do crime passam a ser percebidos antes dele. Isso não significa abandonar a repressão qualificada; significa, antes, reconhecer que prevenir costuma ser mais eficiente do que remediar.\n\n(Texto elaborado para fins didáticos.)",
+      "enunciado": "De acordo com o texto, é correto afirmar que",
+      "alternativas": [
+        "o policiamento comunitário propõe substituir a repressão qualificada pela prevenção.",
+        "a confiança entre moradores e policiais favorece a percepção de problemas antes que se transformem em crimes.",
+        "viaturas e armamentos tornam-se dispensáveis quando há policiamento comunitário.",
+        "a polícia só toma conhecimento dos problemas de um bairro depois que o crime acontece.",
+        "o texto defende que remediar é, em regra, mais eficiente do que prevenir."
+      ],
+      "correta": "B",
+      "comentario": "B: o texto afirma que, quando o morador conhece o policial, \"problemas que antes chegavam à polícia apenas depois do crime passam a ser percebidos antes dele\". Erros: A) o texto diz expressamente que isso \"não significa abandonar a repressão qualificada\"; C) a segurança \"não se constrói apenas\" com viaturas e armamentos, ou seja, eles não são dispensáveis; D) generalização indevida: isso ocorria \"antes\", não sempre; E) o texto afirma o contrário: \"prevenir costuma ser mais eficiente do que remediar\".",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "POR-004",
+      "disciplina": "Língua Portuguesa",
+      "assunto": "Pontuação",
+      "dificuldade": "média",
+      "enunciado": "Assinale a alternativa pontuada corretamente de acordo com a norma-padrão.",
+      "alternativas": [
+        "Os candidatos aprovados, iniciarão o curso de formação em março.",
+        "Recife, capital de Pernambuco, sediará a cerimônia de formatura.",
+        "O sargento entregou, o documento ao comandante da companhia.",
+        "Durante a madrugada a guarnição, realizou a abordagem.",
+        "Os soldados que, concluíram o curso receberam a boina."
+      ],
+      "correta": "B",
+      "comentario": "B: \"capital de Pernambuco\" é aposto explicativo e deve vir isolado por vírgulas. Erros: A) não se separa o sujeito (\"Os candidatos aprovados\") do verbo por vírgula; C) não se separa o verbo (\"entregou\") de seu complemento (\"o documento\"); D) a vírgula separa indevidamente o sujeito (\"a guarnição\") do verbo; a vírgula caberia após \"madrugada\", adjunto adverbial deslocado; E) a vírgula após \"que\" separa indevidamente o pronome relativo do verbo da oração adjetiva restritiva.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "RLM-001",
+      "disciplina": "Raciocínio Lógico",
+      "assunto": "Negação de proposições categóricas",
+      "dificuldade": "fácil",
+      "enunciado": "A negação lógica da proposição \"Todo policial é disciplinado\" é:",
+      "alternativas": [
+        "Nenhum policial é disciplinado.",
+        "Algum policial não é disciplinado.",
+        "Todo policial é indisciplinado.",
+        "Algum policial é disciplinado.",
+        "Nenhum disciplinado é policial."
+      ],
+      "correta": "B",
+      "comentario": "Para negar \"Todo A é B\", basta mostrar que existe pelo menos um A que não é B: \"Algum policial não é disciplinado\" (equivale a \"Pelo menos um policial não é disciplinado\" ou \"Existe policial que não é disciplinado\"). A alternativa A (\"Nenhum...\") é a pegadinha clássica: é uma afirmação muito mais forte e não é a negação.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "RLM-002",
+      "disciplina": "Raciocínio Lógico",
+      "assunto": "Equivalências lógicas (condicional)",
+      "dificuldade": "média",
+      "enunciado": "Considere a proposição: \"Se o candidato estuda diariamente, então ele é aprovado\". Uma proposição logicamente equivalente a ela é:",
+      "alternativas": [
+        "Se o candidato é aprovado, então ele estuda diariamente.",
+        "Se o candidato não estuda diariamente, então ele não é aprovado.",
+        "Se o candidato não é aprovado, então ele não estuda diariamente.",
+        "O candidato estuda diariamente e não é aprovado.",
+        "O candidato não estuda diariamente e é aprovado."
+      ],
+      "correta": "C",
+      "comentario": "A contrapositiva de \"Se P, então Q\" é \"Se não Q, então não P\", e ela é logicamente equivalente. P = \"estuda diariamente\"; Q = \"é aprovado\" → \"Se não é aprovado, então não estuda diariamente\". Outra equivalência seria \"O candidato não estuda diariamente ou é aprovado\" (¬P ∨ Q). A) é a recíproca e B) é a inversa: nenhuma delas é equivalente. D) é justamente a NEGAÇÃO da condicional (P ∧ ¬Q).",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "RLM-003",
+      "disciplina": "Raciocínio Lógico",
+      "assunto": "Sequências numéricas",
+      "dificuldade": "fácil",
+      "enunciado": "Observe a sequência numérica: 2, 5, 11, 23, 47, ... Mantido o mesmo padrão, o próximo termo é:",
+      "alternativas": ["93", "94", "95", "96", "97"],
+      "correta": "C",
+      "comentario": "Cada termo é obtido multiplicando o anterior por 2 e somando 1: 2×2+1 = 5; 5×2+1 = 11; 11×2+1 = 23; 23×2+1 = 47; 47×2+1 = 95. Outra forma de ver: as diferenças entre os termos (3, 6, 12, 24) dobram a cada passo; a próxima diferença é 48, e 47 + 48 = 95.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "RLM-004",
+      "disciplina": "Raciocínio Lógico",
+      "assunto": "Análise combinatória",
+      "dificuldade": "média",
+      "enunciado": "Um pelotão dispõe de 5 soldados para formar uma guarnição de 3 integrantes, sem distinção de funções entre eles. O número de guarnições diferentes que podem ser formadas é:",
+      "alternativas": ["6", "10", "15", "20", "60"],
+      "correta": "B",
+      "comentario": "Como não há distinção de funções, a ordem de escolha não importa: é uma combinação de 5 elementos tomados 3 a 3. C(5,3) = 5! / (3! × 2!) = (5 × 4) / 2 = 10. A alternativa E (60) seria o arranjo A(5,3) = 5 × 4 × 3, que só valeria se as funções fossem diferentes (por exemplo: motorista, comandante e patrulheiro).",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "INF-001",
+      "disciplina": "Informática",
+      "assunto": "Planilhas (Microsoft Excel)",
+      "dificuldade": "média",
+      "enunciado": "Em uma planilha do Microsoft Excel (versão em português), as células A1, A2, A3 e A4 contêm, respectivamente, os valores 8, 3, 5 e 8. Ao digitar na célula B1 a fórmula =CONT.SE(A1:A4;8), o resultado exibido será:",
+      "alternativas": ["1", "2", "3", "8", "16"],
+      "correta": "B",
+      "comentario": "CONT.SE conta quantas células do intervalo atendem ao critério. No intervalo A1:A4 (8, 3, 5, 8), o valor 8 aparece 2 vezes. Atenção: CONT.SE não soma os valores. Quem faria isso é SOMASE, que resultaria em 16 (alternativa E).",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "INF-002",
+      "disciplina": "Informática",
+      "assunto": "Segurança da informação",
+      "dificuldade": "fácil",
+      "enunciado": "Um policial recebe um e-mail que imita a identidade visual de um banco e solicita que ele clique em um link para \"atualizar seus dados\", informando senha e número do cartão. Esse tipo de golpe é conhecido como:",
+      "alternativas": ["Phishing.", "Firewall.", "Backup.", "Cookie.", "Criptografia."],
+      "correta": "A",
+      "comentario": "Phishing (de \"fishing\", pescar) é a fraude em que o golpista se passa por instituição confiável para \"pescar\" dados pessoais, senhas e dados financeiros. Firewall é um filtro de tráfego de rede; backup é cópia de segurança; cookie é um pequeno arquivo que os sites gravam no navegador; criptografia é a técnica de codificar informações para protegê-las.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "INF-003",
+      "disciplina": "Informática",
+      "assunto": "Windows 10: atalhos de teclado",
+      "dificuldade": "fácil",
+      "enunciado": "No sistema operacional Windows 10, em sua configuração padrão, o atalho de teclado formado pela tecla do logotipo do Windows + L tem a função de:",
+      "alternativas": [
+        "abrir o Explorador de Arquivos.",
+        "bloquear o computador, exibindo a tela de bloqueio.",
+        "exibir a área de trabalho, minimizando as janelas abertas.",
+        "abrir o aplicativo Configurações.",
+        "abrir a caixa de diálogo Executar."
+      ],
+      "correta": "B",
+      "comentario": "Windows + L bloqueia a sessão (L de \"lock\"). Os demais: Windows + E abre o Explorador de Arquivos; Windows + D exibe a área de trabalho; Windows + I abre as Configurações; Windows + R abre a caixa Executar. Bloquear o computador ao se afastar da mesa é uma boa prática de segurança da informação.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "INF-004",
+      "disciplina": "Informática",
+      "assunto": "Correio eletrônico",
+      "dificuldade": "fácil",
+      "enunciado": "Ao enviar uma mensagem de correio eletrônico, o remetente inseriu alguns endereços no campo CCO (cópia carbono oculta). Nesse caso, os destinatários desse campo:",
+      "alternativas": [
+        "só receberão a mensagem se o remetente confirmar o envio uma segunda vez.",
+        "recebem a mensagem, mas seus endereços não ficam visíveis para os demais destinatários.",
+        "recebem a mensagem, mas ficam impedidos de respondê-la.",
+        "recebem apenas o assunto da mensagem, sem o corpo do texto.",
+        "têm seus endereços exibidos para todos os destinatários dos campos Para e CC."
+      ],
+      "correta": "B",
+      "comentario": "No campo CCO (Cco, ou BCC em inglês), os destinatários recebem normalmente a mensagem, mas seus endereços ficam ocultos para os demais. É útil, por exemplo, para enviar um comunicado a muitas pessoas sem expor o e-mail de todos. Já os endereços dos campos Para e CC ficam visíveis a todos.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "CON-001",
+      "disciplina": "Direito Constitucional",
+      "assunto": "Segurança pública (art. 144)",
+      "dificuldade": "fácil",
+      "enunciado": "De acordo com a Constituição Federal de 1988, às polícias militares cabem:",
+      "alternativas": [
+        "a apuração de infrações penais, exceto as militares, e as funções de polícia judiciária.",
+        "a polícia ostensiva e a preservação da ordem pública.",
+        "o patrulhamento ostensivo das rodovias federais.",
+        "o exercício, com exclusividade, das funções de polícia judiciária da União.",
+        "a segurança dos estabelecimentos penais."
+      ],
+      "correta": "B",
+      "comentario": "Art. 144, §5º: \"às polícias militares cabem a polícia ostensiva e a preservação da ordem pública; aos corpos de bombeiros militares, além das atribuições definidas em lei, incumbe a execução de atividades de defesa civil\". As demais atribuições são de outros órgãos: A) polícias civis (§4º); C) Polícia Rodoviária Federal (§2º); D) Polícia Federal (§1º, IV); E) polícias penais (§5º-A).",
+      "base_legal": "CF/88, art. 144, §5º",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "CON-002",
+      "disciplina": "Direito Constitucional",
+      "assunto": "Direitos e garantias fundamentais: inviolabilidade do domicílio",
+      "dificuldade": "média",
+      "enunciado": "Segundo a Constituição Federal, a casa é asilo inviolável do indivíduo, ninguém nela podendo penetrar sem consentimento do morador. Sobre as exceções a essa regra, é correto afirmar que é permitido o ingresso:",
+      "alternativas": [
+        "por determinação judicial, a qualquer hora do dia ou da noite.",
+        "em caso de flagrante delito, a qualquer hora do dia ou da noite.",
+        "para prestar socorro, somente durante o dia.",
+        "durante a noite, por determinação da autoridade policial.",
+        "em caso de desastre, somente com autorização judicial prévia."
+      ],
+      "correta": "B",
+      "comentario": "Art. 5º, XI: \"...salvo em caso de flagrante delito ou desastre, ou para prestar socorro, ou, durante o dia, por determinação judicial\". Flagrante delito, desastre e prestação de socorro autorizam o ingresso a qualquer hora e sem ordem judicial; somente o cumprimento de determinação judicial fica restrito ao período diurno. A autoridade policial não pode, por si só, autorizar o ingresso. Atenção: o STF (RE 603.616, Tema 280) exige fundadas razões, justificadas posteriormente, que indiquem situação de flagrante dentro da casa.",
+      "base_legal": "CF/88, art. 5º, XI",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "CON-003",
+      "disciplina": "Direito Constitucional",
+      "assunto": "Direitos e garantias fundamentais: direitos do preso",
+      "dificuldade": "média",
+      "enunciado": "Sobre os direitos da pessoa presa previstos no art. 5º da Constituição Federal, assinale a alternativa correta.",
+      "alternativas": [
+        "A prisão e o local onde o preso se encontre devem ser comunicados ao juiz competente no prazo de até 72 horas.",
+        "O preso tem direito à identificação dos responsáveis por sua prisão ou por seu interrogatório policial.",
+        "O direito de permanecer calado só pode ser exercido perante o juiz, e não na fase policial.",
+        "A comunicação da prisão à família do preso depende de autorização da autoridade policial.",
+        "A assistência de advogado é garantida apenas a partir do recebimento da denúncia."
+      ],
+      "correta": "B",
+      "comentario": "Art. 5º, LXIV: \"o preso tem direito à identificação dos responsáveis por sua prisão ou por seu interrogatório policial\". Erros: A e D) a prisão e o local onde se encontre o preso devem ser comunicados IMEDIATAMENTE ao juiz competente e à família do preso ou à pessoa por ele indicada (LXII); C e E) o preso será informado de seus direitos, entre eles o de permanecer calado, sendo-lhe assegurada a assistência da família e de advogado (LXIII), o que vale desde a prisão, inclusive na fase policial.",
+      "base_legal": "CF/88, art. 5º, LXII, LXIII e LXIV",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "CON-004",
+      "disciplina": "Direito Constitucional",
+      "assunto": "Militares dos Estados (arts. 42 e 142)",
+      "dificuldade": "média",
+      "enunciado": "Considerando as disposições da Constituição Federal aplicáveis aos militares dos Estados, assinale a alternativa correta.",
+      "alternativas": [
+        "Os militares estaduais podem se sindicalizar, sendo-lhes vedada apenas a greve.",
+        "Ao militar são proibidas a sindicalização e a greve.",
+        "O militar, enquanto em serviço ativo, pode estar filiado a partido político.",
+        "As polícias militares são instituições organizadas com base na legalidade e na eficiência, e não na hierarquia.",
+        "As patentes dos oficiais das polícias militares são conferidas pelo Presidente da República."
+      ],
+      "correta": "B",
+      "comentario": "O art. 142, §3º, IV (\"ao militar são proibidas a sindicalização e a greve\") aplica-se aos militares dos Estados por força do art. 42, §1º. Erros: A) a sindicalização também é proibida; C) o militar, enquanto em serviço ativo, NÃO pode estar filiado a partido político (art. 142, §3º, V); D) as PMs e os CBMs são instituições organizadas com base na hierarquia e disciplina (art. 42, caput); E) as patentes dos oficiais estaduais são conferidas pelos respectivos Governadores (art. 42, §1º).",
+      "base_legal": "CF/88, art. 42, caput e §1º; art. 142, §3º, IV e V",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "DH-001",
+      "disciplina": "Direitos Humanos",
+      "assunto": "Declaração Universal dos Direitos Humanos",
+      "dificuldade": "fácil",
+      "enunciado": "A Declaração Universal dos Direitos Humanos foi adotada e proclamada:",
+      "alternativas": [
+        "pela Assembleia Geral das Nações Unidas, em 1948.",
+        "pelo Conselho de Segurança das Nações Unidas, em 1945.",
+        "pela Organização dos Estados Americanos, em 1969.",
+        "pela Liga das Nações, em 1919.",
+        "pela Assembleia Nacional Constituinte brasileira, em 1988."
+      ],
+      "correta": "A",
+      "comentario": "A DUDH foi adotada e proclamada pela Assembleia Geral da ONU em 10 de dezembro de 1948, em Paris. Por isso, 10 de dezembro é o Dia Internacional dos Direitos Humanos. A ONU foi criada em 1945 (distrator B). Em 1969, no âmbito da OEA, foi adotada a Convenção Americana sobre Direitos Humanos, o Pacto de São José da Costa Rica (distrator C).",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "DH-002",
+      "disciplina": "Direitos Humanos",
+      "assunto": "Características dos direitos humanos",
+      "dificuldade": "fácil",
+      "enunciado": "A doutrina aponta diversas características dos direitos humanos. Assinale a alternativa que NÃO corresponde a uma dessas características.",
+      "alternativas": ["Universalidade.", "Indivisibilidade.", "Imprescritibilidade.", "Renunciabilidade.", "Historicidade."],
+      "correta": "D",
+      "comentario": "Os direitos humanos são IRRENUNCIÁVEIS: o titular pode deixar de exercê-los em uma situação concreta, mas não pode abrir mão deles. As demais são características reconhecidas: universalidade (pertencem a todas as pessoas), indivisibilidade (formam um conjunto que não se separa), imprescritibilidade (não se perdem com o passar do tempo) e historicidade (foram conquistados e ampliados ao longo da história).",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "DH-003",
+      "disciplina": "Direitos Humanos",
+      "assunto": "Convenção Americana e jurisprudência do STF",
+      "dificuldade": "média",
+      "enunciado": "O Brasil é signatário da Convenção Americana sobre Direitos Humanos (Pacto de São José da Costa Rica). Com base nesse tratado e na jurisprudência do Supremo Tribunal Federal, é correto afirmar que:",
+      "alternativas": [
+        "é lícita a prisão civil do depositário infiel, desde que decretada por juiz.",
+        "é ilícita a prisão civil de depositário infiel, qualquer que seja a modalidade do depósito.",
+        "é vedada a prisão civil do devedor de pensão alimentícia.",
+        "a Convenção foi adotada pela Assembleia Geral da ONU em 1948.",
+        "os tratados de direitos humanos não produzem nenhum efeito no direito brasileiro."
+      ],
+      "correta": "B",
+      "comentario": "Súmula Vinculante 25: \"É ilícita a prisão civil de depositário infiel, qualquer que seja a modalidade do depósito\". A Convenção Americana (art. 7º, item 7) só admite a prisão civil por inadimplemento de obrigação alimentar, por isso a C está errada. O STF entende que os tratados de direitos humanos aprovados sem o rito do art. 5º, §3º, da CF têm status supralegal (acima das leis, abaixo da Constituição), o que tornou inaplicável a legislação que previa a prisão do depositário infiel. D) A Convenção é de 1969, no âmbito da OEA.",
+      "base_legal": "Súmula Vinculante 25 do STF; Convenção Americana sobre Direitos Humanos, art. 7º, item 7",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "DH-004",
+      "disciplina": "Direitos Humanos",
+      "assunto": "Uso da força (Lei nº 13.060/2014)",
+      "dificuldade": "média",
+      "enunciado": "A Lei nº 13.060/2014 disciplina o uso dos instrumentos de menor potencial ofensivo pelos agentes de segurança pública. De acordo com essa lei, é correto afirmar que:",
+      "alternativas": [
+        "é sempre legítimo o uso de arma de fogo contra veículo que desrespeite bloqueio policial em via pública.",
+        "não é legítimo o uso de arma de fogo contra pessoa em fuga que esteja desarmada ou que não represente risco imediato de morte ou de lesão aos agentes de segurança pública ou a terceiros.",
+        "o agente em serviço fica dispensado de observar o princípio da proporcionalidade.",
+        "os instrumentos de menor potencial ofensivo são de uso exclusivo das Forças Armadas.",
+        "é vedado ao agente de segurança pública o uso de qualquer instrumento de menor potencial ofensivo."
+      ],
+      "correta": "B",
+      "comentario": "Art. 2º, parágrafo único, I: não é legítimo o uso de arma de fogo contra pessoa em fuga que esteja desarmada ou que não represente risco imediato de morte ou de lesão aos agentes ou a terceiros. A) Errada: contra veículo que desrespeite bloqueio policial, o uso de arma de fogo NÃO é legítimo, exceto quando o ato represente risco de morte ou lesão aos agentes ou a terceiros (inciso II). C) O art. 2º exige a observância dos princípios da legalidade, necessidade, razoabilidade e proporcionalidade. D e E) A lei determina que os órgãos de segurança pública priorizem a utilização dos instrumentos de menor potencial ofensivo.",
+      "base_legal": "Lei nº 13.060/2014, art. 2º",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "HIS-001",
+      "disciplina": "História de Pernambuco",
+      "assunto": "Domínio holandês e Insurreição Pernambucana",
+      "dificuldade": "fácil",
+      "enunciado": "Sobre o período de domínio holandês em Pernambuco, no século XVII, é correto afirmar que:",
+      "alternativas": [
+        "João Maurício de Nassau governou o Brasil holandês e promoveu obras de urbanização no Recife.",
+        "os holandeses foram expulsos de Pernambuco ainda no século XVI, logo após sua chegada.",
+        "as Batalhas dos Guararapes ocorreram no século XIX, durante o Império.",
+        "a ocupação holandesa teve início após a Independência do Brasil.",
+        "a Insurreição Pernambucana tinha como objetivo garantir a permanência dos holandeses."
+      ],
+      "correta": "A",
+      "comentario": "João Maurício de Nassau governou o Brasil holandês entre 1637 e 1644, modernizou o Recife (pontes, palácios, a Cidade Maurícia) e trouxe artistas e cientistas. A ocupação começou em 1630 e terminou em 1654, com a rendição holandesa. As Batalhas dos Guararapes (1648 e 1649), marcos da Insurreição Pernambucana contra os holandeses, ocorreram no século XVII. A primeira, em 19 de abril de 1648, é a data em que se comemora o Dia do Exército Brasileiro.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "HIS-002",
+      "disciplina": "História de Pernambuco",
+      "assunto": "Guerra dos Mascates",
+      "dificuldade": "média",
+      "enunciado": "A Guerra dos Mascates (1710–1711) foi um conflito que opôs:",
+      "alternativas": [
+        "os senhores de engenho de Olinda aos comerciantes portugueses estabelecidos no Recife.",
+        "os indígenas potiguaras aos missionários jesuítas.",
+        "os colonos holandeses aos invasores franceses.",
+        "os republicanos aos monarquistas, após a Proclamação da República.",
+        "os quilombolas de Palmares aos bandeirantes paulistas."
+      ],
+      "correta": "A",
+      "comentario": "A aristocracia açucareira de Olinda, endividada, rivalizava com os comerciantes portugueses do Recife, chamados pejorativamente de \"mascates\". O estopim foi a elevação do Recife à condição de vila, com Câmara própria, o que lhe deu autonomia em relação a Olinda. Ao final, prevaleceram os interesses dos comerciantes e o Recife manteve sua autonomia. A alternativa E refere-se aos ataques ao Quilombo dos Palmares, no fim do século XVII.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "HIS-003",
+      "disciplina": "História de Pernambuco",
+      "assunto": "Revolução Pernambucana de 1817",
+      "dificuldade": "média",
+      "enunciado": "A Revolução Pernambucana de 1817 caracterizou-se por:",
+      "alternativas": [
+        "instalar um governo provisório de caráter republicano, inspirado em ideias iluministas, em oposição ao governo de D. João VI.",
+        "defender o retorno de D. Pedro I ao trono brasileiro após sua abdicação.",
+        "ser um movimento de resistência contra a ocupação holandesa.",
+        "ter ocorrido após a Proclamação da República, em reação ao governo de Deodoro da Fonseca.",
+        "ter sido liderada exclusivamente por pessoas escravizadas, com o objetivo de abolir a escravidão."
+      ],
+      "correta": "A",
+      "comentario": "Em 6 de março de 1817, revolucionários pernambucanos (comerciantes, militares, padres e proprietários, influenciados pelo Iluminismo e pela maçonaria) tomaram o poder no Recife e instalaram um governo provisório republicano, insatisfeitos, entre outros motivos, com os pesados impostos cobrados para sustentar a Corte portuguesa no Rio de Janeiro. O movimento durou pouco mais de dois meses e foi duramente reprimido. Entre suas lideranças estavam Domingos José Martins e o Padre João Ribeiro. Apesar do caráter republicano, o movimento não propôs a abolição da escravidão. A data de 6 de março é lembrada como a Data Magna de Pernambuco, e a bandeira do estado se inspira na bandeira da revolução.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "HIS-004",
+      "disciplina": "História de Pernambuco",
+      "assunto": "Confederação do Equador",
+      "dificuldade": "média",
+      "enunciado": "A Confederação do Equador, movimento iniciado em Pernambuco em 1824, está relacionada:",
+      "alternativas": [
+        "à reação contra o autoritarismo de D. Pedro I, após a dissolução da Assembleia Constituinte e a outorga da Constituição de 1824.",
+        "à tentativa de restabelecer o domínio holandês no Nordeste.",
+        "à Inconfidência Mineira, liderada por Tiradentes.",
+        "ao período regencial, iniciado após a abdicação de D. Pedro I.",
+        "à luta pela reincorporação de Pernambuco a Portugal."
+      ],
+      "correta": "A",
+      "comentario": "Em 1823, D. Pedro I dissolveu a Assembleia Constituinte e, em 1824, outorgou uma Constituição centralizadora, com o Poder Moderador. Em reação, Manuel de Carvalho Pais de Andrade proclamou em Pernambuco a Confederação do Equador, de caráter republicano e federalista, com adesão de outras províncias do Nordeste. O movimento foi reprimido e Frei Caneca, uma de suas principais lideranças, foi executado em 1825. C) A Inconfidência Mineira ocorreu em 1789; D) o período regencial começou em 1831.",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "LEG-001",
+      "disciplina": "Legislação Especial",
+      "assunto": "Legislação estadual dos militares de Pernambuco",
+      "dificuldade": "fácil",
+      "enunciado": "Assinale a alternativa que identifica corretamente, na ordem, a Lei estadual nº 6.783/1974 e a Lei estadual nº 11.817/2000, de Pernambuco.",
+      "alternativas": [
+        "Estatuto dos Policiais Militares do Estado de Pernambuco; Código Disciplinar dos Militares do Estado de Pernambuco.",
+        "Código Disciplinar dos Militares do Estado de Pernambuco; Estatuto dos Policiais Militares do Estado de Pernambuco.",
+        "Código Penal Militar; Código de Processo Penal Militar.",
+        "Estatuto do Desarmamento; Lei de Drogas.",
+        "Lei de Abuso de Autoridade; Lei de Tortura."
+      ],
+      "correta": "A",
+      "comentario": "A Lei estadual nº 6.783, de 16 de outubro de 1974, é o Estatuto dos Policiais Militares do Estado de Pernambuco; a Lei estadual nº 11.817, de 24 de julho de 2000, é o Código Disciplinar dos Militares do Estado de Pernambuco (militares do Estado são os policiais militares e os bombeiros militares, conforme o art. 42 da CF). Os distratores trazem normas federais: Código Penal Militar (Decreto-Lei nº 1.001/1969), Código de Processo Penal Militar (Decreto-Lei nº 1.002/1969), Estatuto do Desarmamento (Lei nº 10.826/2003), Lei de Drogas (Lei nº 11.343/2006), Abuso de Autoridade (Lei nº 13.869/2019) e Tortura (Lei nº 9.455/1997).",
+      "base_legal": "Lei estadual nº 6.783/1974; Lei estadual nº 11.817/2000",
+      "conferir": "Conferir datas e ementas no texto atualizado das leis (Portal ALEPE Legis).",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "LEG-002",
+      "disciplina": "Legislação Especial",
+      "assunto": "Hierarquia militar: postos e graduações",
+      "dificuldade": "fácil",
+      "enunciado": "Sobre a hierarquia nas corporações militares estaduais, assinale a alternativa correta.",
+      "alternativas": [
+        "O soldado é uma praça, e o seu grau hierárquico é denominado graduação.",
+        "O soldado ocupa um posto, assim como os oficiais.",
+        "As patentes dos oficiais das polícias militares são conferidas pelo Presidente da República.",
+        "Hierarquia e disciplina não se aplicam às polícias militares, por serem órgãos de natureza civil.",
+        "O cabo é um oficial subalterno."
+      ],
+      "correta": "A",
+      "comentario": "Nas corporações militares, os OFICIAIS ocupam POSTOS (tenente, capitão, major, coronel etc.) e as PRAÇAS possuem GRADUAÇÕES (soldado, cabo, sargento, subtenente). C) As patentes dos oficiais estaduais são conferidas pelos respectivos Governadores (CF, art. 42, §1º). D) As PMs são instituições militares organizadas com base na hierarquia e disciplina (CF, art. 42). E) O cabo é praça; os oficiais subalternos são os tenentes.",
+      "base_legal": "CF/88, art. 42; Lei estadual nº 6.783/1974",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "LEG-003",
+      "disciplina": "Legislação Especial",
+      "assunto": "Regime disciplinar militar e habeas corpus",
+      "dificuldade": "difícil",
+      "enunciado": "Um soldado recebeu punição disciplinar e deseja impetrar habeas corpus. Conforme a Constituição Federal e o entendimento do Supremo Tribunal Federal, é correto afirmar que:",
+      "alternativas": [
+        "não cabe habeas corpus para discutir o mérito da punição disciplinar militar, mas ele é cabível para o exame dos pressupostos de legalidade do ato.",
+        "cabe habeas corpus para discutir livremente o mérito da punição, inclusive a conveniência e a oportunidade de sua aplicação.",
+        "as punições disciplinares militares não podem ser apreciadas pelo Poder Judiciário em nenhuma hipótese.",
+        "o habeas corpus contra punição disciplinar de militar estadual deve ser impetrado exclusivamente no Superior Tribunal Militar.",
+        "a Constituição autoriza expressamente o habeas corpus contra qualquer punição disciplinar militar."
+      ],
+      "correta": "A",
+      "comentario": "O art. 142, §2º, da CF (aplicável aos militares dos Estados por força do art. 42, §1º) dispõe que \"não caberá habeas corpus em relação a punições disciplinares militares\". O STF, porém, entende que a vedação alcança apenas o MÉRITO da punição: é cabível o habeas corpus para o exame dos pressupostos de legalidade, como a hierarquia, o poder disciplinar, o ato ligado à função e a pena susceptível de ser aplicada disciplinarmente. B e E) contrariam o texto constitucional; C) o controle de legalidade pelo Judiciário é possível; D) não existe essa exclusividade.",
+      "base_legal": "CF/88, art. 42, §1º, e art. 142, §2º",
+      "fonte": "Inédita"
+    },
+    {
+      "id": "LEG-004",
+      "disciplina": "Legislação Especial",
+      "assunto": "Hierarquia e disciplina",
+      "dificuldade": "fácil",
+      "enunciado": "Na legislação militar, \"a rigorosa observância e o acatamento integral das leis, regulamentos, normas e disposições que fundamentam o organismo militar\", traduzindo-se pelo perfeito cumprimento do dever por parte de todos e de cada um de seus integrantes, corresponde ao conceito de:",
+      "alternativas": ["disciplina.", "hierarquia.", "antiguidade.", "precedência.", "subordinação."],
+      "correta": "A",
+      "comentario": "Esse é o conceito de DISCIPLINA. Já a HIERARQUIA é a ordenação da autoridade, em níveis diferentes, dentro da estrutura militar, feita por postos e graduações e, dentro de um mesmo posto ou graduação, pela antiguidade. Hierarquia e disciplina são a base institucional das corporações militares (CF, art. 42). Os estatutos militares, como o Estatuto dos Policiais Militares de Pernambuco (Lei nº 6.783/1974), trazem essas definições.",
+      "base_legal": "CF/88, art. 42; Lei estadual nº 6.783/1974",
+      "conferir": "Conferir a redação literal da definição no texto atualizado da Lei nº 6.783/1974 (Portal ALEPE Legis).",
+      "fonte": "Inédita"
+    }
+  ]
+}
