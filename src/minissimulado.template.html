@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05090b">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Minissimulado de Português · PMPE · Raiz de Física</title>
+<link rel="icon" href="__LOGO__">
+<style>
+/*__FONTES__*/
+/*__ESTILO__*/
+</style>
+</head>
+<body>
+<!-- Mostrado apenas quando o arquivo é aberto sem JavaScript (pré-visualização do iPhone, WhatsApp, Google Drive etc.) -->
+<div id="nojs">
+  <h1>Minissimulado de Português · PMPE</h1>
+  <p>Este material é interativo e precisa ser aberto em um navegador (Safari, Chrome, Edge ou Firefox).</p>
+  <ul>
+    <li><b>Pelo celular (iPhone ou Android):</b> abra o link de acesso que está na sua área de membros da Kiwify.</li>
+    <li><b>Pelo arquivo baixado:</b> no computador, clique com o botão direito no arquivo e escolha “Abrir com” → Chrome, Edge, Safari ou Firefox.</li>
+    <li>No iPhone, a pré-visualização do app Arquivos e do WhatsApp não executa o simulado. Use o link de acesso no Safari.</li>
+  </ul>
+  <p>Precisa de ajuda? Fale com o suporte Raiz de Física pelo canal informado na área de membros.</p>
+</div>
+
+<!-- ===== tela de acesso ===== -->
+<div id="gate" hidden>
+  <form class="g-card" id="g-form" autocomplete="on" novalidate>
+    <img class="g-logo" src="__LOGO__" alt="Raiz de Física">
+    <h1>MINISSIMULADO<br>DE PORTUGUÊS</h1>
+    <div class="g-sub">PMPE 2026 · Acesso do aluno</div>
+    <div class="g-err" id="g-err" role="alert" hidden></div>
+    <div class="fld"><label for="g-nome">Nome completo</label><input class="in" id="g-nome" name="name" autocomplete="name" required placeholder="Como no cadastro da compra"></div>
+    <div class="fld"><label for="g-email">E-mail da compra</label><input class="in" id="g-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="voce@email.com"></div>
+    <div class="fld"><label for="g-chave">Chave de acesso</label><input class="in key" id="g-chave" name="chave" autocomplete="off" autocapitalize="characters" spellcheck="false" required placeholder="RF-XXXX-XXXX-XXXX"></div>
+    <label class="chk"><input type="checkbox" id="g-termos"> <span>Li e aceito os termos: material de uso pessoal e intransferível. Meu nome, e-mail e número de licença aparecerão como marca d’água, e o compartilhamento é proibido (Lei nº 9.610/1998).</span></label>
+    <button class="btn wide" id="g-btn" type="submit">Acessar o simulado</button>
+    <p class="g-note">A chave foi enviada para o seu e-mail após a compra e também está na área de membros. Não encontrou? Confira a caixa de spam.</p>
+  </form>
+</div>
+
+<!-- ===== aplicativo ===== -->
+<div id="app" hidden>
+  <header class="topbar">
+    <div class="tb-in">
+      <img class="tb-emb" src="__LOGO__" alt="">
+      <div class="tb-brand"><b>MINISSIMULADO · PORTUGUÊS</b><span id="tb-lic"></span></div>
+      <div class="tb-act">
+        <span class="tb-timer" title="Tempo de prova"><span id="tb-tempo">0:00:00</span></span>
+        <button class="tb-btn" data-act="cartao" aria-label="Abrir cartão-resposta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span id="tb-cont">0/40</span></button>
+        <button class="tb-btn" data-act="nav" aria-label="Abrir sumário"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg><span class="t">Sumário</span></button>
+      </div>
+    </div>
+    <div class="prog" id="prog"><i></i></div>
+  </header>
+  <main id="main"></main>
+  <footer class="foot" id="foot"></footer>
+</div>
+
+<!-- painéis -->
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sh-cartao" hidden role="dialog" aria-label="Cartão-resposta">
+  <div class="sheet-h"><b>CARTÃO-RESPOSTA</b><button class="tb-btn" data-act="fechar" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+  <div class="leg"><span><i style="background:rgba(63,239,255,.25)"></i>Marcada</span><span><i style="background:rgba(52,224,126,.45)"></i>Acerto</span><span><i style="background:rgba(255,90,110,.45)"></i>Erro</span><span><i style="background:rgba(125,143,148,.4)"></i>Em branco</span></div>
+  <div class="cartao" id="cartao"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><a class="btn ghost sm" href="#finalizar" data-act="ir">Ir para Finalizar</a><a class="btn ghost sm" href="#gabarito" data-act="ir">Gabarito comentado</a></div>
+</div>
+<div class="sheet" id="sh-nav" hidden role="dialog" aria-label="Sumário">
+  <div class="sheet-h"><b>SUMÁRIO</b><button class="tb-btn" data-act="fechar" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+  <nav class="navlist">
+    <a href="#capa" data-act="ir">Capa e modos <small>início</small></a>
+    <a href="#como-usar" data-act="ir">Como usar <small>tesoura e cartão</small></a>
+    <a href="#raiox" data-act="ir">Raio-X da matéria <small>pesos</small></a>
+    <a href="#fase-1" data-act="ir">Fase 1 · Aquecimento <small>Q1–Q10</small></a>
+    <a href="#fase-2" data-act="ir">Fase 2 · Ritmo de prova <small>Q11–Q20</small></a>
+    <a href="#fase-3" data-act="ir">Fase 3 · Nível PMPE <small>Q21–Q30</small></a>
+    <a href="#fase-4" data-act="ir">Fase 4 · Desafio de elite <small>Q31–Q40</small></a>
+    <a href="#finalizar" data-act="ir">Finalizar <small>corrigir</small></a>
+    <a href="#resultado" data-act="ir">Resultado e diagnóstico <small>pizza e caminho</small></a>
+    <a href="#gabarito" data-act="ir">Gabarito comentado <small>A a E</small></a>
+  </nav>
+</div>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="wm" aria-hidden="true"></div>
+<div id="shield" hidden><b>CONTEÚDO PROTEGIDO</b><span>Material licenciado e rastreável. Toque ou clique aqui para continuar.</span></div>
+
+<script id="payload" type="application/octet-stream">__PAYLOAD__</script>
+<script id="lic" type="text/plain">__LICENCAS__</script>
+<script>
+/*__APP__*/
+</script>
+</body>
+</html>
