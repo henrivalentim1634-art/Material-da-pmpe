@@ -60,6 +60,26 @@ export const PRODUTOS = {
     navExtra: [['guia', 'Guia-relâmpago', 'atalhos'], ['laboratorio', 'Laboratório de fórmulas', 'interativo']],
     vendas: 'vendas-info',
     pasta: 'informatica'
+  },
+  dh: {
+    id: 'dh',
+    prod: 'RFDH1',
+    prefixo: 'RD',                       // chaves RD-XXXX-XXXX-XXXX
+    storage: 'rf_dh_pmpe',
+    conteudo: 'privado/dh/index.mjs',
+    licencas: 'privado/licencas-dh.csv',
+    revogadas: 'privado/revogadas-dh.txt',
+    saida: 'produto/minissimulado-direitos-humanos-pmpe.html',
+    titulo: 'Minissimulado de Direitos Humanos · PMPE · Raiz de Física',
+    nojs: 'Minissimulado de Direitos Humanos · PMPE',
+    gate: 'MINISSIMULADO<br>DIREITOS HUMANOS',
+    gateSub: 'PMPE 2026 · Acesso do aluno',
+    marca: 'MINISSIMULADO · DIREITOS HUMANOS',
+    katex: true,
+    banner: 'src/marca/banner-direitos-humanos.jpg',
+    navExtra: [['vademecum', 'Vade-mécum relâmpago', 'leis'], ['laboratorio', 'Calculadora de penas', 'frações']],
+    vendas: 'vendas-dh',
+    pasta: 'direitos-humanos'
   }
 };
 

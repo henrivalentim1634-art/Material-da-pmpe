@@ -1,0 +1,21 @@
+/* Estilo das páginas de apoio (obrigado, termos, privacidade) */
+:root{color-scheme:dark;--bg:#05090b;--panel:#0a161b;--cyan:#3fefff;--cyan2:#16c2d2;--ink:#e6f5f7;--ink2:#b9d3d7;--muted:#86a7ad;--line:rgba(63,239,255,.14);--line2:rgba(63,239,255,.38);--ok:#34e07e}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16.5px;line-height:1.65}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 520px at 50% -10%,rgba(63,239,255,.12),transparent 60%),var(--bg)}
+a{color:var(--cyan)}
+.wrap{max-width:780px;margin:0 auto;padding:28px 16px 60px}
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:22px;text-decoration:none;color:#fff;font-family:'Orbitron','Rajdhani',sans-serif;font-weight:900;letter-spacing:1.6px;font-size:.85rem}
+.logo img{width:46px;height:46px;border-radius:50%;filter:drop-shadow(0 0 8px rgba(63,239,255,.45))}
+h1{font-family:'Orbitron','Rajdhani',sans-serif;font-weight:900;letter-spacing:1.4px;font-size:clamp(1.3rem,5vw,1.9rem);line-height:1.2;color:#dffcff;margin:0 0 12px}
+h2{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.3rem;color:#fff;margin:26px 0 8px;letter-spacing:.4px}
+p,li{color:var(--ink2)}
+.card{background:linear-gradient(180deg,#0a161b,#0c1d23);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+.passos{counter-reset:p;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.passos li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start}
+.passos li::before{counter-increment:p;content:counter(p);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:900;color:#021417;background:var(--cyan)}
+.passos b{color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;border:1px solid var(--cyan2);color:#021417;background:linear-gradient(180deg,var(--cyan),var(--cyan2));padding:13px 20px;border-radius:12px;text-decoration:none;min-height:48px}
+.ok{display:inline-flex;align-items:center;gap:8px;color:#9bf3c2;border:1px solid rgba(52,224,126,.5);background:rgba(52,224,126,.1);border-radius:999px;padding:5px 12px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.6px}
+.muted{color:var(--muted);font-size:.9rem}

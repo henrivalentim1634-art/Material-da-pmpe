@@ -1,8 +1,8 @@
 # Guia completo: do arquivo à primeira venda na Kiwify
 
-Produtos: **Minissimulado de Português PMPE 2026**, **Minissimulado de Raciocínio Lógico PMPE 2026** e **Minissimulado de Informática PMPE 2026** · preço: **R$ 10,80 cada** · marca: **Raiz de Física**
+Produtos: **Minissimulado de Português PMPE 2026**, **Minissimulado de Raciocínio Lógico PMPE 2026**, **Minissimulado de Informática PMPE 2026** e **Minissimulado de Direitos Humanos PMPE 2026** · preço: **R$ 10,80 cada** · marca: **Raiz de Física**
 
-Os três produtos usam o mesmo processo. Onde houver diferença, o guia mostra cada caminho; os textos e anúncios específicos do RLM estão em `kiwify/rlm/` e os de Informática em `kiwify/info/`.
+Os quatro produtos usam o mesmo processo. Onde houver diferença, o guia mostra cada caminho; os textos e anúncios específicos do RLM estão em `kiwify/rlm/`, os de Informática em `kiwify/info/` e os de Direitos Humanos em `kiwify/dh/`.
 
 Este guia segue a ordem em que você vai trabalhar. Os nomes de menus da Kiwify mudam de vez em quando; se algum botão estiver com outro nome, procure pela função descrita.
 
@@ -12,16 +12,16 @@ Este guia segue a ordem em que você vai trabalhar. Os nomes de menus da Kiwify 
 
 | Pasta / arquivo | Para que serve | Vai para onde |
 |---|---|---|
-| `produto/minissimulado-portugues-pmpe.html` · `produto/minissimulado-rlm-pmpe.html` · `produto/minissimulado-informatica-pmpe.html` | Os simulados (40 questões, gabarito, diagnóstico), criptografados | Hospedagem (Netlify) → link na área de membros |
-| `vendas/` (Português) · `vendas-rlm/` (RLM) · `vendas-info/` (Informática) · `vitrine/` | Páginas de vendas, obrigado, termos, privacidade e a vitrine com os três produtos | Hospedagem (Netlify) → link nos anúncios e na Kiwify |
+| `produto/minissimulado-portugues-pmpe.html` · `produto/minissimulado-rlm-pmpe.html` · `produto/minissimulado-informatica-pmpe.html` · `produto/minissimulado-direitos-humanos-pmpe.html` | Os simulados (40 questões, gabarito, diagnóstico), criptografados | Hospedagem (Netlify) → link na área de membros |
+| `vendas/` (Português) · `vendas-rlm/` (RLM) · `vendas-info/` (Informática) · `vendas-dh/` (Direitos Humanos) · `vitrine/` | Páginas de vendas, obrigado, termos, privacidade e a vitrine com os quatro produtos | Hospedagem (Netlify) → link nos anúncios e na Kiwify |
 | `kiwify/criativos/*.png` · `kiwify/rlm/criativos/*.png` · `kiwify/info/criativos/*.png` | Capa do produto, banner do checkout, anúncios, capas da área de membros | Kiwify e Gerenciador de Anúncios |
 | `kiwify/textos-prontos.md` · `kiwify/rlm/textos-prontos-rlm.md` · `kiwify/info/textos-prontos-info.md` | Descrição do produto, textos do checkout, aulas da área de membros, e-mails | Copiar e colar na Kiwify |
-| `kiwify/automacao-chaves.md` | Entrega automática das chaves de acesso (vale para os três produtos) | Make ou Zapier |
+| `kiwify/automacao-chaves.md` | Entrega automática das chaves de acesso (vale para os quatro produtos) | Make ou Zapier |
 | `kiwify/anuncios.md` · `kiwify/rlm/anuncios-rlm.md` · `kiwify/info/anuncios-info.md` | Textos de anúncio, roteiros, público e orçamento | Meta Ads / TikTok / orgânico |
-| `privado/licencas.csv` (chaves `RF-`) · `privado/licencas-rlm.csv` (chaves `RL-`) · `privado/licencas-info.csv` (chaves `RI-`) (**enviados só para você, fora do GitHub**) | 1.001 chaves de acesso para cada produto | Uma planilha de controle por produto (Google Planilhas) |
+| `privado/licencas.csv` (chaves `RF-`) · `privado/licencas-rlm.csv` (chaves `RL-`) · `privado/licencas-info.csv` (chaves `RI-`) · `privado/licencas-dh.csv` (chaves `RD-`) (**enviados só para você, fora do GitHub**) | 1.001 chaves de acesso para cada produto | Uma planilha de controle por produto (Google Planilhas) |
 | `privado/conteudo/` · `privado/rlm/` · `privado/info/` (**enviados só para você**) | Questões e gabarito em texto aberto | Guarde em local seguro (necessário para atualizar o material) |
 
-> As chaves de um produto **não abrem** os outros: a chave `RF-…` abre o de Português, a `RL-…` abre o de Raciocínio Lógico e a `RI-…` abre o de Informática.
+> As chaves de um produto **não abrem** os outros: a chave `RF-…` abre o de Português, a `RL-…` abre o de Raciocínio Lógico, a `RI-…` abre o de Informática e a `RD-…` abre o de Direitos Humanos.
 
 ### Como o cliente recebe (fluxo)
 
@@ -63,7 +63,7 @@ Isso cria a pasta `site/` (e o arquivo `site-netlify.zip`) com:
 
 ```
 site/
-├── index.html                    ← vitrine com os três produtos
+├── index.html                    ← vitrine com os quatro produtos
 ├── portugues/
 │   ├── index.html                ← página de vendas de Português
 │   ├── obrigado.html  termos.html  privacidade.html  img/ …
@@ -76,6 +76,10 @@ site/
 │   ├── index.html                ← página de vendas de Informática
 │   ├── obrigado.html  termos.html  privacidade.html  img/ …
 │   └── acesso/index.html         ← simulado de Informática (link da área de membros)
+├── direitos-humanos/
+│   ├── index.html                ← página de vendas de Direitos Humanos
+│   ├── obrigado.html  termos.html  privacidade.html  img/ …
+│   └── acesso/index.html         ← simulado de Direitos Humanos (link da área de membros)
 ├── _headers                      ← regras de segurança do Netlify
 └── robots.txt                    ← impede o Google de indexar os simulados
 ```
@@ -93,7 +97,8 @@ site/
    - Vendas de Português: `https://raizdefisica-pmpe.netlify.app/portugues/` · simulado: `…/portugues/acesso/`
    - Vendas de RLM: `https://raizdefisica-pmpe.netlify.app/rlm/` · simulado: `…/rlm/acesso/`
    - Vendas de Informática: `https://raizdefisica-pmpe.netlify.app/informatica/` · simulado: `…/informatica/acesso/`
-   - Entre em cada simulado com a **chave do autor** (licença nº 0000, primeira linha de `licencas.csv`, `licencas-rlm.csv` e `licencas-info.csv`).
+   - Vendas de Direitos Humanos: `https://raizdefisica-pmpe.netlify.app/direitos-humanos/` · simulado: `…/direitos-humanos/acesso/`
+   - Entre em cada simulado com a **chave do autor** (licença nº 0000, primeira linha de `licencas.csv`, `licencas-rlm.csv`, `licencas-info.csv` e `licencas-dh.csv`).
 6. Para atualizar depois: **Deploys → arraste a nova pasta `site/`**. O endereço continua o mesmo.
 
 **Domínio próprio (opcional):** em *Domain management → Add a domain*, aponte algo como `simulado.raizdefisica.com.br`. Passa mais confiança nos anúncios.
@@ -102,7 +107,7 @@ site/
 
 ### 2.3. Antes de publicar a página de vendas
 
-Abra `vendas/index.html`, `vendas-rlm/index.html` e `vendas-info/index.html` e troque, em cada um:
+Abra `vendas/index.html`, `vendas-rlm/index.html`, `vendas-info/index.html` e `vendas-dh/index.html` e troque, em cada um:
 
 - `CHECKOUT_URL` (no fim do arquivo) pelo link do checkout Kiwify **daquele produto** (passo 3).
 - `[SEU NOME OU RAZÃO SOCIAL]`, `[CPF/CNPJ]` e `[SEU-EMAIL-DE-SUPORTE]` no rodapé, também em `obrigado.html`, `termos.html` e `privacidade.html`.
@@ -119,13 +124,13 @@ Em **Produtos → Criar produto**:
 | Campo | O que colocar |
 |---|---|
 | Tipo | Produto digital com entrega pela **Área de Membros da Kiwify** |
-| Nome | Português: `Minissimulado de Português PMPE 2026 · 40 questões comentadas` · RLM: `Minissimulado de Raciocínio Lógico PMPE 2026 · 40 questões comentadas` · Informática: `Minissimulado de Informática PMPE 2026 · 40 questões comentadas` |
-| Descrição | Copie de `textos-prontos.md` (Português) `rlm/textos-prontos-rlm.md` (RLM) ou `info/textos-prontos-info.md` (Informática) → seção 1 |
+| Nome | Português: `Minissimulado de Português PMPE 2026 · 40 questões comentadas` · RLM: `Minissimulado de Raciocínio Lógico PMPE 2026 · 40 questões comentadas` · Informática: `Minissimulado de Informática PMPE 2026 · 40 questões comentadas` · Direitos Humanos: `Minissimulado de Direitos Humanos PMPE 2026 · 40 questões comentadas` |
+| Descrição | Copie de `textos-prontos.md` (Português) `rlm/textos-prontos-rlm.md` (RLM) `info/textos-prontos-info.md` (Informática) ou `dh/textos-prontos-dh.md` (Direitos Humanos) → seção 1 |
 | Categoria | Educação / Concursos |
 | Imagem do produto | `kiwify/criativos/capa-produto-1080x1080.png` · `kiwify/rlm/criativos/capa-produto-rlm-1080x1080.png` · `kiwify/info/criativos/capa-produto-info-1080x1080.png` |
 | Preço | **R$ 10,80** (pagamento único) |
 | Garantia | **7 dias** (prazo legal do art. 49 do CDC) |
-| Página de vendas | `https://raizdefisica-pmpe.netlify.app/portugues/` · `https://raizdefisica-pmpe.netlify.app/rlm/` · `https://raizdefisica-pmpe.netlify.app/informatica/` |
+| Página de vendas | `https://raizdefisica-pmpe.netlify.app/portugues/` · `https://raizdefisica-pmpe.netlify.app/rlm/` · `https://raizdefisica-pmpe.netlify.app/informatica/` · `https://raizdefisica-pmpe.netlify.app/direitos-humanos/` |
 | E-mail de suporte | o seu e-mail de atendimento |
 
 Salve e copie o **link do checkout** (algo como `https://pay.kiwify.com.br/xxxxxx`). Ele vai em `CHECKOUT_URL` na página de vendas.
@@ -136,13 +141,13 @@ Salve e copie o **link do checkout** (algo como `https://pay.kiwify.com.br/xxxxx
 
 Em **Produto → Checkout (personalizar)**:
 
-1. **Banner do topo:** `kiwify/criativos/banner-checkout-1200x400.png` (Português) `kiwify/rlm/criativos/banner-checkout-rlm-1200x400.png` (RLM) ou `kiwify/info/criativos/banner-checkout-info-1200x400.png` (Informática). Se o painel pedir outra proporção, ajuste o tamanho no editor de imagem ou me peça uma versão nova.
+1. **Banner do topo:** `kiwify/criativos/banner-checkout-1200x400.png` (Português) `kiwify/rlm/criativos/banner-checkout-rlm-1200x400.png` (RLM) `kiwify/info/criativos/banner-checkout-info-1200x400.png` (Informática) ou `kiwify/dh/criativos/banner-checkout-dh-1200x400.png` (Direitos Humanos). Se o painel pedir outra proporção, ajuste o tamanho no editor de imagem ou me peça uma versão nova.
 2. **Cores:** fundo escuro, destaque `#16C2D2` (ciano da marca), botão `#3FEFFF` com texto escuro.
 3. **Títulos e textos de confiança:** copie de `textos-prontos.md` → seção 2.
 4. **Formas de pagamento:** **Pix** e **cartão de crédito**. Em ticket de R$ 10,80, o boleto costuma atrasar a liberação e cancelar mais; deixe desligado. Parcelamento não faz sentido nesse valor.
 5. **Campos do comprador:** nome, e-mail (com confirmação de e-mail) e CPF, se a Kiwify exigir para Pix. Celular é opcional; pedir menos campos aumenta a conversão.
-6. **Order bump (aumenta o lucro por venda):** ofereça **outro minissimulado** como order bump com desconto (ex.: quem compra Informática leva o de RLM por R$ 7,90, e vice-versa, porque os dois formam o Bloco II da prova). Com três produtos, o ticket médio sobe sem custo extra de anúncio. Textos em `textos-prontos.md`, `rlm/textos-prontos-rlm.md` e `info/textos-prontos-info.md` → seção 3.
-7. **Página de obrigado:** redirecione para `https://raizdefisica-pmpe.netlify.app/portugues/obrigado.html` (Português) `…/rlm/obrigado.html` (RLM) ou `…/informatica/obrigado.html` (Informática).
+6. **Order bump (aumenta o lucro por venda):** ofereça **outro minissimulado** como order bump com desconto (ex.: quem compra Informática leva o de RLM por R$ 7,90, e vice-versa, porque os dois formam o Bloco II da prova). Direitos Humanos combina com Português. Com quatro produtos, o ticket médio sobe sem custo extra de anúncio. Textos em `textos-prontos.md`, `rlm/textos-prontos-rlm.md`, `info/textos-prontos-info.md` e `dh/textos-prontos-dh.md` → seção 3.
+7. **Página de obrigado:** redirecione para `https://raizdefisica-pmpe.netlify.app/portugues/obrigado.html` (Português) `…/rlm/obrigado.html` (RLM), `…/informatica/obrigado.html` (Informática) ou `…/direitos-humanos/obrigado.html` (Direitos Humanos).
 8. **Pixels:** em *Pixels/Integrações de rastreamento*, conecte o pixel da Meta (e o token da API de Conversões, se tiver) e/ou TikTok. Assim, a Kiwify envia o evento **Purchase** sozinha. Não dispare Purchase também na página de obrigado, senão a venda conta duas vezes.
 9. **Cronômetro de escassez e notificações de “alguém comprou”:** use só se forem verdadeiros. Contadores falsos ferem o Código de Defesa do Consumidor e as políticas de anúncio.
 10. **Cupons (opcional):** crie um cupom de lançamento (ex.: `PMPE10`) apenas se o preço cheio ainda fizer sentido depois do desconto e da taxa.
@@ -155,12 +160,12 @@ Em **Área de membros → Criar curso** (ou na aba de conteúdo do produto):
 
 Crie **uma área de membros para cada produto** (cada uma com o seu link de simulado e as suas chaves).
 
-**Capa do curso:** `area-membros-capa-vertical-1080x1620.png` · **Banner:** `area-membros-banner-1920x1080.png` (RLM: as versões `-rlm` em `kiwify/rlm/criativos/`; Informática: as versões `-info` em `kiwify/info/criativos/`)
+**Capa do curso:** `area-membros-capa-vertical-1080x1620.png` · **Banner:** `area-membros-banner-1920x1080.png` (RLM: as versões `-rlm` em `kiwify/rlm/criativos/`; Informática: as versões `-info` em `kiwify/info/criativos/`; Direitos Humanos: as versões `-dh` em `kiwify/dh/criativos/`)
 
 | Módulo | Aula | Conteúdo (texto pronto em `textos-prontos.md`, `rlm/textos-prontos-rlm.md` ou `info/textos-prontos-info.md` → seção 4) | Miniatura |
 |---|---|---|---|
 | 1 · Comece aqui | 1. Boas-vindas e como funciona | Texto de boas-vindas e passo a passo | `aula-1-comece-aqui-1280x720.png` |
-| | 2. Acessar o simulado | **Botão/link** para `…/portugues/acesso/`, `…/rlm/acesso/` ou `…/informatica/acesso/` + instruções da chave + dicas de iPhone | `aula-2-acessar-simulado-1280x720.png` |
+| | 2. Acessar o simulado | **Botão/link** para `…/portugues/acesso/`, `…/rlm/acesso/`, `…/informatica/acesso/` ou `…/direitos-humanos/acesso/` + instruções da chave + dicas de iPhone | `aula-2-acessar-simulado-1280x720.png` |
 | | 3. Depois do resultado | Como usar o diagnóstico e o caminho de estudo | `aula-3-plano-de-estudo-1280x720.png` |
 | 2 · Suporte | 4. Dúvidas e suporte | FAQ, e-mail, prazos, reembolso | — |
 
@@ -215,10 +220,10 @@ Regras que evitam reprovação e problemas: não use o brasão nem o nome “PMP
 
 | Tarefa | Como fazer |
 |---|---|
-| **Gerar mais chaves** | Português: `node gerar-chaves.mjs 500` · RLM: `node gerar-chaves.mjs 500 rlm` · Informática: `node gerar-chaves.mjs 500 info` → `node build.mjs` → `node montar-site.mjs` → reenviar `site/` ao Netlify → importar as novas linhas na planilha |
-| **Bloquear uma chave vazada ou reembolsada** | Escreva a chave em `privado/revogadas.txt` (Português) `privado/revogadas-rlm.txt` (RLM) ou `privado/revogadas-info.txt` (Informática), uma por linha, ou marque `REVOGADA` no CSV → `node build.mjs` → `node montar-site.mjs` → reenviar ao Netlify |
-| **Corrigir ou trocar uma questão** | Português: `privado/conteudo/questoes-*.mjs` · RLM: `privado/rlm/questoes.json` · Informática: `privado/info/questoes-fase*.mjs` → `node build.mjs` → `node montar-site.mjs` → reenviar. O progresso dos alunos continua salvo |
-| **Atualizar as capturas e os criativos** | `node capturas-marketing.cjs` e `node gerar-criativos.cjs` (Português) · `node capturas-marketing.cjs rlm` e `node gerar-criativos.cjs rlm` (RLM) · `node capturas-marketing.cjs info` e `node gerar-criativos.cjs info` (Informática) |
+| **Gerar mais chaves** | Português: `node gerar-chaves.mjs 500` · RLM: `node gerar-chaves.mjs 500 rlm` · Informática: `node gerar-chaves.mjs 500 info` · Direitos Humanos: `node gerar-chaves.mjs 500 dh` → `node build.mjs` → `node montar-site.mjs` → reenviar `site/` ao Netlify → importar as novas linhas na planilha |
+| **Bloquear uma chave vazada ou reembolsada** | Escreva a chave em `privado/revogadas.txt` (Português) `privado/revogadas-rlm.txt` (RLM), `privado/revogadas-info.txt` (Informática) ou `privado/revogadas-dh.txt` (Direitos Humanos), uma por linha, ou marque `REVOGADA` no CSV → `node build.mjs` → `node montar-site.mjs` → reenviar ao Netlify |
+| **Corrigir ou trocar uma questão** | Português: `privado/conteudo/questoes-*.mjs` · RLM: `privado/rlm/questoes.json` · Informática: `privado/info/questoes-fase*.mjs` · Direitos Humanos: `privado/dh/questoes-fase*.mjs` → `node build.mjs` → `node montar-site.mjs` → reenviar. O progresso dos alunos continua salvo |
+| **Atualizar as capturas e os criativos** | `node capturas-marketing.cjs` e `node gerar-criativos.cjs` (Português) · `node capturas-marketing.cjs rlm` e `node gerar-criativos.cjs rlm` (RLM) · `node capturas-marketing.cjs info` e `node gerar-criativos.cjs info` (Informática) · `node capturas-marketing.cjs dh` e `node gerar-criativos.cjs dh` (Direitos Humanos) |
 
 Guarde **duas cópias** da pasta `privado/` (por exemplo, no Google Drive e em um pendrive). Sem ela, não dá para gerar chaves novas nem editar as questões.
 

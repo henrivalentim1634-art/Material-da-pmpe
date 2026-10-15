@@ -321,7 +321,7 @@ function montar() {
     '<br>' + m.rodape +
     '<br>Material protegido pela Lei nº 9.610/1998. Reproduzir, compartilhar ou revender sem autorização é crime (art. 184 do Código Penal). <a href="#" data-act="sair">Sair desta licença</a>';
   QS.forEach(function (q) { atualizarQ(q.n); });
-  if (FER) (FER.tipo === 'xl' ? laboratorioXL : laboratorioTV)($('#lab-ferr'), FER);
+  if (FER) (FER.tipo === 'pena' ? calculadoraPena : FER.tipo === 'xl' ? laboratorioXL : laboratorioTV)($('#lab-ferr'), FER);
   aplicarSub();
   montarCartao();
   atualizarTudo();
@@ -330,7 +330,10 @@ function montar() {
 function ferramenta() {
   var m = C.meta, f = m.ferramenta || (m.ferramentaTV ? { tipo: 'tv' } : null);
   if (!f) return null;
-  var base = f.tipo === 'xl'
+  var base = f.tipo === 'pena'
+    ? { titulo: 'Calculadora de frações de pena', sigla: '⅔', sub: 'Aumentos, diminuições e progressão',
+        lead: 'Aplique frações de aumento ou de diminuição (tráfico privilegiado, majorantes da tortura) e percentuais de progressão de regime à pena-base e veja a conta passo a passo, em anos, meses e dias. Use para conferir as suas resoluções.' }
+    : f.tipo === 'xl'
     ? { titulo: 'Laboratório de fórmulas', sigla: 'fx', sub: 'Teste fórmulas do Excel e do Calc',
         lead: 'Digite fórmulas do Excel 2019 e do LibreOffice Calc, em português, sobre a planilha de exemplo e veja o resultado, os erros (como #DIV/0! e #N/D) e o que acontece com as referências ao copiar a fórmula para outra célula. Use para conferir as suas resoluções.' }
     : { titulo: 'Laboratório de tabela-verdade', sigla: 'V/F', sub: 'Monte e classifique proposições',
@@ -519,7 +522,7 @@ function renderResultado() {
   h += '<div class="grid2" style="margin-top:12px"><div class="card"><h3 class="eyebrow" style="margin-bottom:6px">Curva de dificuldade (por fase)</h3>';
   C.fases.forEach(function (f) { var v = R.fases[f.n]; if (!v) return; h += barra(f.nome, v[0], v[1]); });
   h += '</div><div class="card"><h3 class="eyebrow" style="margin-bottom:6px">Por formato de questão</h3>';
-  [['ass', 'Assertivas (I, II, III...)'], ['img', C.meta.rotuloImg || 'Com imagem'], ['txt', 'Ligadas a texto'], ['iso', 'Gramática isolada']].forEach(function (x) { var v = R.fmt[x[0]]; if (v[1]) h += barra(x[1], v[0], v[1]); });
+  [['ass', 'Assertivas (I, II, III...)'], ['img', C.meta.rotuloImg || 'Com imagem'], ['txt', 'Ligadas a texto'], ['iso', C.meta.rotuloIso || 'Gramática isolada']].forEach(function (x) { var v = R.fmt[x[0]]; if (v[1]) h += barra(x[1], v[0], v[1]); });
   h += '</div></div>';
   /* diagnóstico */
   var ks = Object.keys(A).filter(function (k) { return R.areas[k].tot; });
@@ -540,7 +543,7 @@ function renderResultado() {
   var f4 = R.fases[4], f1 = R.fases[1];
   if (f4 && f1 && f1[1] && f4[1] && f1[0] / f1[1] - f4[0] / f4[1] >= 0.3) dicas.push('<b>Queda nas questões difíceis</b>: você foi bem na Fase 1 e caiu na Fase 4. ' + C.meta.dicaQueda);
   if (R.bl) dicas.push('<b>' + R.bl + ' questão(ões) em branco</b>: na prova da AOCP, a questão em branco vale zero. Elimine o que puder e marque a melhor opção restante.');
-  if (ST.modo === 'prova' && ST.acc > C.meta.tempoSugerido * 60000 * (R.tot / 40) * 1.15) dicas.push('<b>Ritmo</b>: você passou do tempo sugerido (3 min por questão). Faça primeiro as questões de gramática isolada e deixe as de texto longo para o fim.');
+  if (ST.modo === 'prova' && ST.acc > C.meta.tempoSugerido * 60000 * (R.tot / 40) * 1.15) dicas.push('<b>Ritmo</b>: você passou do tempo sugerido (3 min por questão). ' + (C.meta.dicaRitmo || 'Faça primeiro as questões de gramática isolada e deixe as de texto longo para o fim.'));
   if (!dicas.length) dicas.push('Nada crítico a ajustar além dos pontos fracos. Mantenha a revisão dos comentários das questões que errou.');
   h += '<div class="dg melhorar"><h3>' + IC.alvo + ' Pontos a melhorar</h3><ul>' + dicas.map(function (d) { return '<li>' + d + '</li>'; }).join('') + '</ul></div></div>';
   /* caminho */
@@ -1174,6 +1177,64 @@ function laboratorioXL(el, conf) {
   });
   [inp, alvo, dest].forEach(function (e) { e.addEventListener('input', desenhar); });
   inp.value = conf.inicial || EX[0]; desenhar();
+}
+
+/* ============================ calculadora de frações de pena ============================ */
+/* Convenção usada em provas e na prática forense: ano de 12 meses e mês de 30 dias (ano = 360 dias); frações de dia são desprezadas (art. 11 do Código Penal). */
+function penaDias(a, m, d) { return (+a || 0) * 360 + (+m || 0) * 30 + (+d || 0); }
+function penaTexto(dias) {
+  dias = Math.floor(dias + 1e-9);
+  if (dias <= 0) return '0 dia';
+  var a = Math.floor(dias / 360), m = Math.floor((dias % 360) / 30), d = dias % 30, p = [];
+  if (a) p.push(a + (a === 1 ? ' ano' : ' anos'));
+  if (m) p.push(m + (m === 1 ? ' mês' : ' meses'));
+  if (d) p.push(d + (d === 1 ? ' dia' : ' dias'));
+  return p.length === 1 ? p[0] : p.slice(0, -1).join(', ') + ' e ' + p[p.length - 1];
+}
+function penaCalcular(base, op, n, den) {
+  /* base em dias; op: 'diminuir' | 'aumentar' | 'fracao'; fração n/den */
+  if (!(den > 0) || !(n >= 0)) throw new Error('Informe uma fração válida (denominador maior que zero).');
+  if (!(base > 0)) throw new Error('Informe a pena-base (anos, meses e/ou dias).');
+  var parte = base * n / den, res = op === 'aumentar' ? base + parte : op === 'diminuir' ? base - parte : parte;
+  if (res < 0) throw new Error('A diminuição é maior que a própria pena.');
+  return { parte: Math.floor(parte + 1e-9), res: Math.floor(res + 1e-9) };
+}
+function calculadoraPena(el, conf) {
+  if (!el) return;
+  conf = conf || {};
+  var FR = conf.fracoes || [['1/6', 1, 6], ['1/5', 1, 5], ['1/4', 1, 4], ['1/3', 1, 3], ['2/5', 2, 5], ['1/2', 1, 2], ['3/5', 3, 5], ['2/3', 2, 3], ['16%', 16, 100], ['25%', 25, 100], ['40%', 40, 100], ['50%', 50, 100], ['60%', 60, 100], ['70%', 70, 100]];
+  var EX = conf.exemplos || [];
+  el.innerHTML =
+    '<div class="pn-grid"><label><span class="tvl-lb">Anos</span><input class="in" id="pn-a" type="number" min="0" inputmode="numeric" value="' + (conf.anos != null ? conf.anos : 5) + '"></label>' +
+    '<label><span class="tvl-lb">Meses</span><input class="in" id="pn-m" type="number" min="0" inputmode="numeric" value="0"></label>' +
+    '<label><span class="tvl-lb">Dias</span><input class="in" id="pn-d" type="number" min="0" inputmode="numeric" value="0"></label></div>' +
+    '<div class="pn-ops" role="group" aria-label="Operação"><button type="button" class="tvl-k tvl-w" data-op="diminuir" aria-pressed="true">Diminuir</button><button type="button" class="tvl-k tvl-w" data-op="aumentar" aria-pressed="false">Aumentar</button><button type="button" class="tvl-k tvl-w" data-op="fracao" aria-pressed="false">Só a fração</button></div>' +
+    '<div class="pn-frac"><span class="tvl-lb">Fração</span><input class="in" id="pn-n" type="number" min="0" inputmode="numeric" value="2" aria-label="Numerador"><span class="pn-bar">/</span><input class="in" id="pn-q" type="number" min="1" inputmode="numeric" value="3" aria-label="Denominador"></div>' +
+    '<div class="tvl-ex"><span>Frações:</span>' + FR.map(function (f) { return '<button type="button" class="tvl-chip" data-n="' + f[1] + '" data-q="' + f[2] + '">' + esc(f[0]) + '</button>'; }).join('') + '</div>' +
+    (EX.length ? '<div class="tvl-ex"><span>Situações:</span>' + EX.map(function (x, i) { return '<button type="button" class="tvl-chip" data-x="' + i + '">' + esc(x[0]) + '</button>'; }).join('') + '</div>' : '') +
+    '<div class="pn-out" aria-live="polite"></div>' +
+    '<p class="tvl-help">Convenção das provas e da prática forense: ano de 12 meses e mês de 30 dias; frações de dia são desprezadas (art. 11 do Código Penal). Percentuais (como os do art. 112 da Lei de Execução Penal) funcionam como frações de denominador 100.</p>';
+  var $i = function (id) { return el.querySelector('#' + id); }, op = 'diminuir', out = el.querySelector('.pn-out');
+  function desenhar() {
+    var base = penaDias($i('pn-a').value, $i('pn-m').value, $i('pn-d').value), n = +$i('pn-n').value, q = +$i('pn-q').value, r;
+    try { r = penaCalcular(base, op, n, q); } catch (err) { out.innerHTML = '<p class="tvl-erro">' + esc(err.message) + '</p>'; return; }
+    var fr = n + '/' + q, nome = op === 'aumentar' ? 'Aumento de ' + fr : op === 'diminuir' ? 'Diminuição de ' + fr : fr + ' da pena';
+    out.innerHTML = '<p class="tvl-res"><span class="st ok">' + esc(nome) + '</span> ' + esc(penaTexto(r.res)) + '</p>' +
+      '<ol class="pn-passos"><li>Pena-base: <b>' + esc(penaTexto(base)) + '</b> = ' + base.toLocaleString('pt-BR') + ' dias.</li>' +
+      '<li>' + esc(fr) + ' de ' + base.toLocaleString('pt-BR') + ' dias = <b>' + r.parte.toLocaleString('pt-BR') + ' dias</b> (' + esc(penaTexto(r.parte)) + ').</li>' +
+      (op === 'fracao' ? '' : '<li>' + base.toLocaleString('pt-BR') + (op === 'aumentar' ? ' + ' : ' − ') + r.parte.toLocaleString('pt-BR') + ' = <b>' + r.res.toLocaleString('pt-BR') + ' dias</b> = ' + esc(penaTexto(r.res)) + '.</li>') + '</ol>';
+  }
+  el.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-op]'), c = ev.target.closest('[data-n]'), x = ev.target.closest('[data-x]');
+    if (b) { op = b.getAttribute('data-op'); Array.prototype.forEach.call(el.querySelectorAll('[data-op]'), function (k) { k.setAttribute('aria-pressed', String(k === b)); }); desenhar(); }
+    if (c) { $i('pn-n').value = c.getAttribute('data-n'); $i('pn-q').value = c.getAttribute('data-q'); desenhar(); }
+    if (x) {
+      var e = EX[+x.getAttribute('data-x')]; $i('pn-a').value = e[1]; $i('pn-m').value = e[2]; $i('pn-d').value = 0; $i('pn-n').value = e[4]; $i('pn-q').value = e[5];
+      op = e[3]; Array.prototype.forEach.call(el.querySelectorAll('[data-op]'), function (k) { k.setAttribute('aria-pressed', String(k.getAttribute('data-op') === op)); }); desenhar();
+    }
+  });
+  ['pn-a', 'pn-m', 'pn-d', 'pn-n', 'pn-q'].forEach(function (id) { $i(id).addEventListener('input', desenhar); });
+  desenhar();
 }
 
 /* ============================ painéis e modal ============================ */

@@ -9,8 +9,13 @@ Infoprodutos em HTML para concursos policiais (PMPE / PMAL), prontos para venda 
 | Minissimulado de **Português** PMPE 2026 | `produto/minissimulado-portugues-pmpe.html` | `vendas/` | `RF-XXXX-XXXX-XXXX` |
 | Minissimulado de **Raciocínio Lógico** PMPE 2026 | `produto/minissimulado-rlm-pmpe.html` | `vendas-rlm/` | `RL-XXXX-XXXX-XXXX` |
 | Minissimulado de **Informática** PMPE 2026 | `produto/minissimulado-informatica-pmpe.html` | `vendas-info/` | `RI-XXXX-XXXX-XXXX` |
+| Minissimulado de **Direitos Humanos** PMPE 2026 | `produto/minissimulado-direitos-humanos-pmpe.html` | `vendas-dh/` | `RD-XXXX-XXXX-XXXX` |
 
-A pasta `vitrine/` tem a página inicial do site com os três produtos.
+A pasta `vitrine/` tem a página inicial do site com os quatro produtos.
+
+## Minissimulado de Direitos Humanos PMPE 2026
+
+40 questões inéditas em 4 fases, sobre os itens de Direitos Humanos e Legislação Extravagante do edital, com ênfase nas novidades (Pacto de San José da Costa Rica, com 8 questões, Estatuto da Pessoa Idosa, Estatuto da Juventude e Lei Maria da Penha) e 7 questões de assertivas. Traz a **Calculadora de penas** (frações de aumento e de diminuição e percentuais de progressão, com a conta em anos, meses e dias), o Vade-mécum relâmpago, figuras em HTML e SVG (linha do tempo, pirâmide das normas e sistema interamericano), frações em KaTeX, gabarito comentado, gráfico de pizza, diagnóstico em 8 áreas e caminho de estudo. O Estatuto dos PMs de PE (Lei estadual nº 6.783/1974) não está incluído.
 
 ## Minissimulado de Informática PMPE 2026
 
@@ -27,7 +32,7 @@ A pasta `vitrine/` tem a página inicial do site com os três produtos.
 | Pasta | Conteúdo |
 |---|---|
 | `produto/` | Os produtos finais (arquivo único cada, conteúdo **criptografado**; só abrem com chave de licença) |
-| `vendas/` · `vendas-rlm/` · `vendas-info/` · `vitrine/` | Páginas de vendas, obrigado, termos de uso, privacidade e a vitrine |
+| `vendas/` · `vendas-rlm/` · `vendas-info/` · `vendas-dh/` · `vitrine/` | Páginas de vendas, obrigado, termos de uso, privacidade e a vitrine |
 | `kiwify/` | **[Guia passo a passo](kiwify/GUIA-KIWIFY.md)**, textos prontos, automação das chaves, kit de anúncios e criativos em PNG |
 | `src/` | Motor do simulado (HTML, CSS e JS) e identidade visual |
 | `ferramentas/` | Scripts de build: gerar chaves, criptografar e montar o produto, capturas, criativos e pasta do site |
@@ -43,12 +48,13 @@ npm install
 node gerar-chaves.mjs 500        # (opcional) chaves novas de Português (privado/licencas.csv)
 node gerar-chaves.mjs 500 rlm    # (opcional) chaves novas de RLM (privado/licencas-rlm.csv)
 node gerar-chaves.mjs 500 info   # (opcional) chaves novas de Informática (privado/licencas-info.csv)
+node gerar-chaves.mjs 500 dh     # (opcional) chaves novas de Direitos Humanos (privado/licencas-dh.csv)
 node build.mjs                   # criptografa o conteúdo e gera os produtos em produto/
 node build.mjs rlm               # (ou só um produto: portugues, rlm ou info)
 node montar-site.mjs             # monta site/ e site-netlify.zip para publicar no Netlify
 ```
 
-Para revogar uma chave, escreva-a em `privado/revogadas.txt` (Português) `privado/revogadas-rlm.txt` (RLM) ou `privado/revogadas-info.txt` (Informática) e rode `node build.mjs` de novo.
+Para revogar uma chave, escreva-a em `privado/revogadas.txt` (Português) `privado/revogadas-rlm.txt` (RLM), `privado/revogadas-info.txt` (Informática) ou `privado/revogadas-dh.txt` (Direitos Humanos) e rode `node build.mjs` de novo.
 
 ## Proteção do material
 

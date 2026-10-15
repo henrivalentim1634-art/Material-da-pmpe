@@ -2,6 +2,7 @@
 // Uso: node gerar-criativos.cjs          (Português: kiwify/criativos/)
 //      node gerar-criativos.cjs rlm      (RLM: kiwify/rlm/criativos/)
 //      node gerar-criativos.cjs info     (Informática: kiwify/info/criativos/)
+//      node gerar-criativos.cjs dh       (Direitos Humanos: kiwify/dh/criativos/)
 const { chromium } = require('playwright');
 const path = require('path');
 const RAIZ = path.join(__dirname, '..');
@@ -9,7 +10,8 @@ const ID = process.argv[2] || 'portugues';
 const CFG = {
   portugues: { fonte: 'kiwify/criativos/fonte/criativos.html', out: 'kiwify/criativos', og: 'vendas/img/og-imagem.jpg' },
   rlm: { fonte: 'kiwify/rlm/criativos/fonte/criativos-rlm.html', out: 'kiwify/rlm/criativos', og: 'vendas-rlm/img/og-imagem.jpg' },
-  info: { fonte: 'kiwify/info/criativos/fonte/criativos-info.html', out: 'kiwify/info/criativos', og: 'vendas-info/img/og-imagem.jpg' }
+  info: { fonte: 'kiwify/info/criativos/fonte/criativos-info.html', out: 'kiwify/info/criativos', og: 'vendas-info/img/og-imagem.jpg' },
+  dh: { fonte: 'kiwify/dh/criativos/fonte/criativos-dh.html', out: 'kiwify/dh/criativos', og: 'vendas-dh/img/og-imagem.jpg' }
 }[ID];
 if (!CFG) throw new Error('Produto desconhecido: ' + ID);
 (async () => {
