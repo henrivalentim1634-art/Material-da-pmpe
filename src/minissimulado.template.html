@@ -7,17 +7,19 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="format-detection" content="telephone=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Minissimulado de Português · PMPE · Raiz de Física</title>
+<title>__TITULO__</title>
 <link rel="icon" href="__LOGO__">
 <style>
 /*__FONTES__*/
 /*__ESTILO__*/
+/*__KATEX__*/
+/*__EXTRA_CSS__*/
 </style>
 </head>
 <body>
 <!-- Mostrado apenas quando o arquivo é aberto sem JavaScript (pré-visualização do iPhone, WhatsApp, Google Drive etc.) -->
 <div id="nojs">
-  <h1>Minissimulado de Português · PMPE</h1>
+  <h1>__NOJS_TITULO__</h1>
   <p>Este material é interativo e precisa ser aberto em um navegador (Safari, Chrome, Edge ou Firefox).</p>
   <ul>
     <li><b>Pelo celular (iPhone ou Android):</b> abra o link de acesso que está na sua área de membros da Kiwify.</li>
@@ -31,12 +33,12 @@
 <div id="gate" hidden>
   <form class="g-card" id="g-form" autocomplete="on" novalidate>
     <img class="g-logo" src="__LOGO__" alt="Raiz de Física">
-    <h1>MINISSIMULADO<br>DE PORTUGUÊS</h1>
-    <div class="g-sub">PMPE 2026 · Acesso do aluno</div>
+    <h1>__GATE_TITULO__</h1>
+    <div class="g-sub">__GATE_SUB__</div>
     <div class="g-err" id="g-err" role="alert" hidden></div>
     <div class="fld"><label for="g-nome">Nome completo</label><input class="in" id="g-nome" name="name" autocomplete="name" required placeholder="Como no cadastro da compra"></div>
     <div class="fld"><label for="g-email">E-mail da compra</label><input class="in" id="g-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="voce@email.com"></div>
-    <div class="fld"><label for="g-chave">Chave de acesso</label><input class="in key" id="g-chave" name="chave" autocomplete="off" autocapitalize="characters" spellcheck="false" required placeholder="RF-XXXX-XXXX-XXXX"></div>
+    <div class="fld"><label for="g-chave">Chave de acesso</label><input class="in key" id="g-chave" name="chave" autocomplete="off" autocapitalize="characters" spellcheck="false" required placeholder="__CHAVE_EX__"></div>
     <label class="chk"><input type="checkbox" id="g-termos"> <span>Li e aceito os termos: material de uso pessoal e intransferível. Meu nome, e-mail e número de licença aparecerão como marca d’água, e o compartilhamento é proibido (Lei nº 9.610/1998).</span></label>
     <button class="btn wide" id="g-btn" type="submit">Acessar o simulado</button>
     <p class="g-note">A chave foi enviada para o seu e-mail após a compra e também está na área de membros. Não encontrou? Confira a caixa de spam.</p>
@@ -48,7 +50,7 @@
   <header class="topbar">
     <div class="tb-in">
       <img class="tb-emb" src="__LOGO__" alt="">
-      <div class="tb-brand"><b>MINISSIMULADO · PORTUGUÊS</b><span id="tb-lic"></span></div>
+      <div class="tb-brand"><b>__MARCA__</b><span id="tb-lic"></span></div>
       <div class="tb-act">
         <span class="tb-timer" title="Tempo de prova"><span id="tb-tempo">0:00:00</span></span>
         <button class="tb-btn" data-act="cartao" aria-label="Abrir cartão-resposta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span id="tb-cont">0/40</span></button>
@@ -75,6 +77,7 @@
     <a href="#capa" data-act="ir">Capa e modos <small>início</small></a>
     <a href="#como-usar" data-act="ir">Como usar <small>tesoura e cartão</small></a>
     <a href="#raiox" data-act="ir">Raio-X da matéria <small>pesos</small></a>
+    __NAV_EXTRA__
     <a href="#fase-1" data-act="ir">Fase 1 · Aquecimento <small>Q1–Q10</small></a>
     <a href="#fase-2" data-act="ir">Fase 2 · Ritmo de prova <small>Q11–Q20</small></a>
     <a href="#fase-3" data-act="ir">Fase 3 · Nível PMPE <small>Q21–Q30</small></a>
@@ -89,6 +92,7 @@
 <div id="wm" aria-hidden="true"></div>
 <div id="shield" hidden><b>CONTEÚDO PROTEGIDO</b><span>Material licenciado e rastreável. Toque ou clique aqui para continuar.</span></div>
 
+<script id="cfg" type="application/json">__CFG__</script>
 <script id="payload" type="application/octet-stream">__PAYLOAD__</script>
 <script id="lic" type="text/plain">__LICENCAS__</script>
 <script>

@@ -86,8 +86,15 @@ function fluxo(ck, nonce, ct) {
   return out;
 }
 
+/* ============================ descompressão (tiny-inflate, MIT, embutida pelo build) ============================ */
+var INFLATE = null;
+/*__INFLATE__*/
+
 /* ============================ licenças ============================ */
-var PROD = 'RFPT1', ITER = 15000;   /* alongamento da chave: encarece ataques de força bruta (igual ao build.mjs) */
+var CFG = {};
+try { CFG = JSON.parse(($('#cfg') || {}).textContent || '{}'); } catch (e) { CFG = {}; }
+var PROD = CFG.prod || 'RFPT1', ITER = 15000;   /* alongamento da chave: encarece ataques de força bruta (igual ao build.mjs) */
+var SK = CFG.storage || 'rf_pt_pmpe';           /* prefixo do armazenamento local, um por produto */
 var LIC = {};
 (function () {
   var raw = ($('#lic') || {}).textContent || '';
@@ -95,7 +102,7 @@ var LIC = {};
 })();
 function normKey(s) {
   s = String(s || '').toUpperCase().replace(/[^0-9A-Z]/g, '');
-  if (s.length === 14 && s.slice(0, 2) === 'RF') s = s.slice(2);
+  if (s.length === 14 && /^[A-Z]{2}/.test(s)) s = s.slice(2);
   return s.replace(/O/g, '0').replace(/[IL]/g, '1');
 }
 function esticar(k) {
@@ -112,7 +119,11 @@ function abrir(k) {
   for (var i = 0; i < 32; i++) ck[i] = wr[i] ^ wk[i];
   var pl = $('#payload').textContent.trim().split('.');
   var txt;
-  try { txt = deutf8(fluxo(ck, unb64(pl[0]), unb64(pl[1]))); } catch (err) { return null; }
+  try {
+    var bruto = fluxo(ck, unb64(pl[0]), unb64(pl[1]));
+    if (pl[2]) { var cheio = new Uint8Array(+pl[2]); bruto = INFLATE(bruto, cheio); } /* conteúdo comprimido (deflate) antes de criptografar */
+    txt = deutf8(bruto);
+  } catch (err) { return null; }
   if (txt.slice(0, 4) !== 'RFOK') return null;
   try { return { num: e[0], dados: JSON.parse(txt.slice(4)) }; } catch (err2) { return null; }
 }
@@ -253,9 +264,9 @@ function montar() {
   var m = C.meta, A = C.areas, nAss = QS.filter(function (q) { return q.tipo === 'assertivas'; }).length, nImg = QS.filter(function (q) { return q.img; }).length;
   var h = '';
   /* capa */
-  h += '<section class="hero" id="capa"><div class="hero-top"><img class="hero-emb" src="' + LOGO + '" alt="Raiz de Física"><div><h1>MINISSIMULADO<br><em>PORTUGUÊS</em></h1>' +
+  h += '<section class="hero" id="capa"><div class="hero-top"><img class="hero-emb" src="' + LOGO + '" alt="Raiz de Física"><div><h1>' + esc(m.heroL1 || 'MINISSIMULADO') + '<br><em>' + esc(m.heroL2 || '') + '</em></h1>' +
     '<div class="sub">' + esc(m.sub) + '</div></div></div>' +
-    '<p class="ola">Olá, <b>' + esc(SESS.n.split(' ')[0]) + '</b>! São 40 questões em 4 fases de dificuldade crescente, montadas sobre os 18 itens de Português do edital PMPE 2026 e o levantamento dos assuntos que mais caem. Ao final, você recebe gráfico de desempenho, diagnóstico e o caminho de estudo.</p>' +
+    '<p class="ola">Olá, <b>' + esc(SESS.n.split(' ')[0]) + '</b>! ' + m.heroTexto + '</p>' +
     '<div class="facts"><div class="fact"><div class="l">Questões</div><div class="v">40</div></div><div class="fact"><div class="l">Fases</div><div class="v">4</div></div>' +
     '<div class="fact"><div class="l">Assertivas</div><div class="v">' + nAss + '</div></div><div class="fact"><div class="l">Com imagem</div><div class="v">' + nImg + '</div></div>' +
     '<div class="fact"><div class="l">Tempo sugerido</div><div class="v">' + Math.floor(m.tempoSugerido / 60) + 'h' + pad(m.tempoSugerido % 60) + '</div></div></div>' +
@@ -270,20 +281,27 @@ function montar() {
     passo(IC.alvo, 'Marque a resposta', 'Toque na alternativa. No Modo Prova, toque de novo para desmarcar.') +
     passo(IC.tesoura, 'Use a tesoura', 'Elimine alternativas pelo ícone de tesoura e resolva por eliminação. Toque de novo para restaurar.') +
     passo(IC.grade, 'Cartão-resposta', 'O botão “Cartão” mostra as 40 questões; toque no número para ir até ela. Depois da correção, ele vira o gabarito em cores.') +
-    passo(IC.livro, 'Textos de apoio', 'Questões ligadas a um texto têm o botão “Texto I” ou “Texto II”, que abre o texto sem perder o lugar.') +
+    passo(IC.livro, (m.passo4 || [])[0] || 'Textos de apoio', (m.passo4 || [])[1] || 'Questões ligadas a um texto têm o botão “Texto I” ou “Texto II”, que abre o texto sem perder o lugar.') +
     passo(IC.check, 'Finalize', 'No fim, toque em “Finalizar e ver resultado”: gráfico de pizza, pontos fortes e fracos e o caminho de estudo.') +
     passo(IC.escudo, 'Material licenciado', 'Seus dados aparecem como marca d’água. Não compartilhe: cada licença é rastreável.') + '</div></section>';
   /* raio-x */
-  var maxA = 0; C.raiox.assuntos.forEach(function (a) { maxA = Math.max(maxA, a[1]); });
+  var maxA = 0, maxP = 0; C.raiox.assuntos.forEach(function (a) { maxA = Math.max(maxA, a[1]); });
+  Object.keys(A).forEach(function (k) { maxP = Math.max(maxP, A[k].peso); });
   h += '<section class="blk" id="raiox"><p class="eyebrow">Raio-X da matéria</p><h2 class="st">Onde este simulado mira</h2>' +
-    '<p class="lead">As 40 questões seguem o peso de cada área na prova da PMPE (edital 2026, banca Instituto AOCP), com ênfase em sintaxe.</p><div class="grid2"><div class="card hud"><h3 class="eyebrow" style="margin-bottom:8px">Peso provável na prova × questões aqui</h3>' +
+    '<p class="lead">' + m.raioxLead + '</p><div class="grid2"><div class="card hud"><h3 class="eyebrow" style="margin-bottom:8px">Peso provável na prova × questões aqui</h3>' +
     Object.keys(A).map(function (k) {
       var nq = QS.filter(function (q) { return q.area === k; }).length;
-      return '<div class="hb"><span class="t"><b>' + esc(A[k].nome) + '</b><small>' + nq + ' questões neste simulado</small></span><span class="tr"><span class="bt"><i style="width:' + Math.round(A[k].peso / 0.25 * 100) + '%"></i></span><span>' + pct(A[k].peso) + '</span></span></div>';
+      return '<div class="hb"><span class="t"><b>' + esc(A[k].nome) + '</b><small>' + nq + ' questões neste simulado</small></span><span class="tr"><span class="bt"><i style="width:' + Math.round(A[k].peso / maxP * 100) + '%"></i></span><span>' + pct(A[k].peso) + '</span></span></div>';
     }).join('') + '</div><div class="card hud"><h3 class="eyebrow" style="margin-bottom:8px">Assuntos mais cobrados · ' + C.raiox.total.toLocaleString('pt-BR') + ' questões</h3>' +
     C.raiox.assuntos.slice(0, 12).map(function (a) {
       return '<div class="hb"><span class="t"><b>' + esc(a[0]) + '</b></span><span class="tr"><span class="bt"><i style="width:' + Math.round(a[1] / maxA * 100) + '%"></i></span><span>' + a[1] + '</span></span></div>';
     }).join('') + '</div></div></section>';
+  /* seções extras (formulário etc.) e laboratório de tabela-verdade */
+  (C.secoes || []).forEach(function (sx) {
+    h += '<section class="blk" id="' + sx.id + '"><p class="eyebrow">' + esc(sx.eyebrow) + '</p><h2 class="st">' + esc(sx.titulo) + '</h2>' + (sx.lead ? '<p class="lead">' + sx.lead + '</p>' : '') + sx.html + '</section>';
+  });
+  if (m.ferramentaTV) h += '<section class="blk" id="laboratorio"><p class="eyebrow">Ferramenta interativa</p><h2 class="st">Laboratório de tabela-verdade</h2>' +
+    '<p class="lead">Monte qualquer proposição com até 5 letras e veja a tabela-verdade completa, coluna por coluna, com a classificação automática (tautologia, contradição ou contingência). Use para conferir as suas resoluções.</p><div class="card hud" id="tv-lab"></div></section>';
   /* fases */
   var usados = {};
   C.fases.forEach(function (f) {
@@ -299,9 +317,10 @@ function montar() {
   h += '<section class="blk" id="gabarito" style="margin-top:28px"></section>';
   $('#main').innerHTML = h;
   $('#foot').innerHTML = 'Licença nº <b>' + pad4(NUM) + '</b> · ' + esc(SESS.n) + ' · ' + esc(SESS.e) + '<br>Minissimulado de Português · PMPE · Raiz de Física · v' + esc(m.versao) +
-    '<br>Base teórica: Fernando Pestana, <i>A Gramática para Concursos Públicos</i>. Questões inéditas, elaboradas no padrão das bancas Instituto AOCP, Cebraspe e IAUPE; textos e ilustrações criados para fins didáticos.' +
+    '<br>' + m.rodape +
     '<br>Material protegido pela Lei nº 9.610/1998. Reproduzir, compartilhar ou revender sem autorização é crime (art. 184 do Código Penal). <a href="#" data-act="sair">Sair desta licença</a>';
   QS.forEach(function (q) { atualizarQ(q.n); });
+  if (m.ferramentaTV) laboratorioTV($('#tv-lab'));
   aplicarSub();
   montarCartao();
   atualizarTudo();
@@ -310,6 +329,8 @@ function pad4(n) { return ('000' + n).slice(-4); }
 function passo(ic, t, d) { return '<div class="passo"><span class="pi">' + ic + '</span><div><b>' + t + '</b><span>' + d + '</span></div></div>'; }
 function tocHTML() {
   var it = [['capa', '◆', 'Capa e modos', 'Prova ou treino'], ['como-usar', '?', 'Como usar', 'Tesoura, cartão e textos'], ['raiox', 'RX', 'Raio-X da matéria', 'Pesos e assuntos']];
+  (C.secoes || []).forEach(function (sx) { it.push([sx.id, sx.sigla || '§', sx.titulo, sx.sub || '']); });
+  if (C.meta.ferramentaTV) it.push(['laboratorio', 'V/F', 'Laboratório de tabela-verdade', 'Monte e classifique proposições']);
   C.fases.forEach(function (f) { it.push(['fase-' + f.n, f.n, f.nome, 'Questões ' + f.de + ' a ' + f.ate]); });
   it.push(['finalizar', '✓', 'Finalizar', 'Conferir e corrigir'], ['resultado', '%', 'Resultado e diagnóstico', 'Pizza, pontos fortes e caminho'], ['gabarito', 'G', 'Gabarito comentado', 'Comentário de cada alternativa']);
   return it.map(function (x) { return '<a href="#' + x[0] + '" data-act="ir"><span class="n">' + x[1] + '</span><span><b>' + esc(x[2]) + '</b><small>' + esc(x[3]) + '</small></span></a>'; }).join('');
@@ -468,7 +489,7 @@ function renderResultado() {
   var ritmo = R.tot ? ST.acc / R.tot : 0, meta = C.meta.tempoSugerido * 60000 / 40;
   h += '<div class="kpis" style="margin-top:12px">' +
     kpi('Aproveitamento', pct(R.acc), R.ok + ' de ' + R.tot + ' questões') +
-    kpi('Projeção na PMPE', Math.round(R.acc * 10) + '<small>/10</small>', 'questões de Português da prova') +
+    kpi('Projeção na PMPE', Math.round(R.acc * C.meta.projecao.total) + '<small>/' + C.meta.projecao.total + '</small>', C.meta.projecao.rotulo) +
     kpi('Tempo total', fmtMin(ST.acc), 'ritmo de ' + Math.round(ritmo / 1000 / 6) / 10 + ' min por questão') +
     kpi('Modo', ST.modo === 'prova' ? 'Prova' : 'Treino', 'finalizado em ' + dataBR(ST.fim)) + '</div>';
   /* por área */
@@ -484,7 +505,7 @@ function renderResultado() {
   h += '<div class="grid2" style="margin-top:12px"><div class="card"><h3 class="eyebrow" style="margin-bottom:6px">Curva de dificuldade (por fase)</h3>';
   C.fases.forEach(function (f) { var v = R.fases[f.n]; if (!v) return; h += barra(f.nome, v[0], v[1]); });
   h += '</div><div class="card"><h3 class="eyebrow" style="margin-bottom:6px">Por formato de questão</h3>';
-  [['ass', 'Assertivas (I, II, III...)'], ['img', 'Com imagem (charge, tirinha, gráfico)'], ['txt', 'Ligadas a texto'], ['iso', 'Gramática isolada']].forEach(function (x) { var v = R.fmt[x[0]]; if (v[1]) h += barra(x[1], v[0], v[1]); });
+  [['ass', 'Assertivas (I, II, III...)'], ['img', C.meta.rotuloImg || 'Com imagem'], ['txt', 'Ligadas a texto'], ['iso', 'Gramática isolada']].forEach(function (x) { var v = R.fmt[x[0]]; if (v[1]) h += barra(x[1], v[0], v[1]); });
   h += '</div></div>';
   /* diagnóstico */
   var ks = Object.keys(A).filter(function (k) { return R.areas[k].tot; });
@@ -501,9 +522,9 @@ function renderResultado() {
   var dicas = [];
   medios.forEach(function (k) { dicas.push('<b>' + esc(A[k].nome) + '</b> (' + R.areas[k].ok + '/' + R.areas[k].tot + '): falta pouco. Refaça ' + R.areas[k].err.map(function (q) { return '<a href="#q' + q.n + '" data-act="ir">Q' + q.n + '</a>'; }).join(', ') + ' e leia o comentário de cada alternativa.'); });
   if (R.fmt.ass[1] && R.fmt.ass[0] / R.fmt.ass[1] < 0.6) dicas.push('<b>Questões de assertivas</b> (' + R.fmt.ass[0] + '/' + R.fmt.ass[1] + '): julgue primeiro a assertiva de que você tem mais certeza e corte com a tesoura as alternativas incompatíveis.');
-  if (R.fmt.img[1] && R.fmt.img[0] / R.fmt.img[1] < 0.6) dicas.push('<b>Questões com imagem</b> (' + R.fmt.img[0] + '/' + R.fmt.img[1] + '): descreva em uma frase a relação entre imagem e texto antes de ler as alternativas.');
+  if (R.fmt.img[1] && R.fmt.img[0] / R.fmt.img[1] < 0.6) dicas.push('<b>' + (C.meta.rotuloImg || 'Questões com imagem') + '</b> (' + R.fmt.img[0] + '/' + R.fmt.img[1] + '): ' + C.meta.dicaImagem);
   var f4 = R.fases[4], f1 = R.fases[1];
-  if (f4 && f1 && f1[1] && f4[1] && f1[0] / f1[1] - f4[0] / f4[1] >= 0.3) dicas.push('<b>Queda nas questões difíceis</b>: você foi bem na Fase 1 e caiu na Fase 4. O próximo nível é sintaxe do período composto e funções do “que” e do “se”.');
+  if (f4 && f1 && f1[1] && f4[1] && f1[0] / f1[1] - f4[0] / f4[1] >= 0.3) dicas.push('<b>Queda nas questões difíceis</b>: você foi bem na Fase 1 e caiu na Fase 4. ' + C.meta.dicaQueda);
   if (R.bl) dicas.push('<b>' + R.bl + ' questão(ões) em branco</b>: na prova da AOCP, a questão em branco vale zero. Elimine o que puder e marque a melhor opção restante.');
   if (ST.modo === 'prova' && ST.acc > C.meta.tempoSugerido * 60000 * (R.tot / 40) * 1.15) dicas.push('<b>Ritmo</b>: você passou do tempo sugerido (3 min por questão). Faça primeiro as questões de gramática isolada e deixe as de texto longo para o fim.');
   if (!dicas.length) dicas.push('Nada crítico a ajustar além dos pontos fracos. Mantenha a revisão dos comentários das questões que errou.');
@@ -515,9 +536,10 @@ function renderResultado() {
   var dias = [['Dias 1 a 4', 4], ['Dias 5 a 8', 4], ['Dias 9 a 11', 3]];
   prio.forEach(function (k, i) {
     h += '<li><div><b>' + dias[i][0] + ' · Prioridade ' + (i + 1) + ': ' + esc(A[k].nome) + '</b><span>Você acertou ' + R.areas[k].ok + ' de ' + R.areas[k].tot + '; a área vale cerca de ' + pct(A[k].peso) + ' da prova.</span><ul>' +
-      A[k].plano.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '<li>No livro do Fernando Pestana: ' + esc(A[k].pestana) + '.</li></ul></div></li>';
+      A[k].plano.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '<li>' + esc(C.meta.refRotulo) + ' ' + esc(A[k].ref || A[k].pestana) + '.</li></ul></div></li>';
   });
-  if (prio.indexOf('INT') < 0) h += '<li><div><b>Todos os dias · 10 questões de interpretação</b><span>Interpretação e tipologia somam cerca de ' + pct(A.INT.peso) + ' da prova de Português: é a área que mais pesa e precisa de treino diário, mesmo quando você vai bem.</span></div></li>';
+  var dd = C.meta.diario;
+  if (dd && A[dd.area] && prio.indexOf(dd.area) < 0) h += '<li><div><b>' + esc(dd.titulo) + '</b><span>' + dd.texto.replace('{peso}', pct(A[dd.area].peso)) + '</span></div></li>';
   h += '<li><div><b>Dia 12 · Revisão espaçada</b><span>Releia os comentários das questões erradas 1 dia, 7 dias e 30 dias depois. Anote as pegadinhas em um caderno de erros.</span></div></li>';
   h += '<li><div><b>Dias 13 e 14 · Novo teste</b><span>Refaça este simulado no Modo Prova, com cronômetro, e compare no histórico abaixo. Meta: subir pelo menos 10 pontos percentuais.</span></div></li></ol>';
   /* histórico */
@@ -561,6 +583,132 @@ function renderGabarito() {
       '<p style="margin:8px 0 0"><a href="#q' + q.n + '" data-act="ir">Ir para a questão ' + q.n + '</a></p></details>';
   }).join('');
   el.innerHTML = h;
+}
+
+/* ============================ laboratório de tabela-verdade ============================ */
+/* Precedência usual nos livros de concurso: ~ (mais forte), ∧, ∨ e ⊻, →, ↔ (mais fraco); → associa à direita. */
+function tvTokens(src) {
+  var t = [], i = 0, s = String(src);
+  while (i < s.length) {
+    var c = s.charAt(i), r = s.slice(i);
+    if (/\s/.test(c)) { i++; continue; }
+    if (r.charAt(0) === '↔' || r.charAt(0) === '⇔') { t.push('↔'); i++; continue; }
+    if (/^(<->|<=>)/.test(r)) { t.push('↔'); i += 3; continue; }
+    if (r.charAt(0) === '→' || r.charAt(0) === '⇒') { t.push('→'); i++; continue; }
+    if (/^(->|=>)/.test(r)) { t.push('→'); i += 2; continue; }
+    if ('~¬!'.indexOf(c) >= 0) { t.push('~'); i++; continue; }
+    if ('∧^&'.indexOf(c) >= 0) { t.push('∧'); i++; continue; }
+    if ('∨|v'.indexOf(c) >= 0) { t.push('∨'); i++; continue; }
+    if (c === '⊻') { t.push('⊻'); i++; continue; }
+    if ('([{'.indexOf(c) >= 0) { t.push('('); i++; continue; }
+    if (')]}'.indexOf(c) >= 0) { t.push(')'); i++; continue; }
+    if (/[a-uw-z]/.test(c)) { t.push(c); i++; continue; }
+    throw new Error('Símbolo não reconhecido: “' + c + '”.');
+  }
+  if (!t.length) throw new Error('Digite uma proposição.');
+  return t;
+}
+function tvParse(tk) {
+  var i = 0;
+  function iff() { var a = imp(); while (tk[i] === '↔') { i++; a = { op: '↔', a: a, b: imp() }; } return a; }
+  function imp() { var a = ou(); if (tk[i] === '→') { i++; return { op: '→', a: a, b: imp() }; } return a; }
+  function ou() { var a = e(); while (tk[i] === '∨' || tk[i] === '⊻') { var o = tk[i++]; a = { op: o, a: a, b: e() }; } return a; }
+  function e() { var a = nao(); while (tk[i] === '∧') { i++; a = { op: '∧', a: a, b: nao() }; } return a; }
+  function nao() { if (tk[i] === '~') { i++; return { op: '~', a: nao() }; } return atomo(); }
+  function atomo() {
+    var c = tk[i];
+    if (c === undefined) throw new Error('A expressão terminou antes do esperado (falta uma letra depois do operador).');
+    if (c === '(') { i++; var x = iff(); if (tk[i] !== ')') throw new Error('Falta fechar um parêntese.'); i++; return x; }
+    if (/^[a-z]$/.test(c)) { i++; return { op: 'var', v: c }; }
+    throw new Error('Esperava uma letra ou “(”, mas encontrei “' + c + '”.');
+  }
+  var raiz = iff();
+  if (i < tk.length) throw new Error(tk[i] === ')' ? 'Há um parêntese fechando sem ter sido aberto.' : 'Falta um operador antes de “' + tk[i] + '”.');
+  return raiz;
+}
+function tvStr(n, topo) {
+  if (n.op === 'var') return n.v;
+  if (n.op === '~') { var x = tvStr(n.a, false); return '~' + x; }
+  var s = tvStr(n.a, false) + ' ' + n.op + ' ' + tvStr(n.b, false);
+  return topo ? s : '(' + s + ')';
+}
+function tvEval(n, env) {
+  switch (n.op) {
+    case 'var': return env[n.v];
+    case '~': return !tvEval(n.a, env);
+    case '∧': return tvEval(n.a, env) && tvEval(n.b, env);
+    case '∨': return tvEval(n.a, env) || tvEval(n.b, env);
+    case '⊻': return tvEval(n.a, env) !== tvEval(n.b, env);
+    case '→': return !tvEval(n.a, env) || tvEval(n.b, env);
+    default: return tvEval(n.a, env) === tvEval(n.b, env);
+  }
+}
+function tvColunas(n, lista, vistos) {
+  if (n.op === 'var') return;
+  tvColunas(n.a, lista, vistos); if (n.b) tvColunas(n.b, lista, vistos);
+  var k = tvStr(n, true);
+  if (!vistos[k]) { vistos[k] = 1; lista.push(n); }
+}
+function tvLetras(n, set) { if (n.op === 'var') set[n.v] = 1; else { tvLetras(n.a, set); if (n.b) tvLetras(n.b, set); } }
+function tvTabela(src) {
+  var raiz = tvParse(tvTokens(src)), set = {};
+  tvLetras(raiz, set);
+  var vars = Object.keys(set).sort(), nv = vars.length;
+  if (nv > 5) throw new Error('Use no máximo 5 letras diferentes (32 linhas).');
+  var cols = []; tvColunas(raiz, cols, {});
+  var linhas = [], nV = 0;
+  for (var i = 0; i < (1 << nv); i++) {
+    var env = {};
+    vars.forEach(function (v, j) { env[v] = !((i >> (nv - 1 - j)) & 1); });
+    var vals = vars.map(function (v) { return env[v]; }).concat(cols.map(function (c) { return tvEval(c, env); }));
+    if (tvEval(raiz, env)) nV++;
+    linhas.push(vals);
+  }
+  var tot = 1 << nv;
+  return { vars: vars, cols: cols.map(function (c) { return tvStr(c, true); }), linhas: linhas, nV: nV, tot: tot,
+    tipo: nV === tot ? 'Tautologia' : nV === 0 ? 'Contradição' : 'Contingência', raiz: tvStr(raiz, true) };
+}
+function laboratorioTV(el) {
+  if (!el) return;
+  var teclas = ['p', 'q', 'r', 's', '~', '∧', '∨', '⊻', '→', '↔', '(', ')'];
+  var EX = ['(p → q) ↔ (~q → ~p)', 'p ∧ ~p', '((p → q) ∧ (q → r)) → (p → r)', '((p → q) ∧ q) → p', '~(p ∧ q) ↔ (~p ∨ ~q)'];
+  el.innerHTML = '<label class="fld" for="tvl-in"><span class="tvl-lb">Proposição</span></label>' +
+    '<input class="in tvl-campo" id="tvl-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" placeholder="Ex.: (p → q) ↔ (~q → ~p)">' +
+    '<div class="tvl-keys">' + teclas.map(function (k) { return '<button type="button" class="tvl-k" data-k="' + esc(k) + '">' + esc(k) + '</button>'; }).join('') +
+    '<button type="button" class="tvl-k" data-k="apagar" aria-label="Apagar o último símbolo">⌫</button><button type="button" class="tvl-k tvl-w" data-k="limpar">Limpar</button></div>' +
+    '<div class="tvl-ex"><span>Exemplos:</span>' + EX.map(function (x) { return '<button type="button" class="tvl-chip" data-ex="' + esc(x) + '">' + esc(x) + '</button>'; }).join('') + '</div>' +
+    '<p class="tvl-help">Também pode digitar: <code>-&gt;</code> para →, <code>&lt;-&gt;</code> para ↔, <code>^</code> para ∧, <code>v</code> para ∨, <code>!</code> para ~ e colchetes no lugar de parênteses. Ordem de prioridade: ~, ∧, ∨ e ⊻, →, ↔.</p>' +
+    '<div class="tvl-out" aria-live="polite"></div>';
+  var inp = el.querySelector('#tvl-in'), out = el.querySelector('.tvl-out');
+  function desenhar() {
+    var v = inp.value;
+    if (!v.trim()) { out.innerHTML = '<p class="tvl-vazio">A tabela aparece aqui.</p>'; return; }
+    var t;
+    try { t = tvTabela(v); } catch (err) { out.innerHTML = '<p class="tvl-erro">' + esc(err.message) + '</p>'; return; }
+    var cls = t.tipo === 'Tautologia' ? 'ok' : t.tipo === 'Contradição' ? 'no' : 'mid';
+    var cab = t.vars.concat(t.cols);
+    out.innerHTML = '<p class="tvl-res"><span class="st ' + cls + '">' + t.tipo + '</span> ' + t.tot + ' linhas · ' + t.nV + ' verdadeira' + (t.nV === 1 ? '' : 's') + ' · ' + (t.tot - t.nV) + ' falsa' + (t.tot - t.nV === 1 ? '' : 's') + '</p>' +
+      '<div class="tblwrap"><table class="tv tvl-tab"><thead><tr>' + cab.map(function (c, j) { return '<th class="' + (j === cab.length - 1 ? 'fim' : j < t.vars.length ? 'var' : '') + '">' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      t.linhas.map(function (l) { return '<tr>' + l.map(function (x, j) { return '<td class="' + (x ? 'v' : 'f') + (j === l.length - 1 ? ' fim' : '') + '">' + (x ? 'V' : 'F') + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  }
+  function inserir(txt) {
+    var a = inp.selectionStart == null ? inp.value.length : inp.selectionStart, b = inp.selectionEnd == null ? a : inp.selectionEnd;
+    var pre = inp.value.slice(0, a), pos = inp.value.slice(b);
+    var sep = /[∧∨⊻→↔]/.test(txt) ? ' ' : '';
+    var novo = (sep && pre && !/\s$/.test(pre) ? pre + ' ' : pre) + txt + sep;
+    inp.value = novo + pos; inp.setSelectionRange(novo.length, novo.length); desenhar();
+  }
+  el.addEventListener('click', function (ev) {
+    var k = ev.target.closest('[data-k]'), x = ev.target.closest('[data-ex]');
+    if (x) { inp.value = x.getAttribute('data-ex'); desenhar(); return; }
+    if (!k) return;
+    var v = k.getAttribute('data-k');
+    if (v === 'limpar') { inp.value = ''; desenhar(); return; }
+    if (v === 'apagar') { inp.value = inp.value.replace(/\s+$/, '').slice(0, -1); desenhar(); return; }
+    inserir(v);
+  });
+  inp.addEventListener('input', desenhar);
+  inp.value = EX[0]; desenhar();
 }
 
 /* ============================ painéis e modal ============================ */
@@ -643,7 +791,7 @@ function onClick(ev) {
     case 'sair':
       ev.preventDefault();
       modal('Sair desta licença?', '<p>Seu progresso fica salvo neste aparelho. Para entrar de novo, use o mesmo e-mail e a mesma chave.</p>', [
-        { t: 'Cancelar', c: 'ghost' }, { t: 'Sair', c: 'danger', f: function () { lsDel('rf_pt_pmpe_sess'); location.reload(); } }]);
+        { t: 'Cancelar', c: 'ghost' }, { t: 'Sair', c: 'danger', f: function () { lsDel(SK + '_sess'); location.reload(); } }]);
       break;
   }
 }
@@ -723,17 +871,40 @@ function protecoes() {
 
 /* ============================ acesso ============================ */
 var LOGO = '';
+/* fórmula em destaque mais larga que a tela (celular estreito): reduz a fonte até caber, no mínimo 62%; se ainda assim não couber, ela rola de lado */
+var formT = 0;
+function agendarFormulas() { clearTimeout(formT); formT = setTimeout(ajustarFormulas, 120); }
+function ajustarFormulas() {
+  var ds = DOC.querySelectorAll('.katex-display');
+  for (var i = 0; i < ds.length; i++) {
+    var d = ds[i];
+    if (!d.offsetWidth) continue;
+    d.style.fontSize = '';
+    if (d.scrollWidth > d.clientWidth + 1) d.style.fontSize = Math.max(62, Math.floor(100 * d.clientWidth / d.scrollWidth)) + '%';
+  }
+}
 function iniciarApp(r, nome, email, chave) {
   C = r.dados; NUM = r.num; QS = C.questoes; QBY = {}; QS.forEach(function (q) { QBY[q.n] = q; });
+  if (C.itens) ITEM = C.itens;
   SESS = { n: nome, e: email, k: chave };
-  lsSet('rf_pt_pmpe_sess', JSON.stringify({ n: nome, e: email, k: chave, a: Date.now() }));
-  STKEY = 'rf_pt_pmpe_st_' + pad4(NUM);
+  lsSet(SK + '_sess', JSON.stringify({ n: nome, e: email, k: chave, a: Date.now() }));
+  STKEY = SK + '_st_' + pad4(NUM);
   ST = carregar();
   WMURL = gerarMarca(); garantirMarca(); moverSelo();
   $('#gate').hidden = true; $('#app').hidden = false;
   $('#tb-lic').textContent = 'Licença nº ' + pad4(NUM) + ' · ' + nome.split(' ')[0];
   montar();
+  ajustarFormulas();
+  if (WIN.MutationObserver) new MutationObserver(function (ms) {
+    for (var i = 0; i < ms.length; i++) for (var j = 0; j < ms[i].addedNodes.length; j++) {
+      var n = ms[i].addedNodes[j];
+      if (n.nodeType === 1 && (n.classList.contains('katex-display') || n.querySelector('.katex-display'))) { agendarFormulas(); return; }
+    }
+  }).observe($('#app'), { childList: true, subtree: true });
+  WIN.addEventListener('resize', agendarFormulas);
+  DOC.addEventListener('toggle', agendarFormulas, true);
   DOC.addEventListener('click', onClick);
+  DOC.addEventListener('click', agendarFormulas);
   DOC.addEventListener('keydown', function (e) { if (e.key === 'Escape') fecharPainel(); });
   $('#scrim').addEventListener('click', fecharPainel);
   setInterval(tick, 1000);
@@ -741,13 +912,13 @@ function iniciarApp(r, nome, email, chave) {
 function validarEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
 function gate() {
   LOGO = ($('.g-logo') || {}).src || '';
-  var f = $('#g-form'), err = $('#g-err'), falhas = +(lsGet('rf_pt_pmpe_f') || 0), bloqAte = +(lsGet('rf_pt_pmpe_b') || 0);
+  var f = $('#g-form'), err = $('#g-err'), falhas = +(lsGet(SK + '_f') || 0), bloqAte = +(lsGet(SK + '_b') || 0);
   function erro(m) { err.innerHTML = m; err.hidden = false; }
-  var s = null; try { s = JSON.parse(lsGet('rf_pt_pmpe_sess') || 'null'); } catch (e) { s = null; }
+  var s = null; try { s = JSON.parse(lsGet(SK + '_sess') || 'null'); } catch (e) { s = null; }
   if (s && s.k) {
     var r0 = abrir(normKey(s.k));
     if (r0) { iniciarApp(r0, s.n, s.e, s.k); return; }
-    lsDel('rf_pt_pmpe_sess');
+    lsDel(SK + '_sess');
     erro('Esta chave não é mais válida. Se você comprou o material, fale com o suporte informando o e-mail da compra.');
   }
   if (s) { $('#g-nome').value = s.n || ''; $('#g-email').value = s.e || ''; }
@@ -758,19 +929,19 @@ function gate() {
     var nome = $('#g-nome').value.trim().replace(/\s+/g, ' '), email = $('#g-email').value.trim().toLowerCase(), k = normKey($('#g-chave').value);
     if (nome.length < 5 || nome.indexOf(' ') < 0) { erro('Digite seu <b>nome completo</b> (nome e sobrenome).'); return; }
     if (!validarEmail(email)) { erro('Digite um <b>e-mail válido</b> (o mesmo da compra).'); return; }
-    if (k.length !== 12) { erro('A chave tem o formato <b>RF-XXXX-XXXX-XXXX</b>. Confira se copiou todos os caracteres.'); return; }
+    if (k.length !== 12) { erro('A chave tem o formato <b>' + esc(CFG.chaveEx || 'RF-XXXX-XXXX-XXXX') + '</b>. Confira se copiou todos os caracteres.'); return; }
     if (!$('#g-termos').checked) { erro('Para continuar, aceite os termos de uso.'); return; }
     var bt = $('#g-btn'); bt.disabled = true; bt.textContent = 'Verificando…';
     setTimeout(function () {
       var r = abrir(k);
       bt.disabled = false; bt.textContent = 'Acessar o simulado';
       if (!r) {
-        falhas++; lsSet('rf_pt_pmpe_f', String(falhas));
-        if (falhas % 5 === 0) { bloqAte = Date.now() + 60000; lsSet('rf_pt_pmpe_b', String(bloqAte)); }
+        falhas++; lsSet(SK + '_f', String(falhas));
+        if (falhas % 5 === 0) { bloqAte = Date.now() + 60000; lsSet(SK + '_b', String(bloqAte)); }
         erro('Chave inválida. Confira o e-mail que você recebeu após a compra (veja também a caixa de spam) ou a área de membros.');
         return;
       }
-      lsSet('rf_pt_pmpe_f', '0');
+      lsSet(SK + '_f', '0');
       iniciarApp(r, nome, email, k);
     }, 350);
   });

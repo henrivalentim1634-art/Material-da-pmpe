@@ -1,13 +1,16 @@
-// Gera chaves de licença novas e acrescenta em privado/licencas.csv.
-// Uso:  node gerar-chaves.mjs 500        (gera 500 chaves novas)
+// Gera chaves de licença novas e acrescenta no CSV do produto (ver ferramentas/produtos.mjs).
+// Uso:  node gerar-chaves.mjs 500            (Português: privado/licencas.csv, chaves RF-)
+//       node gerar-chaves.mjs 500 rlm        (RLM: privado/licencas-rlm.csv, chaves RL-)
 // A licença nº 0000 é a CHAVE DO AUTOR, para testes. Nunca a envie para clientes.
 import { randomBytes } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { produto } from './produtos.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
-const ARQ = join(RAIZ, 'privado', 'licencas.csv');
+const PRODUTO = produto(process.argv[3] || 'portugues');
+const ARQ = join(RAIZ, PRODUTO.licencas);
 const ALFA = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'; // base32 de Crockford: sem I, L, O, U (evita confusão ao digitar)
 const CAB = 'numero;chave;status;email_comprador;nome_comprador;data_envio;observacao';
 
@@ -15,7 +18,7 @@ function novaChave() {
   const b = randomBytes(8); // 64 bits; usamos 60 (12 caracteres de 5 bits)
   let n = b.readBigUInt64BE(0), s = '';
   for (let i = 0; i < 12; i++) { s += ALFA[Number(n & 31n)]; n >>= 5n; }
-  return `RF-${s.slice(0, 4)}-${s.slice(4, 8)}-${s.slice(8, 12)}`;
+  return `${PRODUTO.prefixo}-${s.slice(0, 4)}-${s.slice(4, 8)}-${s.slice(8, 12)}`;
 }
 
 const qtd = Math.max(1, parseInt(process.argv[2] || '1000', 10));
@@ -37,4 +40,4 @@ for (let i = 0; i < qtd; i++) {
 }
 writeFileSync(ARQ, linhas.join('\n') + '\n', 'utf8');
 console.log(`OK: ${qtd} chaves novas. Total de licenças: ${linhas.length - 1}. Arquivo: ${ARQ}`);
-console.log('Lembre-se de rodar "node build.mjs" para que as chaves novas passem a funcionar no HTML.');
+console.log(`Lembre-se de rodar "node build.mjs ${PRODUTO.id}" para que as chaves novas passem a funcionar no HTML.`);

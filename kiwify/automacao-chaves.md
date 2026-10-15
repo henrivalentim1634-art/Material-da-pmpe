@@ -88,7 +88,7 @@ Sua compra foi aprovada. Esta é a sua chave pessoal de acesso:
     {chave}
 
 Como entrar:
-1. Abra https://raizdefisica-pmpe.netlify.app/acesso/ no Safari ou no Chrome.
+1. Abra https://raizdefisica-pmpe.netlify.app/portugues/acesso/ no Safari ou no Chrome.
 2. Digite seu nome completo, este e-mail ({email}) e a chave acima.
 3. Escolha o Modo Prova ou o Modo Treino e bons estudos!
 

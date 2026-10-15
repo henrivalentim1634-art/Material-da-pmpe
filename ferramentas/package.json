@@ -9,5 +9,9 @@
   },
   "devDependencies": {
     "terser": "5.36.0"
+  },
+  "dependencies": {
+    "katex": "^0.16.11",
+    "tiny-inflate": "^1.0.3"
   }
 }

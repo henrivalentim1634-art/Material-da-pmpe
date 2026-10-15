@@ -131,11 +131,11 @@ Criativos prontos em `kiwify/criativos/`:
 A página de vendas repassa as UTMs para o checkout da Kiwify automaticamente.
 
 ```
-https://raizdefisica-pmpe.netlify.app/?utm_source=meta&utm_medium=cpc&utm_campaign=port_pmpe&utm_content=feed1_tirinha
-https://raizdefisica-pmpe.netlify.app/?utm_source=meta&utm_medium=cpc&utm_campaign=port_pmpe&utm_content=feed2_diagnostico
-https://raizdefisica-pmpe.netlify.app/?utm_source=meta&utm_medium=cpc&utm_campaign=port_pmpe&utm_content=feed3_quiz
-https://raizdefisica-pmpe.netlify.app/?utm_source=instagram&utm_medium=bio&utm_campaign=port_pmpe
-https://raizdefisica-pmpe.netlify.app/?utm_source=whatsapp&utm_medium=lista&utm_campaign=port_pmpe
+https://raizdefisica-pmpe.netlify.app/portugues/?utm_source=meta&utm_medium=cpc&utm_campaign=port_pmpe&utm_content=feed1_tirinha
+https://raizdefisica-pmpe.netlify.app/portugues/?utm_source=meta&utm_medium=cpc&utm_campaign=port_pmpe&utm_content=feed2_diagnostico
+https://raizdefisica-pmpe.netlify.app/portugues/?utm_source=meta&utm_medium=cpc&utm_campaign=port_pmpe&utm_content=feed3_quiz
+https://raizdefisica-pmpe.netlify.app/portugues/?utm_source=instagram&utm_medium=bio&utm_campaign=port_pmpe
+https://raizdefisica-pmpe.netlify.app/portugues/?utm_source=whatsapp&utm_medium=lista&utm_campaign=port_pmpe
 ```
 
 ---
@@ -150,6 +150,6 @@ https://raizdefisica-pmpe.netlify.app/?utm_source=whatsapp&utm_medium=lista&utm_
 **Carrossel (5 cards):** 1) “3 pegadinhas da AOCP em Português” · 2) haver/existir · 3) “aluga-se salas” · 4) “implica em” · 5) “Treine 40 questões nesse nível: link na bio”.
 
 **Mensagem para lista ou grupo de WhatsApp (só para quem pediu para receber)**
-> Pessoal, lancei o **Minissimulado de Português PMPE 2026**: 40 questões inéditas no nível da AOCP, com gabarito comentado de todas as alternativas e um diagnóstico do que estudar. Funciona no celular. R$ 10,80 👉 https://raizdefisica-pmpe.netlify.app/?utm_source=whatsapp
+> Pessoal, lancei o **Minissimulado de Português PMPE 2026**: 40 questões inéditas no nível da AOCP, com gabarito comentado de todas as alternativas e um diagnóstico do que estudar. Funciona no celular. R$ 10,80 👉 https://raizdefisica-pmpe.netlify.app/portugues/?utm_source=whatsapp
 
 **Hashtags:** #PMPE #PMPE2026 #ConcursoPMPE #PoliciaMilitarPE #ConcursoPolicial #PortuguesParaConcursos #AOCP #Concurseiro

@@ -80,7 +80,7 @@ Use se você tiver outro produto, como o **Raio-X PMPE**:
 ### Aula 2 · Acessar o simulado
 
 > **Abra o simulado por este link:**
-> 👉 https://raizdefisica-pmpe.netlify.app/acesso/
+> 👉 https://raizdefisica-pmpe.netlify.app/portugues/acesso/
 > (Dica: salve o link nos favoritos ou adicione à tela inicial do celular.)
 >
 > **Na tela de acesso, digite:**
@@ -142,7 +142,7 @@ Use se você tiver outro produto, como o **Raio-X PMPE**:
 
 **+2 dias · lembrete**
 > Assunto: Você já fez o minissimulado?
-> Olá, {nome}! Reserve 2 horas nesta semana para fazer as 40 questões no Modo Prova. O diagnóstico no final mostra exatamente por onde começar. Link: https://raizdefisica-pmpe.netlify.app/acesso/
+> Olá, {nome}! Reserve 2 horas nesta semana para fazer as 40 questões no Modo Prova. O diagnóstico no final mostra exatamente por onde começar. Link: https://raizdefisica-pmpe.netlify.app/portugues/acesso/
 
 **+7 dias · avaliação**
 > Assunto: Como foi o seu resultado?
@@ -156,7 +156,7 @@ Use se você tiver outro produto, como o **Raio-X PMPE**:
 > Oi, {nome}! Já reenviei a sua chave para {email}. Ela tem o formato RF-XXXX-XXXX-XXXX. Confira também a caixa de spam. Qualquer coisa, estou por aqui.
 
 **“Abre só código no celular”**
-> Oi, {nome}! Isso acontece quando o arquivo é aberto pela pré-visualização do WhatsApp ou do app Arquivos. Abra pelo link da área de membros, no Safari ou no Chrome: https://raizdefisica-pmpe.netlify.app/acesso/
+> Oi, {nome}! Isso acontece quando o arquivo é aberto pela pré-visualização do WhatsApp ou do app Arquivos. Abra pelo link da área de membros, no Safari ou no Chrome: https://raizdefisica-pmpe.netlify.app/portugues/acesso/
 
 **Pedido de reembolso**
 > Oi, {nome}! Sem problemas: o reembolso está dentro do prazo de 7 dias. Você pode pedir pela própria Kiwify ou eu faço por aqui. O acesso será encerrado após a devolução.
