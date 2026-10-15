@@ -1,6 +1,7 @@
 // Gera capturas reais do produto para a página de vendas e os anúncios.
 // Uso: node capturas-marketing.cjs            (Português → vendas/img/)
 //      node capturas-marketing.cjs rlm        (RLM → vendas-rlm/img/)
+//      node capturas-marketing.cjs info       (Informática → vendas-info/img/)
 // Precisa do Playwright/Chromium e da pasta privado/.
 const { chromium, devices } = require('playwright');
 const fs = require('fs'), path = require('path');
@@ -10,6 +11,9 @@ const CFG = {
   portugues: { html: 'produto/minissimulado-portugues-pmpe.html', csv: 'privado/licencas.csv', conteudo: 'privado/conteudo/index.mjs', out: 'vendas/img',
     tesoura: 14, cortes: ['A', 'C', 'E'], marca: 'B', errar: [8, 15, 26, 32, 36, 38, 40], branco: [22, 33], comentario: 32,
     telas: [['tela-capa', '#capa', -20], ['tela-tirinha', '#q31', 0], ['tela-infografico', '#q35', 0]] },
+  info: { html: 'produto/minissimulado-informatica-pmpe.html', csv: 'privado/licencas-info.csv', conteudo: 'privado/info/index.mjs', out: 'vendas-info/img',
+    tesoura: 15, cortes: ['B', 'D', 'E'], marca: 'A', errar: [11, 17, 22, 26, 31, 34, 37], branco: [35, 40], comentario: 31,
+    telas: [['tela-capa', '#capa', -20], ['tela-guia', '#guia', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-planilha', '#q17', 0], ['tela-phishing', '#q28', 0], ['tela-placa', '#q24', 0], ['tela-prompt', '#q33', 0]] },
   rlm: { html: 'produto/minissimulado-rlm-pmpe.html', csv: 'privado/licencas-rlm.csv', conteudo: 'privado/rlm/index.mjs', out: 'vendas-rlm/img',
     tesoura: 13, cortes: ['B', 'D', 'E'], marca: 'A', errar: [12, 19, 27, 33, 35, 37, 40], branco: [29, 38], comentario: 32,
     telas: [['tela-capa', '#capa', -20], ['tela-formulario', '#formulario', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-tabela', '#q11', 0], ['tela-grade', '#q26', 0]] }

@@ -40,6 +40,26 @@ export const PRODUTOS = {
     navExtra: [['formulario', 'Formulário-relâmpago', 'fórmulas'], ['laboratorio', 'Laboratório de tabela-verdade', 'interativo']],
     vendas: 'vendas-rlm',
     pasta: 'rlm'
+  },
+  info: {
+    id: 'info',
+    prod: 'RFINF1',
+    prefixo: 'RI',                       // chaves RI-XXXX-XXXX-XXXX
+    storage: 'rf_info_pmpe',
+    conteudo: 'privado/info/index.mjs',
+    licencas: 'privado/licencas-info.csv',
+    revogadas: 'privado/revogadas-info.txt',
+    saida: 'produto/minissimulado-informatica-pmpe.html',
+    titulo: 'Minissimulado de Informática · PMPE · Raiz de Física',
+    nojs: 'Minissimulado de Informática · PMPE',
+    gate: 'MINISSIMULADO<br>DE INFORMÁTICA',
+    gateSub: 'PMPE 2026 · Acesso do aluno',
+    marca: 'MINISSIMULADO · INFORMÁTICA',
+    katex: true,
+    banner: 'src/marca/banner-informatica.jpg',
+    navExtra: [['guia', 'Guia-relâmpago', 'atalhos'], ['laboratorio', 'Laboratório de fórmulas', 'interativo']],
+    vendas: 'vendas-info',
+    pasta: 'informatica'
   }
 };
 

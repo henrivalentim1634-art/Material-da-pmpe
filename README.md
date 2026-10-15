@@ -8,8 +8,13 @@ Infoprodutos em HTML para concursos policiais (PMPE / PMAL), prontos para venda 
 |---|---|---|---|
 | Minissimulado de **Português** PMPE 2026 | `produto/minissimulado-portugues-pmpe.html` | `vendas/` | `RF-XXXX-XXXX-XXXX` |
 | Minissimulado de **Raciocínio Lógico** PMPE 2026 | `produto/minissimulado-rlm-pmpe.html` | `vendas-rlm/` | `RL-XXXX-XXXX-XXXX` |
+| Minissimulado de **Informática** PMPE 2026 | `produto/minissimulado-informatica-pmpe.html` | `vendas-info/` | `RI-XXXX-XXXX-XXXX` |
 
-A pasta `vitrine/` tem a página inicial do site com os dois produtos.
+A pasta `vitrine/` tem a página inicial do site com os três produtos.
+
+## Minissimulado de Informática PMPE 2026
+
+40 questões inéditas em 4 fases, sobre os 7 itens de Informática do edital (Windows 11 e Prompt de Comando, Office 2019 e LibreOffice 7, internet, segurança, backup e hardware), com ênfase em hardware, Excel, Windows 11, internet e segurança. Traz o **Laboratório de fórmulas** (avaliador de fórmulas do Excel e do Calc em português, com a precedência do Excel, erros como #DIV/0! e #N/D e o ajuste de referências ao copiar), o Guia-relâmpago de atalhos e comandos, figuras em HTML e SVG (planilhas, Explorador de Arquivos, Prompt, placa-mãe, e-mail de phishing e linha do tempo de backup), gabarito comentado, gráfico de pizza, diagnóstico em 8 áreas e caminho de estudo.
 
 ## Minissimulado de Raciocínio Lógico PMPE 2026
 
@@ -22,7 +27,7 @@ A pasta `vitrine/` tem a página inicial do site com os dois produtos.
 | Pasta | Conteúdo |
 |---|---|
 | `produto/` | Os produtos finais (arquivo único cada, conteúdo **criptografado**; só abrem com chave de licença) |
-| `vendas/` · `vendas-rlm/` · `vitrine/` | Páginas de vendas, obrigado, termos de uso, privacidade e a vitrine |
+| `vendas/` · `vendas-rlm/` · `vendas-info/` · `vitrine/` | Páginas de vendas, obrigado, termos de uso, privacidade e a vitrine |
 | `kiwify/` | **[Guia passo a passo](kiwify/GUIA-KIWIFY.md)**, textos prontos, automação das chaves, kit de anúncios e criativos em PNG |
 | `src/` | Motor do simulado (HTML, CSS e JS) e identidade visual |
 | `ferramentas/` | Scripts de build: gerar chaves, criptografar e montar o produto, capturas, criativos e pasta do site |
@@ -37,12 +42,13 @@ cd ferramentas
 npm install
 node gerar-chaves.mjs 500        # (opcional) chaves novas de Português (privado/licencas.csv)
 node gerar-chaves.mjs 500 rlm    # (opcional) chaves novas de RLM (privado/licencas-rlm.csv)
+node gerar-chaves.mjs 500 info   # (opcional) chaves novas de Informática (privado/licencas-info.csv)
 node build.mjs                   # criptografa o conteúdo e gera os produtos em produto/
-node build.mjs rlm               # (ou só um produto)
+node build.mjs rlm               # (ou só um produto: portugues, rlm ou info)
 node montar-site.mjs             # monta site/ e site-netlify.zip para publicar no Netlify
 ```
 
-Para revogar uma chave, escreva-a em `privado/revogadas.txt` (Português) ou `privado/revogadas-rlm.txt` (RLM) e rode `node build.mjs` de novo.
+Para revogar uma chave, escreva-a em `privado/revogadas.txt` (Português) `privado/revogadas-rlm.txt` (RLM) ou `privado/revogadas-info.txt` (Informática) e rode `node build.mjs` de novo.
 
 ## Proteção do material
 

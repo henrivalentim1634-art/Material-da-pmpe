@@ -1,13 +1,15 @@
 // Exporta cada peça <section class="art"> do HTML de criativos em PNG (tamanho exato) e a og:image da página de vendas.
 // Uso: node gerar-criativos.cjs          (Português: kiwify/criativos/)
 //      node gerar-criativos.cjs rlm      (RLM: kiwify/rlm/criativos/)
+//      node gerar-criativos.cjs info     (Informática: kiwify/info/criativos/)
 const { chromium } = require('playwright');
 const path = require('path');
 const RAIZ = path.join(__dirname, '..');
 const ID = process.argv[2] || 'portugues';
 const CFG = {
   portugues: { fonte: 'kiwify/criativos/fonte/criativos.html', out: 'kiwify/criativos', og: 'vendas/img/og-imagem.jpg' },
-  rlm: { fonte: 'kiwify/rlm/criativos/fonte/criativos-rlm.html', out: 'kiwify/rlm/criativos', og: 'vendas-rlm/img/og-imagem.jpg' }
+  rlm: { fonte: 'kiwify/rlm/criativos/fonte/criativos-rlm.html', out: 'kiwify/rlm/criativos', og: 'vendas-rlm/img/og-imagem.jpg' },
+  info: { fonte: 'kiwify/info/criativos/fonte/criativos-info.html', out: 'kiwify/info/criativos', og: 'vendas-info/img/og-imagem.jpg' }
 }[ID];
 if (!CFG) throw new Error('Produto desconhecido: ' + ID);
 (async () => {

@@ -1,4 +1,4 @@
-/* Minissimulado de Português · PMPE — Raiz de Física
+/* Minissimulados PMPE — Raiz de Física
    Motor do material: acesso por chave, conteúdo criptografado, marca d'água, simulado interativo e diagnóstico.
    O conteúdo (questões, gabarito e comentários) só existe criptografado neste arquivo; ele é aberto
    apenas com uma chave de licença válida. */
@@ -300,8 +300,9 @@ function montar() {
   (C.secoes || []).forEach(function (sx) {
     h += '<section class="blk" id="' + sx.id + '"><p class="eyebrow">' + esc(sx.eyebrow) + '</p><h2 class="st">' + esc(sx.titulo) + '</h2>' + (sx.lead ? '<p class="lead">' + sx.lead + '</p>' : '') + sx.html + '</section>';
   });
-  if (m.ferramentaTV) h += '<section class="blk" id="laboratorio"><p class="eyebrow">Ferramenta interativa</p><h2 class="st">Laboratório de tabela-verdade</h2>' +
-    '<p class="lead">Monte qualquer proposição com até 5 letras e veja a tabela-verdade completa, coluna por coluna, com a classificação automática (tautologia, contradição ou contingência). Use para conferir as suas resoluções.</p><div class="card hud" id="tv-lab"></div></section>';
+  var FER = ferramenta();
+  if (FER) h += '<section class="blk" id="laboratorio"><p class="eyebrow">Ferramenta interativa</p><h2 class="st">' + esc(FER.titulo) + '</h2>' +
+    '<p class="lead">' + FER.lead + '</p><div class="card hud" id="lab-ferr"></div></section>';
   /* fases */
   var usados = {};
   C.fases.forEach(function (f) {
@@ -316,21 +317,34 @@ function montar() {
   h += '<section class="blk" id="resultado" style="margin-top:28px"></section>';
   h += '<section class="blk" id="gabarito" style="margin-top:28px"></section>';
   $('#main').innerHTML = h;
-  $('#foot').innerHTML = 'Licença nº <b>' + pad4(NUM) + '</b> · ' + esc(SESS.n) + ' · ' + esc(SESS.e) + '<br>Minissimulado de Português · PMPE · Raiz de Física · v' + esc(m.versao) +
+  $('#foot').innerHTML = 'Licença nº <b>' + pad4(NUM) + '</b> · ' + esc(SESS.n) + ' · ' + esc(SESS.e) + '<br>' + esc(m.titulo || 'Minissimulado') + ' · PMPE · Raiz de Física · v' + esc(m.versao) +
     '<br>' + m.rodape +
     '<br>Material protegido pela Lei nº 9.610/1998. Reproduzir, compartilhar ou revender sem autorização é crime (art. 184 do Código Penal). <a href="#" data-act="sair">Sair desta licença</a>';
   QS.forEach(function (q) { atualizarQ(q.n); });
-  if (m.ferramentaTV) laboratorioTV($('#tv-lab'));
+  if (FER) (FER.tipo === 'xl' ? laboratorioXL : laboratorioTV)($('#lab-ferr'), FER);
   aplicarSub();
   montarCartao();
   atualizarTudo();
+}
+/* ferramenta interativa do produto: tabela-verdade (RLM) ou fórmulas de planilha (Informática) */
+function ferramenta() {
+  var m = C.meta, f = m.ferramenta || (m.ferramentaTV ? { tipo: 'tv' } : null);
+  if (!f) return null;
+  var base = f.tipo === 'xl'
+    ? { titulo: 'Laboratório de fórmulas', sigla: 'fx', sub: 'Teste fórmulas do Excel e do Calc',
+        lead: 'Digite fórmulas do Excel 2019 e do LibreOffice Calc, em português, sobre a planilha de exemplo e veja o resultado, os erros (como #DIV/0! e #N/D) e o que acontece com as referências ao copiar a fórmula para outra célula. Use para conferir as suas resoluções.' }
+    : { titulo: 'Laboratório de tabela-verdade', sigla: 'V/F', sub: 'Monte e classifique proposições',
+        lead: 'Monte qualquer proposição com até 5 letras e veja a tabela-verdade completa, coluna por coluna, com a classificação automática (tautologia, contradição ou contingência). Use para conferir as suas resoluções.' };
+  for (var k in f) base[k] = f[k];
+  return base;
 }
 function pad4(n) { return ('000' + n).slice(-4); }
 function passo(ic, t, d) { return '<div class="passo"><span class="pi">' + ic + '</span><div><b>' + t + '</b><span>' + d + '</span></div></div>'; }
 function tocHTML() {
   var it = [['capa', '◆', 'Capa e modos', 'Prova ou treino'], ['como-usar', '?', 'Como usar', 'Tesoura, cartão e textos'], ['raiox', 'RX', 'Raio-X da matéria', 'Pesos e assuntos']];
   (C.secoes || []).forEach(function (sx) { it.push([sx.id, sx.sigla || '§', sx.titulo, sx.sub || '']); });
-  if (C.meta.ferramentaTV) it.push(['laboratorio', 'V/F', 'Laboratório de tabela-verdade', 'Monte e classifique proposições']);
+  var FER = ferramenta();
+  if (FER) it.push(['laboratorio', FER.sigla, FER.titulo, FER.sub]);
   C.fases.forEach(function (f) { it.push(['fase-' + f.n, f.n, f.nome, 'Questões ' + f.de + ' a ' + f.ate]); });
   it.push(['finalizar', '✓', 'Finalizar', 'Conferir e corrigir'], ['resultado', '%', 'Resultado e diagnóstico', 'Pizza, pontos fortes e caminho'], ['gabarito', 'G', 'Gabarito comentado', 'Comentário de cada alternativa']);
   return it.map(function (x) { return '<a href="#' + x[0] + '" data-act="ir"><span class="n">' + x[1] + '</span><span><b>' + esc(x[2]) + '</b><small>' + esc(x[3]) + '</small></span></a>'; }).join('');
@@ -709,6 +723,457 @@ function laboratorioTV(el) {
   });
   inp.addEventListener('input', desenhar);
   inp.value = EX[0]; desenhar();
+}
+
+/* ============================ laboratório de fórmulas (Excel 2019 e LibreOffice Calc, em português) ============================ */
+/* Precedência do Excel: negação (-), %, ^ (da esquerda para a direita), * e /, + e -, &, comparações. Por isso =-2^2 resulta em 4. */
+var XL_ERRO = { '#DIV/0!': 'divisão por zero.', '#NOME?': 'nome de função ou de referência que o programa não reconhece.', '#VALOR!': 'tipo de dado errado (por exemplo, texto numa conta).',
+  '#REF!': 'referência a uma célula que não existe.', '#N/D': 'valor não encontrado (comum no PROCV com correspondência exata).', '#NÚM!': 'número inválido para a função (por exemplo, raiz de número negativo).' };
+function xlE(c) { return { erro: c }; }
+function xlEhErro(v) { return v !== null && typeof v === 'object' && !!v.erro; }
+function xlCol(s) { var n = 0; s = s.toUpperCase(); for (var i = 0; i < s.length; i++) n = n * 26 + (s.charCodeAt(i) - 64); return n; }
+function xlColL(n) { var s = ''; while (n > 0) { var r = (n - 1) % 26; s = String.fromCharCode(65 + r) + s; n = Math.floor((n - 1) / 26); } return s; }
+function xlRef(s) {
+  var m = /^(\$?)([A-Za-z]{1,3})(\$?)(\d+)$/.exec(s);
+  return m ? { ac: !!m[1], c: xlCol(m[2]), al: !!m[3], l: +m[4] } : null;
+}
+function xlRefStr(r) { return (r.ac ? '$' : '') + xlColL(r.c) + (r.al ? '$' : '') + r.l; }
+function xlTokens(src) {
+  var t = [], i = 0, s = String(src);
+  while (i < s.length) {
+    var c = s.charAt(i), r = s.slice(i), m;
+    if (/\s/.test(c)) { i++; continue; }
+    if (c === '"') {
+      var j = i + 1, v = '';
+      for (;;) {
+        if (j >= s.length) throw new Error('Faltou fechar as aspas de um texto.');
+        if (s.charAt(j) === '"') { if (s.charAt(j + 1) === '"') { v += '"'; j += 2; continue; } break; }
+        v += s.charAt(j++);
+      }
+      t.push({ t: 'str', v: v, i: i, s: s.slice(i, j + 1) }); i = j + 1; continue;
+    }
+    if ((m = /^(\d+(,\d*)?|,\d+)/.exec(r))) { t.push({ t: 'num', v: parseFloat(m[0].replace(',', '.')), i: i, s: m[0] }); i += m[0].length; continue; }
+    if ((m = /^(\$?[A-Za-z]{1,3}\$?\d+)(:(\$?[A-Za-z]{1,3}\$?\d+))?(?![A-Za-z0-9_.(À-ÿ])/.exec(r))) {
+      var a = xlRef(m[1]), b = m[3] ? xlRef(m[3]) : null;
+      if (a && (!m[3] || b)) { t.push({ t: b ? 'rng' : 'ref', a: a, b: b, i: i, s: m[0] }); i += m[0].length; continue; }
+    }
+    if ((m = /^[A-Za-zÀ-ÿ_][A-Za-zÀ-ÿ0-9_.]*/.exec(r))) {
+      var nome = m[0].toUpperCase(), depois = s.slice(i + m[0].length).replace(/^\s+/, '');
+      if (depois.charAt(0) === '(') t.push({ t: 'fn', v: nome, i: i, s: m[0] });
+      else if (nome === 'VERDADEIRO' || nome === 'FALSO') t.push({ t: 'bool', v: nome === 'VERDADEIRO', i: i, s: m[0] });
+      else t.push({ t: 'nome', v: m[0], i: i, s: m[0] });
+      i += m[0].length; continue;
+    }
+    if ((m = /^(<>|<=|>=)/.exec(r))) { t.push({ t: 'op', v: m[0], i: i, s: m[0] }); i += 2; continue; }
+    if ('=<>+-*/^&%();:'.indexOf(c) >= 0) { t.push({ t: 'op', v: c, i: i, s: c }); i++; continue; }
+    if (c === ',') throw new Error('Use ponto e vírgula (;) para separar os argumentos; a vírgula é o separador decimal.');
+    throw new Error('Caractere não reconhecido: “' + c + '”.');
+  }
+  return t;
+}
+function xlParse(src) {
+  var s = String(src).replace(/^\s+/, '');
+  if (s.charAt(0) !== '=') throw new Error('Toda fórmula começa com o sinal de igual (=).');
+  var tk = xlTokens(s.slice(1)), i = 0;
+  function ve(v) { return tk[i] && tk[i].t === 'op' && tk[i].v === v; }
+  function cmp() { var a = cat(); while (tk[i] && tk[i].t === 'op' && /^(=|<>|<|>|<=|>=)$/.test(tk[i].v)) { var o = tk[i++].v; a = { k: 'bin', o: o, a: a, b: cat() }; } return a; }
+  function cat() { var a = add(); while (ve('&')) { i++; a = { k: 'bin', o: '&', a: a, b: add() }; } return a; }
+  function add() { var a = mul(); while (ve('+') || ve('-')) { var o = tk[i++].v; a = { k: 'bin', o: o, a: a, b: mul() }; } return a; }
+  function mul() { var a = pot(); while (ve('*') || ve('/')) { var o = tk[i++].v; a = { k: 'bin', o: o, a: a, b: pot() }; } return a; }
+  function pot() { var a = pct(); while (ve('^')) { i++; a = { k: 'bin', o: '^', a: a, b: pct() }; } return a; }
+  function pct() { var a = un(); while (ve('%')) { i++; a = { k: 'pct', a: a }; } return a; }
+  function un() { if (ve('-')) { i++; return { k: 'neg', a: un() }; } if (ve('+')) { i++; return un(); } return prim(); }
+  function prim() {
+    var x = tk[i];
+    if (!x) throw new Error('A fórmula terminou antes do esperado.');
+    if (x.t === 'num' || x.t === 'str' || x.t === 'bool') { i++; return { k: 'lit', v: x.v }; }
+    if (x.t === 'ref') { i++; return { k: 'ref', r: x.a }; }
+    if (x.t === 'rng') { i++; return { k: 'rng', a: x.a, b: x.b }; }
+    if (x.t === 'nome') { i++; return { k: 'lit', v: xlE('#NOME?') }; }
+    if (x.t === 'fn') {
+      i++; i++; // nome e "("
+      var args = [];
+      if (ve(')')) { i++; return { k: 'fn', f: x.v, args: args }; }
+      for (;;) {
+        if (ve(';') || ve(')')) args.push({ k: 'vazio' }); else args.push(cmp());
+        if (ve(';')) { i++; continue; }
+        if (ve(')')) { i++; break; }
+        throw new Error(tk[i] ? 'Esperava “;” ou “)” depois de um argumento de ' + x.v + '.' : 'Faltou fechar o parêntese de ' + x.v + '.');
+      }
+      return { k: 'fn', f: x.v, args: args };
+    }
+    if (ve('(')) { i++; var e = cmp(); if (!ve(')')) throw new Error('Falta fechar um parêntese.'); i++; return e; }
+    throw new Error('Não esperava “' + x.s + '” nesta posição.');
+  }
+  if (!tk.length) throw new Error('Digite a fórmula depois do sinal de igual.');
+  var raiz = cmp();
+  if (i < tk.length) throw new Error(ve(')') ? 'Há um parêntese fechando sem ter sido aberto.' : 'Falta um operador antes de “' + tk[i].s + '”.');
+  return raiz;
+}
+/* ---------- conversões ---------- */
+function xlNumTexto(t) { var x = String(t).trim(); return /^-?(\d+(,\d+)?|,\d+)$/.test(x) ? parseFloat(x.replace(',', '.')) : null; }
+function xlNum(v) {
+  if (v === null || v === undefined || v === '') return 0;
+  if (typeof v === 'number') return v;
+  if (typeof v === 'boolean') return v ? 1 : 0;
+  if (xlEhErro(v)) return v;
+  var n = xlNumTexto(v); return n === null ? xlE('#VALOR!') : n;
+}
+function xlFmt(v) {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'boolean') return v ? 'VERDADEIRO' : 'FALSO';
+  if (xlEhErro(v)) return v.erro;
+  if (typeof v === 'number') { var x = Number(v.toPrecision(12)); if (Object.is(x, -0)) x = 0; return String(x).replace('.', ','); }
+  return String(v);
+}
+function xlTexto(v) { return xlEhErro(v) ? v : xlFmt(v); }
+function xlBool(v) {
+  if (xlEhErro(v)) return v;
+  if (typeof v === 'boolean') return v;
+  if (v === null || v === undefined || v === '') return false;
+  if (typeof v === 'number') return v !== 0;
+  var u = String(v).toUpperCase(); if (u === 'VERDADEIRO') return true; if (u === 'FALSO') return false;
+  return xlE('#VALOR!');
+}
+function xlTipo(v) { return v === null || v === undefined ? 0 : typeof v === 'number' ? 1 : typeof v === 'string' ? 2 : 3; }
+function xlComparar(a, b) { /* -1, 0, 1 com as regras do Excel: números < textos < lógicos; texto sem diferenciar maiúsculas */
+  if (a === null || a === undefined) a = typeof b === 'string' ? '' : typeof b === 'boolean' ? false : 0;
+  if (b === null || b === undefined) b = typeof a === 'string' ? '' : typeof a === 'boolean' ? false : 0;
+  var ta = xlTipo(a), tb = xlTipo(b);
+  if (ta !== tb) return ta < tb ? -1 : 1;
+  if (ta === 2) { a = a.toUpperCase(); b = b.toUpperCase(); }
+  if (ta === 3) { a = a ? 1 : 0; b = b ? 1 : 0; }
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+function xlArred(x, d, modo) { /* modo: 'arred' (metade para longe do zero), 'cima' (longe do zero), 'baixo' (em direção ao zero) */
+  var f = Math.pow(10, d), y = Math.abs(x) * f, s = x < 0 ? -1 : 1;
+  y = Number(y.toPrecision(15));
+  var r = modo === 'arred' ? Math.floor(y + 0.5) : modo === 'cima' ? Math.ceil(y) : Math.floor(y);
+  return s * r / f;
+}
+/* ---------- avaliação ---------- */
+function xlAvaliar(no, cel) {
+  switch (no.k) {
+    case 'lit': return no.v;
+    case 'vazio': return null;
+    case 'ref': return cel(no.r.c, no.r.l);
+    case 'rng': return xlE('#VALOR!');
+    case 'neg': var a = xlNum(xlAvaliar(no.a, cel)); return xlEhErro(a) ? a : -a;
+    case 'pct': var p = xlNum(xlAvaliar(no.a, cel)); return xlEhErro(p) ? p : p / 100;
+    case 'fn': return xlFuncao(no.f, no.args, cel);
+  }
+  var x = xlAvaliar(no.a, cel), y = xlAvaliar(no.b, cel);
+  if (no.o === '&') { x = xlTexto(x); y = xlTexto(y); if (xlEhErro(x)) return x; if (xlEhErro(y)) return y; return x + y; }
+  if (/^(=|<>|<|>|<=|>=)$/.test(no.o)) {
+    if (xlEhErro(x)) return x; if (xlEhErro(y)) return y;
+    var c = xlComparar(x, y);
+    return no.o === '=' ? c === 0 : no.o === '<>' ? c !== 0 : no.o === '<' ? c < 0 : no.o === '>' ? c > 0 : no.o === '<=' ? c <= 0 : c >= 0;
+  }
+  x = xlNum(x); if (xlEhErro(x)) return x;
+  y = xlNum(y); if (xlEhErro(y)) return y;
+  if (no.o === '+') return x + y;
+  if (no.o === '-') return x - y;
+  if (no.o === '*') return x * y;
+  if (no.o === '/') return y === 0 ? xlE('#DIV/0!') : x / y;
+  if (x === 0 && y === 0) return xlE('#NÚM!');
+  if (x < 0 && Math.floor(y) !== y) return xlE('#NÚM!');
+  if (x === 0 && y < 0) return xlE('#DIV/0!');
+  return Math.pow(x, y);
+}
+function xlMatriz(no, cel) { /* intervalo → matriz de valores; célula única → matriz 1×1 */
+  if (no.k === 'rng') {
+    var c1 = Math.min(no.a.c, no.b.c), c2 = Math.max(no.a.c, no.b.c), l1 = Math.min(no.a.l, no.b.l), l2 = Math.max(no.a.l, no.b.l), m = [];
+    for (var l = l1; l <= l2; l++) { var lin = []; for (var c = c1; c <= c2; c++) lin.push(cel(c, l)); m.push(lin); }
+    return m;
+  }
+  if (no.k === 'ref') return [[cel(no.r.c, no.r.l)]];
+  return null;
+}
+function xlValores(args, cel) { /* lista {v, dir}: dir = argumento digitado diretamente (não veio de intervalo nem de referência) */
+  var out = [];
+  args.forEach(function (a) {
+    var m = xlMatriz(a, cel);
+    if (m) m.forEach(function (lin) { lin.forEach(function (v) { out.push({ v: v, dir: false }); }); });
+    else out.push({ v: xlAvaliar(a, cel), dir: true });
+  });
+  return out;
+}
+function xlNumeros(args, cel) { /* números para SOMA, MÉDIA, MÁXIMO etc.: no intervalo, ignora textos, lógicos e vazias */
+  var ns = [], vs = xlValores(args, cel);
+  for (var i = 0; i < vs.length; i++) {
+    var x = vs[i];
+    if (xlEhErro(x.v)) return x.v;
+    if (typeof x.v === 'number') ns.push(x.v);
+    else if (x.dir && x.v !== null) { var n = xlNum(x.v); if (xlEhErro(n)) return n; ns.push(n); }
+  }
+  return ns;
+}
+function xlCriterio(cr) { /* critério de CONT.SE, SOMASE e MÉDIASE */
+  if (xlEhErro(cr)) return function () { return false; };
+  if (typeof cr === 'number' || typeof cr === 'boolean') return function (v) { return v !== null && xlComparar(v, cr) === 0; };
+  var s = cr === null ? '' : String(cr), m = /^(<>|<=|>=|=|<|>)?([\s\S]*)$/.exec(s), op = m[1] || '=', alvo = m[2], n = xlNumTexto(alvo);
+  if (n !== null) return function (v) {
+    var x = typeof v === 'number' ? v : typeof v === 'string' ? xlNumTexto(v) : null;
+    if (x === null) return op === '<>';
+    var c = x < n ? -1 : x > n ? 1 : 0;
+    return op === '=' ? c === 0 : op === '<>' ? c !== 0 : op === '<' ? c < 0 : op === '>' ? c > 0 : op === '<=' ? c <= 0 : c >= 0;
+  };
+  if (alvo === '') return op === '<>' ? function (v) { return v !== null && v !== ''; } : function (v) { return v === null || v === ''; };
+  if (op === '=' || op === '<>') {
+    var re = new RegExp('^' + alvo.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[\\s\\S]*').replace(/\?/g, '[\\s\\S]') + '$', 'i');
+    return function (v) { var ok = typeof v === 'string' && re.test(v); return op === '=' ? ok : !ok; };
+  }
+  return function (v) { if (typeof v !== 'string') return false; var c = xlComparar(v, alvo); return op === '<' ? c < 0 : op === '>' ? c > 0 : op === '<=' ? c <= 0 : c >= 0; };
+}
+function xlProcurar(valor, chaves, exato) { /* índice na lista de chaves (PROCV, PROCH, CORRESP) ou -1 */
+  if (exato) {
+    for (var i = 0; i < chaves.length; i++) {
+      var k = chaves[i];
+      if (typeof valor === 'string' && typeof k === 'string') { if (xlCriterio(valor)(k)) return i; }
+      else if (k !== null && xlComparar(k, valor) === 0) return i;
+    }
+    return -1;
+  }
+  var achou = -1; /* correspondência aproximada: maior valor menor ou igual (lista em ordem crescente) */
+  for (var j = 0; j < chaves.length; j++) {
+    if (chaves[j] === null || xlTipo(chaves[j]) !== xlTipo(valor)) continue;
+    if (xlComparar(chaves[j], valor) <= 0) achou = j; else break;
+  }
+  return achou;
+}
+var XL_FUNCOES = 'SOMA MÉDIA MÁXIMO MÍNIMO CONT.NÚM CONT.VALORES CONTAR.VAZIO CONT.SE SOMASE MÉDIASE SE E OU NÃO SEERRO ARRED ARREDONDAR.PARA.CIMA ARREDONDAR.PARA.BAIXO TRUNCAR INT ABS MOD POTÊNCIA RAIZ MAIOR MENOR MED CONCATENAR CONCAT MAIÚSCULA MINÚSCULA PRI.MAIÚSCULA ESQUERDA DIREITA EXT.TEXTO NÚM.CARACT ARRUMAR PROCV PROCH ÍNDICE CORRESP'.split(' ');
+function xlFuncao(f, args, cel) {
+  var A = function (i) { return args[i] ? xlAvaliar(args[i], cel) : null; };
+  var N = function (i) { return xlNum(A(i)); };
+  var tem = function (i) { return args.length > i && args[i].k !== 'vazio'; };
+  var faixa = function (min, max) { if (args.length < min || args.length > max) throw new Error(f + ' recebeu ' + args.length + ' argumento' + (args.length === 1 ? '' : 's') + '; esperava ' + (min === max ? min : min + ' a ' + max) + '.'); };
+  var ns, x, d, m, i;
+  switch (f) {
+    case 'VERDADEIRO': faixa(0, 0); return true;
+    case 'FALSO': faixa(0, 0); return false;
+    case 'SOMA': faixa(1, 255); ns = xlNumeros(args, cel); return xlEhErro(ns) ? ns : ns.reduce(function (s, v) { return s + v; }, 0);
+    case 'MÉDIA': faixa(1, 255); ns = xlNumeros(args, cel); if (xlEhErro(ns)) return ns; return ns.length ? ns.reduce(function (s, v) { return s + v; }, 0) / ns.length : xlE('#DIV/0!');
+    case 'MÁXIMO': faixa(1, 255); ns = xlNumeros(args, cel); return xlEhErro(ns) ? ns : ns.length ? Math.max.apply(null, ns) : 0;
+    case 'MÍNIMO': faixa(1, 255); ns = xlNumeros(args, cel); return xlEhErro(ns) ? ns : ns.length ? Math.min.apply(null, ns) : 0;
+    case 'MED': faixa(1, 255); ns = xlNumeros(args, cel); if (xlEhErro(ns)) return ns; if (!ns.length) return xlE('#NÚM!');
+      ns.sort(function (a, b) { return a - b; }); m = ns.length >> 1; return ns.length % 2 ? ns[m] : (ns[m - 1] + ns[m]) / 2;
+    case 'CONT.NÚM': faixa(1, 255); return xlValores(args, cel).filter(function (x) { return typeof x.v === 'number' || (x.dir && (typeof x.v === 'boolean' || (typeof x.v === 'string' && xlNumTexto(x.v) !== null))); }).length;
+    case 'CONT.VALORES': faixa(1, 255); return xlValores(args, cel).filter(function (x) { return x.v !== null && !(x.dir === false && x.v === undefined); }).length;
+    case 'CONTAR.VAZIO': faixa(1, 1); m = xlMatriz(args[0], cel); if (!m) return xlE('#VALOR!');
+      return [].concat.apply([], m).filter(function (v) { return v === null || v === ''; }).length;
+    case 'CONT.SE': case 'SOMASE': case 'MÉDIASE':
+      faixa(2, f === 'CONT.SE' ? 2 : 3);
+      m = xlMatriz(args[0], cel); if (!m) return xlE('#VALOR!');
+      var crit = xlCriterio(A(1)), alvo = tem(2) ? xlMatriz(args[2], cel) : m;
+      if (!alvo) return xlE('#VALOR!');
+      var cont = 0, soma = 0;
+      m.forEach(function (lin, li) { lin.forEach(function (v, ci) {
+        if (!crit(v)) return; cont++;
+        var w = alvo[li] && alvo[li][ci] !== undefined ? alvo[li][ci] : null; /* intervalo de soma do mesmo tamanho (alinhado pelo canto) */
+        if (typeof w === 'number') soma += w;
+      }); });
+      if (f === 'CONT.SE') return cont;
+      if (f === 'SOMASE') return soma;
+      var nums = 0; m.forEach(function (lin, li) { lin.forEach(function (v, ci) { if (crit(v) && alvo[li] && typeof alvo[li][ci] === 'number') nums++; }); });
+      return nums ? soma / nums : xlE('#DIV/0!');
+    case 'SE':
+      faixa(1, 3); x = xlBool(A(0)); if (xlEhErro(x)) return x;
+      if (x) return tem(1) ? A(1) : 0;
+      return args.length > 2 ? (tem(2) ? A(2) : 0) : false;
+    case 'E': case 'OU':
+      faixa(1, 255); var bs = [];
+      for (i = 0; i < args.length; i++) {
+        var mm = xlMatriz(args[i], cel);
+        if (mm && args[i].k === 'rng') { [].concat.apply([], mm).forEach(function (v) { if (typeof v === 'boolean' || typeof v === 'number') bs.push(xlBool(v)); else if (xlEhErro(v)) bs.push(v); }); continue; }
+        var b = xlBool(A(i)); if (xlEhErro(b)) return b; bs.push(b);
+      }
+      for (i = 0; i < bs.length; i++) if (xlEhErro(bs[i])) return bs[i];
+      if (!bs.length) return xlE('#VALOR!');
+      return f === 'E' ? bs.every(Boolean) : bs.some(Boolean);
+    case 'NÃO': faixa(1, 1); x = xlBool(A(0)); return xlEhErro(x) ? x : !x;
+    case 'SEERRO': faixa(2, 2); x = A(0); return xlEhErro(x) ? A(1) : x;
+    case 'ARRED': case 'ARREDONDAR.PARA.CIMA': case 'ARREDONDAR.PARA.BAIXO':
+      faixa(2, 2); x = N(0); d = N(1); if (xlEhErro(x)) return x; if (xlEhErro(d)) return d;
+      return xlArred(x, Math.trunc(d), f === 'ARRED' ? 'arred' : f === 'ARREDONDAR.PARA.CIMA' ? 'cima' : 'baixo');
+    case 'TRUNCAR': faixa(1, 2); x = N(0); d = tem(1) ? N(1) : 0; if (xlEhErro(x)) return x; if (xlEhErro(d)) return d; return xlArred(x, Math.trunc(d), 'baixo');
+    case 'INT': faixa(1, 1); x = N(0); return xlEhErro(x) ? x : Math.floor(Number(x.toPrecision(15)));
+    case 'ABS': faixa(1, 1); x = N(0); return xlEhErro(x) ? x : Math.abs(x);
+    case 'MOD': faixa(2, 2); x = N(0); d = N(1); if (xlEhErro(x)) return x; if (xlEhErro(d)) return d; if (d === 0) return xlE('#DIV/0!');
+      return Number((x - d * Math.floor(x / d)).toPrecision(15));
+    case 'POTÊNCIA': faixa(2, 2); return xlAvaliar({ k: 'bin', o: '^', a: args[0], b: args[1] }, cel);
+    case 'RAIZ': faixa(1, 1); x = N(0); if (xlEhErro(x)) return x; return x < 0 ? xlE('#NÚM!') : Math.sqrt(x);
+    case 'MAIOR': case 'MENOR':
+      faixa(2, 2); ns = xlNumeros([args[0]], cel); if (xlEhErro(ns)) return ns; d = N(1); if (xlEhErro(d)) return d; d = Math.ceil(d);
+      if (d < 1 || d > ns.length) return xlE('#NÚM!');
+      ns.sort(function (a, b) { return f === 'MAIOR' ? b - a : a - b; }); return ns[d - 1];
+    case 'CONCATENAR': case 'CONCAT':
+      faixa(1, 255); var txt = '';
+      for (i = 0; i < args.length; i++) {
+        if (args[i].k === 'rng') {
+          if (f === 'CONCATENAR') return xlE('#VALOR!');
+          var mt = xlMatriz(args[i], cel), er = null;
+          [].concat.apply([], mt).forEach(function (v) { if (xlEhErro(v)) er = er || v; else txt += xlFmt(v); });
+          if (er) return er; continue;
+        }
+        x = xlTexto(A(i)); if (xlEhErro(x)) return x; txt += x;
+      }
+      return txt;
+    case 'MAIÚSCULA': case 'MINÚSCULA': case 'PRI.MAIÚSCULA': case 'ARRUMAR': case 'NÚM.CARACT':
+      faixa(1, 1); x = xlTexto(A(0)); if (xlEhErro(x)) return x;
+      if (f === 'MAIÚSCULA') return x.toUpperCase();
+      if (f === 'MINÚSCULA') return x.toLowerCase();
+      if (f === 'ARRUMAR') return x.replace(/ +/g, ' ').trim();
+      if (f === 'NÚM.CARACT') return x.length;
+      return x.toLowerCase().replace(/(^|[^A-Za-zÀ-ÿ])([a-zà-ÿ])/g, function (_, a, b) { return a + b.toUpperCase(); });
+    case 'ESQUERDA': case 'DIREITA':
+      faixa(1, 2); x = xlTexto(A(0)); if (xlEhErro(x)) return x; d = tem(1) ? N(1) : 1; if (xlEhErro(d)) return d;
+      if (d < 0) return xlE('#VALOR!'); d = Math.floor(d);
+      return f === 'ESQUERDA' ? x.slice(0, d) : (d === 0 ? '' : x.slice(-d));
+    case 'EXT.TEXTO':
+      faixa(3, 3); x = xlTexto(A(0)); if (xlEhErro(x)) return x; var ini = N(1), qt = N(2);
+      if (xlEhErro(ini)) return ini; if (xlEhErro(qt)) return qt; if (ini < 1 || qt < 0) return xlE('#VALOR!');
+      return x.substr(Math.floor(ini) - 1, Math.floor(qt));
+    case 'PROCV': case 'PROCH':
+      faixa(3, 4); var val = A(0); if (xlEhErro(val)) return val;
+      m = xlMatriz(args[1], cel); if (!m) return xlE('#VALOR!');
+      var col = N(2); if (xlEhErro(col)) return col; col = Math.floor(col);
+      var aprox = tem(3) ? xlBool(A(3)) : true; if (xlEhErro(aprox)) return aprox;
+      var vert = f === 'PROCV', largura = vert ? m[0].length : m.length;
+      if (col < 1) return xlE('#VALOR!'); if (col > largura) return xlE('#REF!');
+      var chaves = vert ? m.map(function (l) { return l[0]; }) : m[0];
+      var k = xlProcurar(val, chaves, !aprox);
+      if (k < 0) return xlE('#N/D');
+      var res = vert ? m[k][col - 1] : m[col - 1][k];
+      return res === null ? 0 : res;
+    case 'ÍNDICE':
+      faixa(2, 3); m = xlMatriz(args[0], cel); if (!m) return xlE('#VALOR!');
+      var li = N(1), ci = tem(2) ? N(2) : 1; if (xlEhErro(li)) return li; if (xlEhErro(ci)) return ci;
+      if (m.length === 1 && !tem(2)) { ci = li; li = 1; }
+      if (li < 1 || ci < 1 || li > m.length || ci > m[0].length) return xlE('#REF!');
+      return m[li - 1][ci - 1] === null ? 0 : m[li - 1][ci - 1];
+    case 'CORRESP':
+      faixa(2, 3); val = A(0); if (xlEhErro(val)) return val; m = xlMatriz(args[1], cel); if (!m) return xlE('#VALOR!');
+      var tipo = tem(2) ? N(2) : 1; if (xlEhErro(tipo)) return tipo;
+      var lista = m.length === 1 ? m[0] : m.map(function (l) { return l[0]; });
+      if (tipo === -1) return xlE('#N/D');
+      k = xlProcurar(val, lista, tipo === 0);
+      return k < 0 ? xlE('#N/D') : k + 1;
+  }
+  return xlE('#NOME?');
+}
+/* ---------- copiar e colar: ajusta as referências relativas ---------- */
+function xlCopiar(formula, de, para) {
+  var o = xlRef(de), p = xlRef(para);
+  if (!o || !p) throw new Error('Use endereços de célula como B2 ou F5.');
+  var dc = p.c - o.c, dl = p.l - o.l, s = String(formula).replace(/^\s+/, '');
+  if (s.charAt(0) !== '=') throw new Error('Toda fórmula começa com o sinal de igual (=).');
+  var corpo = s.slice(1), tk = xlTokens(corpo), out = '', pos = 0;
+  function mover(r) {
+    var n = { ac: r.ac, c: r.ac ? r.c : r.c + dc, al: r.al, l: r.al ? r.l : r.l + dl };
+    return n.c < 1 || n.l < 1 || n.c > 16384 || n.l > 1048576 ? null : n;
+  }
+  tk.forEach(function (t) {
+    if (t.t !== 'ref' && t.t !== 'rng') return;
+    out += corpo.slice(pos, t.i);
+    var a = mover(t.a), b = t.b ? mover(t.b) : null;
+    out += !a || (t.b && !b) ? '#REF!' : xlRefStr(a) + (t.b ? ':' + xlRefStr(b) : '');
+    pos = t.i + t.s.length;
+  });
+  return '=' + out + corpo.slice(pos);
+}
+function xlCalcular(formula, grade, alvo) {
+  /* grade: { 'A1': valor, ... }; alvo: célula onde a fórmula está (para detectar referência circular) */
+  var raiz = xlParse(formula), a = alvo ? xlRef(alvo) : null, circ = false;
+  function cel(c, l) {
+    if (a && c === a.c && l === a.l) { circ = true; return 0; }
+    var v = grade[xlColL(c) + l]; return v === undefined ? null : v;
+  }
+  var v = xlAvaliar(raiz, cel);
+  if (circ) throw new Error('Referência circular: a fórmula usa a própria célula ' + alvo.toUpperCase().replace(/\$/g, '') + '.');
+  return v;
+}
+function laboratorioXL(el, conf) {
+  if (!el) return;
+  conf = conf || {};
+  var G = conf.grade || {}, NC = conf.colunas || 8, NL = conf.linhas || 10;
+  var EX = conf.exemplos || ['=SOMA(C2:C7)', '=MÉDIA(D2:D7)', '=-2^2', '=2+3*4^2', '=SE(C2>=7;"Apto";"Inapto")', '=CONT.SE(C2:C7;">=7")', '=SOMASE(B2:B7;"A";D2:D7)', '=PROCV("Diego";A2:E7;4;0)', '=ARRED(MÉDIA(C2:C7);1)', '=$C2*D$1'];
+  var teclas = ['=', ';', ':', '$', '(', ')', '"', '&', '<', '>', '%', '^'];
+  el.innerHTML =
+    '<div class="xll-barra"><label class="xll-cel"><span class="tvl-lb">Célula</span><input class="in" id="xl-alvo" value="' + esc(conf.alvo || 'G2') + '" maxlength="7" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Célula onde a fórmula é digitada"></label>' +
+    '<label class="xll-fx"><span class="tvl-lb">Fórmula <i>fx</i></span><input class="in tvl-campo" id="xl-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="=SOMA(C2:C7)"></label></div>' +
+    '<div class="tvl-keys xll-keys">' + teclas.map(function (k) { return '<button type="button" class="tvl-k" data-k="' + esc(k) + '">' + esc(k) + '</button>'; }).join('') +
+    '<button type="button" class="tvl-k" data-k="apagar" aria-label="Apagar o último caractere">⌫</button><button type="button" class="tvl-k tvl-w" data-k="limpar">Limpar</button></div>' +
+    '<div class="tvl-ex"><span>Exemplos:</span>' + EX.map(function (x) { return '<button type="button" class="tvl-chip" data-ex="' + esc(x) + '">' + esc(x) + '</button>'; }).join('') + '</div>' +
+    '<div class="xll-out" aria-live="polite"></div>' +
+    '<div class="xll-copia"><label><span class="tvl-lb">Copiar e colar em</span><input class="in" id="xl-dest" value="' + esc(conf.destino || 'G3') + '" maxlength="7" autocomplete="off" autocapitalize="characters" spellcheck="false"></label><div class="xll-cres"></div></div>' +
+    '<p class="tvl-help">Toque numa célula da planilha para inserir o endereço dela na fórmula. Como no Excel 2019 e no LibreOffice Calc em português: funções em português, argumentos separados por <code>;</code>, decimais com vírgula e <code>$</code> para travar coluna ou linha. Funções disponíveis: ' + XL_FUNCOES.join(', ') + '.</p>' +
+    '<div class="tblwrap"><table class="xl xll-grade"></table></div>';
+  var inp = el.querySelector('#xl-in'), alvo = el.querySelector('#xl-alvo'), dest = el.querySelector('#xl-dest');
+  var out = el.querySelector('.xll-out'), cres = el.querySelector('.xll-cres'), tab = el.querySelector('.xll-grade');
+  function norm(s) { return String(s || '').replace(/\s|\$/g, '').toUpperCase(); }
+  function valida(s) { var r = xlRef(norm(s)); return r && r.c <= NC && r.l <= NL ? xlColL(r.c) + r.l : null; }
+  function explica(v) { return xlEhErro(v) ? ' <span class="xll-err">' + esc(v.erro) + ': ' + esc(XL_ERRO[v.erro] || '') + '</span>' : ''; }
+  function mostra(v) { return typeof v === 'string' ? '“' + esc(v) + '” <small>(texto)</small>' : typeof v === 'boolean' ? esc(xlFmt(v)) + ' <small>(lógico)</small>' : esc(xlFmt(v)); }
+  function desenhar() {
+    var a = valida(alvo.value), d = valida(dest.value), f = inp.value.trim(), extra = {}, msg = '', cmsg = '';
+    if (!a) msg = '<p class="tvl-erro">Célula inválida. Use um endereço entre A1 e ' + xlColL(NC) + NL + '.</p>';
+    else if (G[a] !== undefined) msg = '<p class="tvl-erro">A célula ' + a + ' já tem dados. Escolha uma célula vazia (por exemplo, nas colunas F a ' + xlColL(NC) + ').</p>';
+    else if (!f) msg = '<p class="tvl-vazio">Digite uma fórmula que comece com =.</p>';
+    else {
+      try {
+        var v = xlCalcular(f, G, a); extra[a] = v;
+        msg = '<p class="tvl-res"><span class="st ' + (xlEhErro(v) ? 'no' : 'ok') + '">' + a + '</span> ' + mostra(v) + explica(v) + '</p>';
+        if (!d) cmsg = '<p class="tvl-erro">Destino inválido. Use um endereço entre A1 e ' + xlColL(NC) + NL + '.</p>';
+        else if (d === a) cmsg = '<p class="tvl-vazio">Escolha um destino diferente de ' + a + '.</p>';
+        else if (G[d] !== undefined) cmsg = '<p class="tvl-vazio">' + d + ' já tem dados; escolha uma célula vazia como destino.</p>';
+        else {
+          var f2 = xlCopiar(f, a, d), v2;
+          try { v2 = /#REF!/.test(f2) ? xlE('#REF!') : xlCalcular(f2, G, d); extra[d] = v2; cmsg = '<p class="tvl-res"><code>' + esc(f2) + '</code> → ' + mostra(v2) + explica(v2) + '</p>'; }
+          catch (e2) { cmsg = '<p class="tvl-res"><code>' + esc(f2) + '</code></p><p class="tvl-erro">' + esc(e2.message) + '</p>'; }
+        }
+      } catch (err) { msg = '<p class="tvl-erro">' + esc(err.message) + '</p>'; }
+    }
+    out.innerHTML = msg; cres.innerHTML = cmsg;
+    var h = '<thead><tr><th></th>';
+    for (var c = 1; c <= NC; c++) h += '<th>' + xlColL(c) + '</th>';
+    h += '</tr></thead><tbody>';
+    for (var l = 1; l <= NL; l++) {
+      h += '<tr><th>' + l + '</th>';
+      for (c = 1; c <= NC; c++) {
+        var k = xlColL(c) + l, val = G[k] !== undefined ? G[k] : extra[k], cls = [];
+        if (k === a) cls.push('sel'); if (k === d) cls.push('dst');
+        if (typeof val === 'number' || xlEhErro(val) || typeof val === 'boolean') cls.push('n');
+        if (l === 1 && G[k] !== undefined && typeof G[k] === 'string') cls.push('cab');
+        h += '<td data-ref="' + k + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + esc(val === undefined || val === null ? '' : xlFmt(val)) + '</td>';
+      }
+      h += '</tr>';
+    }
+    tab.innerHTML = h + '</tbody>';
+  }
+  var cursor = null; /* posição do cursor depois de inserir por botão ou célula: restaurada quando o campo recebe o foco */
+  function inserir(txt) {
+    var a = cursor !== null ? cursor : inp.selectionStart == null ? inp.value.length : inp.selectionStart, b = cursor !== null ? cursor : inp.selectionEnd == null ? a : inp.selectionEnd;
+    var novo = inp.value.slice(0, a) + txt; inp.value = novo + inp.value.slice(b);
+    cursor = novo.length;
+    try { inp.setSelectionRange(cursor, cursor); } catch (e) { }
+    desenhar();
+  }
+  inp.addEventListener('focus', function () { if (cursor !== null) { try { inp.setSelectionRange(cursor, cursor); } catch (e) { } } });
+  inp.addEventListener('keydown', function () { cursor = null; });
+  inp.addEventListener('mousedown', function () { cursor = null; });
+  inp.addEventListener('touchstart', function () { cursor = null; }, { passive: true });
+  el.addEventListener('click', function (ev) {
+    var k = ev.target.closest('[data-k]'), x = ev.target.closest('[data-ex]'), td = ev.target.closest('td[data-ref]');
+    if (x) { inp.value = x.getAttribute('data-ex'); cursor = inp.value.length; desenhar(); return; }
+    if (td) { if (!inp.value) { inp.value = '='; cursor = 1; } inserir(td.getAttribute('data-ref')); return; }
+    if (!k) return;
+    var v = k.getAttribute('data-k');
+    if (v === 'limpar') { inp.value = ''; cursor = 0; desenhar(); return; }
+    if (v === 'apagar') { inp.value = inp.value.slice(0, -1); cursor = inp.value.length; desenhar(); return; }
+    inserir(v);
+  });
+  [inp, alvo, dest].forEach(function (e) { e.addEventListener('input', desenhar); });
+  inp.value = conf.inicial || EX[0]; desenhar();
 }
 
 /* ============================ painéis e modal ============================ */
