@@ -1,6 +1,7 @@
 // Gera chaves de licença novas e acrescenta no CSV do produto (ver ferramentas/produtos.mjs).
 // Uso:  node gerar-chaves.mjs 500            (Português: privado/licencas.csv, chaves RF-)
 //       node gerar-chaves.mjs 500 rlm        (RLM: privado/licencas-rlm.csv, chaves RL-)
+//       node gerar-chaves.mjs 500 dc         (Direito Constitucional: privado/licencas-dc.csv, chaves RC-)
 // A licença nº 0000 é a CHAVE DO AUTOR, para testes. Nunca a envie para clientes.
 import { randomBytes } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';

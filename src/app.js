@@ -203,7 +203,7 @@ function qHTML(q) {
   t += '<span class="tag" title="Nível de dificuldade">Nível ' + dots(q.nivel) + '</span>';
   if (q.tipo === 'assertivas') t += '<span class="tag ass">Assertivas</span>';
   if (q.img) t += '<span class="tag img">Imagem</span>';
-  t += '<span class="tag est">Inédita · estilo ' + esc(q.estilo) + '</span>';
+  t += q.fonte ? '<span class="tag real" title="Questão de prova aplicada">Prova real · ' + esc(q.fonte) + '</span>' : '<span class="tag est">Inédita · estilo ' + esc(q.estilo) + '</span>';
   var tb = q.texto ? '<button class="btn ghost sm q-txtbtn" data-act="texto" data-t="' + q.texto + '">' + IC.livro + ' ' + esc(C.textos[q.texto].rotulo) + '</button>' : '';
   var h = '<article class="q" id="q' + q.n + '" data-n="' + q.n + '">' +
     '<div class="q-h"><span class="q-num">' + pad(q.n) + '</span><div class="q-tags">' + t + '</div>' + tb + '<span id="qr' + q.n + '"></span></div>';
@@ -261,7 +261,7 @@ function atualizarQ(n) {
 }
 
 function montar() {
-  var m = C.meta, A = C.areas, nAss = QS.filter(function (q) { return q.tipo === 'assertivas'; }).length, nImg = QS.filter(function (q) { return q.img; }).length;
+  var m = C.meta, A = C.areas, nAss = QS.filter(function (q) { return q.tipo === 'assertivas'; }).length, nImg = QS.filter(function (q) { return q.img; }).length, nReal = QS.filter(function (q) { return q.fonte; }).length;
   var h = '';
   /* capa */
   h += '<section class="hero" id="capa"><div class="hero-top"><img class="hero-emb" src="' + LOGO + '" alt="Raiz de Física"><div><h1>' + esc(m.heroL1 || 'MINISSIMULADO') + '<br><em>' + esc(m.heroL2 || '') + '</em></h1>' +
@@ -269,6 +269,7 @@ function montar() {
     '<p class="ola">Olá, <b>' + esc(SESS.n.split(' ')[0]) + '</b>! ' + m.heroTexto + '</p>' +
     '<div class="facts"><div class="fact"><div class="l">Questões</div><div class="v">40</div></div><div class="fact"><div class="l">Fases</div><div class="v">4</div></div>' +
     '<div class="fact"><div class="l">Assertivas</div><div class="v">' + nAss + '</div></div><div class="fact"><div class="l">Com imagem</div><div class="v">' + nImg + '</div></div>' +
+    (nReal ? '<div class="fact"><div class="l">Reais de prova</div><div class="v">' + nReal + '</div></div>' : '') +
     '<div class="fact"><div class="l">Tempo sugerido</div><div class="v">' + Math.floor(m.tempoSugerido / 60) + 'h' + pad(m.tempoSugerido % 60) + '</div></div></div>' +
     '<div class="modos" role="group" aria-label="Modo de resolução">' +
     '<button class="modo" data-act="modo" data-m="prova" aria-pressed="' + (ST.modo === 'prova') + '"><b>Modo Prova</b><span>Correção só no final, como no dia da prova. Pode trocar a resposta até finalizar.</span></button>' +
@@ -321,7 +322,7 @@ function montar() {
     '<br>' + m.rodape +
     '<br>Material protegido pela Lei nº 9.610/1998. Reproduzir, compartilhar ou revender sem autorização é crime (art. 184 do Código Penal). <a href="#" data-act="sair">Sair desta licença</a>';
   QS.forEach(function (q) { atualizarQ(q.n); });
-  if (FER) (FER.tipo === 'pena' ? calculadoraPena : FER.tipo === 'xl' ? laboratorioXL : laboratorioTV)($('#lab-ferr'), FER);
+  if (FER) (FER.tipo === 'quorum' ? calculadoraQuorum : FER.tipo === 'pena' ? calculadoraPena : FER.tipo === 'xl' ? laboratorioXL : laboratorioTV)($('#lab-ferr'), FER);
   aplicarSub();
   montarCartao();
   atualizarTudo();
@@ -330,7 +331,10 @@ function montar() {
 function ferramenta() {
   var m = C.meta, f = m.ferramenta || (m.ferramentaTV ? { tipo: 'tv' } : null);
   if (!f) return null;
-  var base = f.tipo === 'pena'
+  var base = f.tipo === 'quorum'
+    ? { titulo: 'Calculadora de quóruns', sigla: '⅗', sub: 'Maioria absoluta, 3/5, 2/3 e 1/3',
+        lead: 'Escolha a Casa legislativa e o quórum e veja o número mínimo de votos, com a conta passo a passo, a regra de arredondamento e onde a Constituição exige cada quórum. Use para conferir as suas resoluções.' }
+    : f.tipo === 'pena'
     ? { titulo: 'Calculadora de frações de pena', sigla: '⅔', sub: 'Aumentos, diminuições e progressão',
         lead: 'Aplique frações de aumento ou de diminuição (tráfico privilegiado, majorantes da tortura) e percentuais de progressão de regime à pena-base e veja a conta passo a passo, em anos, meses e dias. Use para conferir as suas resoluções.' }
     : f.tipo === 'xl'
@@ -438,7 +442,7 @@ function refazer(soErradas) {
 
 /* ============================ resultado e diagnóstico ============================ */
 function calcular() {
-  var at = ativas(), R = { tot: at.length, ok: 0, no: 0, bl: 0, areas: {}, fases: {}, fmt: { ass: [0, 0], img: [0, 0], txt: [0, 0], iso: [0, 0] }, err: [] };
+  var at = ativas(), R = { tot: at.length, ok: 0, no: 0, bl: 0, areas: {}, fases: {}, fmt: { ass: [0, 0], img: [0, 0], txt: [0, 0], iso: [0, 0] }, real: [0, 0], err: [] };
   Object.keys(C.areas).forEach(function (k) { R.areas[k] = { ok: 0, tot: 0, err: [] }; });
   at.forEach(function (q) {
     var s = statusQ(q), a = R.areas[q.area], acerto = s === 'ok' ? 1 : 0;
@@ -447,6 +451,7 @@ function calcular() {
     var f = R.fases[q.fase] || (R.fases[q.fase] = [0, 0]); f[0] += acerto; f[1]++;
     var fm = q.tipo === 'assertivas' ? 'ass' : q.img ? 'img' : q.texto ? 'txt' : 'iso';
     R.fmt[fm][0] += acerto; R.fmt[fm][1]++;
+    if (q.fonte) { R.real[0] += acerto; R.real[1]++; }
   });
   R.acc = R.tot ? R.ok / R.tot : 0;
   return R;
@@ -523,6 +528,7 @@ function renderResultado() {
   C.fases.forEach(function (f) { var v = R.fases[f.n]; if (!v) return; h += barra(f.nome, v[0], v[1]); });
   h += '</div><div class="card"><h3 class="eyebrow" style="margin-bottom:6px">Por formato de questão</h3>';
   [['ass', 'Assertivas (I, II, III...)'], ['img', C.meta.rotuloImg || 'Com imagem'], ['txt', 'Ligadas a texto'], ['iso', C.meta.rotuloIso || 'Gramática isolada']].forEach(function (x) { var v = R.fmt[x[0]]; if (v[1]) h += barra(x[1], v[0], v[1]); });
+  if (R.real[1]) h += barra(C.meta.rotuloReal || 'Questões reais de prova', R.real[0], R.real[1]);
   h += '</div></div>';
   /* diagnóstico */
   var ks = Object.keys(A).filter(function (k) { return R.areas[k].tot; });
@@ -596,7 +602,7 @@ function renderGabarito() {
     var s = statusQ(q), r = ST.resp[q.n];
     return '<details class="gab-item" id="gab' + q.n + '"><summary><span class="gn">Q' + pad(q.n) + '</span><span class="gl">Gabarito ' + q.resp + '</span>' +
       (ST.fim ? '<span class="q-res ' + s + '">' + (s === 'ok' ? 'Acertou' : s === 'no' ? 'Errou (' + r + ')' : 'Em branco') + '</span>' : '') +
-      '<span class="ga">' + esc(ITEM[q.item]) + ' · nível ' + q.nivel + '</span></summary>' + comentHTML(q) +
+      '<span class="ga">' + esc(ITEM[q.item]) + ' · nível ' + q.nivel + (q.fonte ? ' · prova real' : '') + '</span></summary>' + comentHTML(q) +
       '<p style="margin:8px 0 0"><a href="#q' + q.n + '" data-act="ir">Ir para a questão ' + q.n + '</a></p></details>';
   }).join('');
   el.innerHTML = h;
@@ -1234,6 +1240,77 @@ function calculadoraPena(el, conf) {
     }
   });
   ['pn-a', 'pn-m', 'pn-d', 'pn-n', 'pn-q'].forEach(function (id) { $i(id).addEventListener('input', desenhar); });
+  desenhar();
+}
+
+/* ============================ calculadora de quóruns ============================ */
+/* Quórum é número MÍNIMO de votos: frações arredondam para cima; maioria absoluta = primeiro inteiro acima da metade dos membros. */
+var QUORUNS = {
+  ma: { nome: 'Maioria absoluta', usos: 'lei complementar (art. 69); rejeição de veto, em sessão conjunta (art. 66, § 4º); aprovação do estado de defesa e autorização do estado de sítio (arts. 136, § 4º, e 137, parágrafo único); aprovação de Ministro do STF pelo Senado (art. 101, parágrafo único); perda de mandato de parlamentar (art. 55, § 2º); quórum de presença para deliberar (art. 47)' },
+  ms: { nome: 'Maioria simples (dos presentes)', usos: 'regra geral das deliberações, presente a maioria absoluta dos membros (art. 47): leis ordinárias, decretos legislativos e resoluções, salvo exigência constitucional diversa' },
+  f35: { n: 3, d: 5, nome: 'Três quintos', usos: 'emenda à Constituição, em cada Casa e em dois turnos (art. 60, § 2º); tratados de direitos humanos com força de emenda (art. 5º, § 3º)' },
+  f23: { n: 2, d: 3, nome: 'Dois terços', usos: 'autorização da Câmara para processo contra o Presidente da República (arts. 51, I, e 86); condenação pelo Senado nos crimes de responsabilidade (art. 52, parágrafo único); aprovação de lei orgânica municipal, em dois turnos (art. 29)' },
+  f13: { n: 1, d: 3, nome: 'Um terço', usos: 'requerimento de criação de CPI (art. 58, § 3º); proposta de emenda à Constituição por parlamentares (art. 60, I)' },
+  fr: { nome: 'Outra fração', usos: 'fração escolhida por você' }
+};
+function quorumCalcular(membros, tipo, n, d, presentes) {
+  membros = Math.floor(+membros);
+  if (!(membros > 0)) throw new Error('Informe o número de membros da Casa.');
+  var Q = QUORUNS[tipo] || QUORUNS.ma, metade = membros / 2, ma = Math.floor(membros / 2) + 1, r = { tipo: tipo, nome: Q.nome, usos: Q.usos, membros: membros, ma: ma, passos: [] };
+  var fmt = function (x) { return (Math.round(x * 100) / 100).toLocaleString('pt-BR'); };
+  if (tipo === 'ma') {
+    r.votos = ma;
+    r.passos.push('Metade de ' + membros + ' = ' + fmt(metade) + '.');
+    r.passos.push('Maioria absoluta é o primeiro número inteiro acima da metade dos membros: <b>' + ma + '</b> votos, ainda que nem todos estejam presentes.');
+    return r;
+  }
+  if (tipo === 'ms') {
+    presentes = Math.floor(+presentes);
+    if (!(presentes > 0)) throw new Error('Informe quantos membros estão presentes.');
+    if (presentes > membros) throw new Error('Os presentes não podem passar do total de membros.');
+    r.passos.push('Quórum de presença (art. 47): maioria absoluta dos membros, ou seja, ' + ma + ' presentes.');
+    if (presentes < ma) { r.votos = null; r.semQuorum = true; r.passos.push('Com ' + presentes + ' presentes, a Casa <b>não pode deliberar</b>: faltam ' + (ma - presentes) + ' membros.'); return r; }
+    r.votos = Math.floor(presentes / 2) + 1;
+    r.passos.push('Com ' + presentes + ' presentes, a maioria dos presentes é o primeiro inteiro acima de ' + fmt(presentes / 2) + ': <b>' + r.votos + '</b> votos (se todos votarem).');
+    return r;
+  }
+  if (tipo === 'fr') { n = Math.floor(+n); d = Math.floor(+d); } else { n = Q.n; d = Q.d; }
+  if (!(d > 0) || !(n > 0) || n > d) throw new Error('Informe uma fração entre 0 e 1 (numerador menor ou igual ao denominador).');
+  var exato = membros * n / d, votos = Math.ceil(exato - 1e-9);
+  r.n = n; r.d = d; r.votos = votos;
+  r.passos.push(n + '/' + d + ' de ' + membros + ' = ' + membros + ' × ' + n + ' ÷ ' + d + ' = ' + fmt(exato) + '.');
+  r.passos.push(Math.abs(exato - Math.round(exato)) < 1e-9 ? 'O resultado é exato: <b>' + votos + '</b> votos.' : 'Não existe fração de voto e o quórum é o mínimo exigido: arredonda-se para cima, <b>' + votos + '</b> votos (com ' + (votos - 1) + ' votos não se alcança ' + n + '/' + d + ').');
+  return r;
+}
+function calculadoraQuorum(el, conf) {
+  if (!el) return;
+  conf = conf || {};
+  var CASAS = conf.casas || [['Câmara dos Deputados', 513], ['Senado Federal', 81], ['Assembleia Legislativa de PE', 49]];
+  var tipo = QUORUNS[conf.quorum] ? conf.quorum : 'f35';
+  el.innerHTML =
+    '<div class="tvl-ex"><span>Casa:</span>' + CASAS.map(function (c, i) { return '<button type="button" class="tvl-chip" data-casa="' + i + '">' + esc(c[0]) + ' (' + c[1] + ')</button>'; }).join('') + '</div>' +
+    '<div class="pn-grid qr-grid"><label><span class="tvl-lb">Membros</span><input class="in" id="qr-m" type="number" min="1" inputmode="numeric" value="' + (conf.membros || CASAS[0][1]) + '"></label>' +
+    '<label><span class="tvl-lb">Presentes</span><input class="in" id="qr-p" type="number" min="1" inputmode="numeric" value="' + (conf.presentes || 300) + '"></label>' +
+    '</div><div class="pn-frac"><span class="tvl-lb">Outra fração</span><input class="in" id="qr-n" type="number" min="1" inputmode="numeric" value="1" aria-label="Numerador"><span class="pn-bar">/</span><input class="in" id="qr-d" type="number" min="1" inputmode="numeric" value="5" aria-label="Denominador"></div>' +
+    '<div class="qr-tipos" role="group" aria-label="Quórum">' + Object.keys(QUORUNS).map(function (k) { return '<button type="button" class="tvl-k tvl-w" data-qt="' + k + '" aria-pressed="' + (k === tipo) + '">' + esc(QUORUNS[k].nome) + '</button>'; }).join('') + '</div>' +
+    '<div class="pn-out" aria-live="polite"></div>' +
+    '<p class="tvl-help">Use “Presentes” só na maioria simples e “Fração” só em “Outra fração”. Na Câmara (513) e no Senado (81), os números valem para cada Casa; em sessão conjunta, cada Casa vota e é contada separadamente.</p>';
+  var $i = function (id) { return el.querySelector('#' + id); }, out = el.querySelector('.pn-out');
+  function frac(n, d) { return '<span class="qf"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function desenhar() {
+    var r;
+    try { r = quorumCalcular($i('qr-m').value, tipo, $i('qr-n').value, $i('qr-d').value, $i('qr-p').value); } catch (err) { out.innerHTML = '<p class="tvl-erro">' + esc(err.message) + '</p>'; return; }
+    var rot = r.n ? frac(r.n, r.d) + ' de ' + r.membros : esc(r.nome);
+    out.innerHTML = '<p class="tvl-res"><span class="st ' + (r.semQuorum ? 'no' : 'ok') + '">' + rot + '</span> ' + (r.semQuorum ? 'sem quórum para deliberar' : r.votos + ' votos no mínimo') + '</p>' +
+      '<ol class="pn-passos">' + r.passos.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ol>' +
+      '<p class="qr-usos"><b>Onde a CF exige:</b> ' + esc(r.usos) + '.</p>';
+  }
+  el.addEventListener('click', function (ev) {
+    var c = ev.target.closest('[data-casa]'), b = ev.target.closest('[data-qt]');
+    if (c) { $i('qr-m').value = CASAS[+c.getAttribute('data-casa')][1]; desenhar(); }
+    if (b) { tipo = b.getAttribute('data-qt'); Array.prototype.forEach.call(el.querySelectorAll('[data-qt]'), function (k) { k.setAttribute('aria-pressed', String(k === b)); }); desenhar(); }
+  });
+  ['qr-m', 'qr-p', 'qr-n', 'qr-d'].forEach(function (id) { $i(id).addEventListener('input', desenhar); });
   desenhar();
 }
 

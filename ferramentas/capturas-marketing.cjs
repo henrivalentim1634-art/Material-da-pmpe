@@ -3,6 +3,7 @@
 //      node capturas-marketing.cjs rlm        (RLM → vendas-rlm/img/)
 //      node capturas-marketing.cjs info       (Informática → vendas-info/img/)
 //      node capturas-marketing.cjs dh         (Direitos Humanos → vendas-dh/img/)
+//      node capturas-marketing.cjs dc         (Direito Constitucional → vendas-dc/img/)
 // Precisa do Playwright/Chromium e da pasta privado/.
 const { chromium, devices } = require('playwright');
 const fs = require('fs'), path = require('path');
@@ -18,6 +19,9 @@ const CFG = {
   dh: { html: 'produto/minissimulado-direitos-humanos-pmpe.html', csv: 'privado/licencas-dh.csv', conteudo: 'privado/dh/index.mjs', out: 'vendas-dh/img',
     tesoura: 22, cortes: ['A', 'B', 'D'], marca: 'E', errar: [12, 18, 25, 27, 33, 35, 40], branco: [32, 37], comentario: 25,
     telas: [['tela-capa', '#capa', -20], ['tela-vademecum', '#vademecum', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-linha', '#q2', 0], ['tela-piramide', '#q21', 0], ['tela-sistema', '#q26', 0], ['tela-assertivas', '#q13', 0]] },
+  dc: { html: 'produto/minissimulado-direito-constitucional-pmpe.html', csv: 'privado/licencas-dc.csv', conteudo: 'privado/dc/index.mjs', out: 'vendas-dc/img',
+    tesoura: 17, cortes: ['A', 'C', 'D'], marca: 'E', errar: [9, 16, 22, 29, 33, 37, 40], branco: [35, 38], comentario: 31,
+    telas: [['tela-capa', '#capa', -20], ['tela-constituicao', '#constituicao', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-real', '#q3', 0], ['tela-senado', '#q37', 0], ['tela-veto', '#q40', 0], ['tela-assertivas', '#q22', 0]] },
   rlm: { html: 'produto/minissimulado-rlm-pmpe.html', csv: 'privado/licencas-rlm.csv', conteudo: 'privado/rlm/index.mjs', out: 'vendas-rlm/img',
     tesoura: 13, cortes: ['B', 'D', 'E'], marca: 'A', errar: [12, 19, 27, 33, 35, 37, 40], branco: [29, 38], comentario: 32,
     telas: [['tela-capa', '#capa', -20], ['tela-formulario', '#formulario', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-tabela', '#q11', 0], ['tela-grade', '#q26', 0]] }

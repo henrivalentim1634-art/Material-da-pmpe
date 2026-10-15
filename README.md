@@ -10,8 +10,13 @@ Infoprodutos em HTML para concursos policiais (PMPE / PMAL), prontos para venda 
 | Minissimulado de **Raciocínio Lógico** PMPE 2026 | `produto/minissimulado-rlm-pmpe.html` | `vendas-rlm/` | `RL-XXXX-XXXX-XXXX` |
 | Minissimulado de **Informática** PMPE 2026 | `produto/minissimulado-informatica-pmpe.html` | `vendas-info/` | `RI-XXXX-XXXX-XXXX` |
 | Minissimulado de **Direitos Humanos** PMPE 2026 | `produto/minissimulado-direitos-humanos-pmpe.html` | `vendas-dh/` | `RD-XXXX-XXXX-XXXX` |
+| Minissimulado de **Direito Constitucional** PMPE 2026 | `produto/minissimulado-direito-constitucional-pmpe.html` | `vendas-dc/` | `RC-XXXX-XXXX-XXXX` |
 
-A pasta `vitrine/` tem a página inicial do site com os quatro produtos.
+A pasta `vitrine/` tem a página inicial do site com os cinco produtos.
+
+## Minissimulado de Direito Constitucional PMPE 2026
+
+40 questões em 4 fases: 28 questões reais de provas de 2024 (as 10 de Constitucional da prova de Soldado da PMPE, 2 da prova de 2º Tenente da PMPE, 10 do CBMPE e 6 da PCPE), com a fonte indicada em cada uma, e 12 inéditas de nível de elite, com ênfase no art. 5º, na organização do Estado e político-administrativa, na administração pública e nos três Poderes. Traz a **Calculadora de quóruns** (maioria absoluta, maioria simples, 3/5, 2/3 e 1/3, com a regra de arredondamento e onde a Constituição exige cada quórum), a Constituição relâmpago, figuras em HTML e SVG (quadro de competências, hemiciclo do Senado e fluxograma do veto), frações em KaTeX, gabarito comentado, gráfico de pizza, diagnóstico em 8 áreas com desempenho nas questões reais e caminho de estudo.
 
 ## Minissimulado de Direitos Humanos PMPE 2026
 
@@ -32,7 +37,7 @@ A pasta `vitrine/` tem a página inicial do site com os quatro produtos.
 | Pasta | Conteúdo |
 |---|---|
 | `produto/` | Os produtos finais (arquivo único cada, conteúdo **criptografado**; só abrem com chave de licença) |
-| `vendas/` · `vendas-rlm/` · `vendas-info/` · `vendas-dh/` · `vitrine/` | Páginas de vendas, obrigado, termos de uso, privacidade e a vitrine |
+| `vendas/` · `vendas-rlm/` · `vendas-info/` · `vendas-dh/` · `vendas-dc/` · `vitrine/` | Páginas de vendas, obrigado, termos de uso, privacidade e a vitrine |
 | `kiwify/` | **[Guia passo a passo](kiwify/GUIA-KIWIFY.md)**, textos prontos, automação das chaves, kit de anúncios e criativos em PNG |
 | `src/` | Motor do simulado (HTML, CSS e JS) e identidade visual |
 | `ferramentas/` | Scripts de build: gerar chaves, criptografar e montar o produto, capturas, criativos e pasta do site |
@@ -49,12 +54,13 @@ node gerar-chaves.mjs 500        # (opcional) chaves novas de Português (privad
 node gerar-chaves.mjs 500 rlm    # (opcional) chaves novas de RLM (privado/licencas-rlm.csv)
 node gerar-chaves.mjs 500 info   # (opcional) chaves novas de Informática (privado/licencas-info.csv)
 node gerar-chaves.mjs 500 dh     # (opcional) chaves novas de Direitos Humanos (privado/licencas-dh.csv)
+node gerar-chaves.mjs 500 dc     # (opcional) chaves novas de Direito Constitucional (privado/licencas-dc.csv)
 node build.mjs                   # criptografa o conteúdo e gera os produtos em produto/
 node build.mjs rlm               # (ou só um produto: portugues, rlm ou info)
 node montar-site.mjs             # monta site/ e site-netlify.zip para publicar no Netlify
 ```
 
-Para revogar uma chave, escreva-a em `privado/revogadas.txt` (Português) `privado/revogadas-rlm.txt` (RLM), `privado/revogadas-info.txt` (Informática) ou `privado/revogadas-dh.txt` (Direitos Humanos) e rode `node build.mjs` de novo.
+Para revogar uma chave, escreva-a em `privado/revogadas.txt` (Português) `privado/revogadas-rlm.txt` (RLM), `privado/revogadas-info.txt` (Informática) `privado/revogadas-dh.txt` (Direitos Humanos) ou `privado/revogadas-dc.txt` (Direito Constitucional) e rode `node build.mjs` de novo.
 
 ## Proteção do material
 

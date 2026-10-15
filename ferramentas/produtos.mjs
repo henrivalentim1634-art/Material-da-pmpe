@@ -80,6 +80,26 @@ export const PRODUTOS = {
     navExtra: [['vademecum', 'Vade-mécum relâmpago', 'leis'], ['laboratorio', 'Calculadora de penas', 'frações']],
     vendas: 'vendas-dh',
     pasta: 'direitos-humanos'
+  },
+  dc: {
+    id: 'dc',
+    prod: 'RFDC1',
+    prefixo: 'RC',                       // chaves RC-XXXX-XXXX-XXXX
+    storage: 'rf_dc_pmpe',
+    conteudo: 'privado/dc/index.mjs',
+    licencas: 'privado/licencas-dc.csv',
+    revogadas: 'privado/revogadas-dc.txt',
+    saida: 'produto/minissimulado-direito-constitucional-pmpe.html',
+    titulo: 'Minissimulado de Direito Constitucional · PMPE · Raiz de Física',
+    nojs: 'Minissimulado de Direito Constitucional · PMPE',
+    gate: 'MINISSIMULADO<br>DIREITO CONSTITUCIONAL',
+    gateSub: 'PMPE 2026 · Acesso do aluno',
+    marca: 'MINISSIMULADO · DIREITO CONSTITUCIONAL',
+    katex: true,
+    banner: 'src/marca/banner-direito-constitucional.jpg',
+    navExtra: [['constituicao', 'Constituição relâmpago', 'quóruns'], ['laboratorio', 'Calculadora de quóruns', 'frações']],
+    vendas: 'vendas-dc',
+    pasta: 'direito-constitucional'
   }
 };
 
