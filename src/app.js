@@ -211,6 +211,7 @@ function qHTML(q) {
   if (q.img) h += '<div class="q-ilu">' + tex(C.ilustracoes[q.img]) + '</div>';
   h += '<div class="q-en">' + tex(q.enunciado) + '</div>';
   if (q.assertivas) h += '<ol class="ass">' + q.assertivas.map(function (a, i) { return '<li><span class="rn">' + ROM[i] + '.</span><span>' + tex(a) + '</span></li>'; }).join('') + '</ol>';
+  if (q.comando) h += '<div class="q-en">' + tex(q.comando) + '</div>'; /* comando que vem depois dos itens, como na prova original */
   h += '<div class="q-dyn" id="qd' + q.n + '"></div></article>';
   return h;
 }

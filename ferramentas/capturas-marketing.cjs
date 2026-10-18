@@ -4,6 +4,7 @@
 //      node capturas-marketing.cjs info       (Informática → vendas-info/img/)
 //      node capturas-marketing.cjs dh         (Direitos Humanos → vendas-dh/img/)
 //      node capturas-marketing.cjs dc         (Direito Constitucional → vendas-dc/img/)
+//      node capturas-marketing.cjs lee        (Legislação Extravagante → vendas-lee/img/)
 // Precisa do Playwright/Chromium e da pasta privado/.
 const { chromium, devices } = require('playwright');
 const fs = require('fs'), path = require('path');
@@ -22,6 +23,9 @@ const CFG = {
   dc: { html: 'produto/minissimulado-direito-constitucional-pmpe.html', csv: 'privado/licencas-dc.csv', conteudo: 'privado/dc/index.mjs', out: 'vendas-dc/img',
     tesoura: 17, cortes: ['A', 'C', 'D'], marca: 'E', errar: [9, 16, 22, 29, 33, 37, 40], branco: [35, 38], comentario: 31,
     telas: [['tela-capa', '#capa', -20], ['tela-constituicao', '#constituicao', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-real', '#q3', 0], ['tela-senado', '#q37', 0], ['tela-veto', '#q40', 0], ['tela-assertivas', '#q22', 0]] },
+  lee: { html: 'produto/minissimulado-legislacao-extravagante-pmpe.html', csv: 'privado/licencas-lee.csv', conteudo: 'privado/lee/index.mjs', out: 'vendas-lee/img',
+    tesoura: 19, cortes: ['A', 'C', 'D'], marca: 'E', errar: [8, 15, 23, 28, 33, 36, 40], branco: [34, 38], comentario: 35,
+    telas: [['tela-capa', '#capa', -20], ['tela-leiseca', '#leiseca', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-real', '#q1', 0], ['tela-apreensao', '#q30', 0], ['tela-progressao', '#q39', 0], ['tela-assertivas', '#q36', 0]] },
   rlm: { html: 'produto/minissimulado-rlm-pmpe.html', csv: 'privado/licencas-rlm.csv', conteudo: 'privado/rlm/index.mjs', out: 'vendas-rlm/img',
     tesoura: 13, cortes: ['B', 'D', 'E'], marca: 'A', errar: [12, 19, 27, 33, 35, 37, 40], branco: [29, 38], comentario: 32,
     telas: [['tela-capa', '#capa', -20], ['tela-formulario', '#formulario', -10], ['tela-laboratorio', '#laboratorio', -10], ['tela-tabela', '#q11', 0], ['tela-grade', '#q26', 0]] }
