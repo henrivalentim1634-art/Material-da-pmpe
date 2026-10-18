@@ -2,6 +2,7 @@
 // Uso:  node gerar-chaves.mjs 500            (Português: privado/licencas.csv, chaves RF-)
 //       node gerar-chaves.mjs 500 rlm        (RLM: privado/licencas-rlm.csv, chaves RL-)
 //       node gerar-chaves.mjs 500 dc         (Direito Constitucional: privado/licencas-dc.csv, chaves RC-)
+//       node gerar-chaves.mjs 500 lee        (Legislação Extravagante: privado/licencas-lee.csv, chaves RE-)
 // A licença nº 0000 é a CHAVE DO AUTOR, para testes. Nunca a envie para clientes.
 import { randomBytes } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';

@@ -322,7 +322,7 @@ function montar() {
     '<br>' + m.rodape +
     '<br>Material protegido pela Lei nº 9.610/1998. Reproduzir, compartilhar ou revender sem autorização é crime (art. 184 do Código Penal). <a href="#" data-act="sair">Sair desta licença</a>';
   QS.forEach(function (q) { atualizarQ(q.n); });
-  if (FER) (FER.tipo === 'quorum' ? calculadoraQuorum : FER.tipo === 'pena' ? calculadoraPena : FER.tipo === 'xl' ? laboratorioXL : laboratorioTV)($('#lab-ferr'), FER);
+  if (FER) (FER.tipo === 'regime' ? calculadoraRegime : FER.tipo === 'quorum' ? calculadoraQuorum : FER.tipo === 'pena' ? calculadoraPena : FER.tipo === 'xl' ? laboratorioXL : laboratorioTV)($('#lab-ferr'), FER);
   aplicarSub();
   montarCartao();
   atualizarTudo();
@@ -331,7 +331,10 @@ function montar() {
 function ferramenta() {
   var m = C.meta, f = m.ferramenta || (m.ferramentaTV ? { tipo: 'tv' } : null);
   if (!f) return null;
-  var base = f.tipo === 'quorum'
+  var base = f.tipo === 'regime'
+    ? { titulo: 'Calculadora de progressão de regime', sigla: '%', sub: 'Art. 112 da LEP, redação de 2026',
+        lead: 'Informe a pena e a situação do condenado e veja o tempo mínimo para progredir de regime pelo art. 112 da Lei de Execução Penal, já com as mudanças de 2026 (crimes hediondos, feminicídio, organização criminosa e milícia), a conta passo a passo e a comparação com a regra antiga. Use para conferir as suas resoluções.' }
+    : f.tipo === 'quorum'
     ? { titulo: 'Calculadora de quóruns', sigla: '⅗', sub: 'Maioria absoluta, 3/5, 2/3 e 1/3',
         lead: 'Escolha a Casa legislativa e o quórum e veja o número mínimo de votos, com a conta passo a passo, a regra de arredondamento e onde a Constituição exige cada quórum. Use para conferir as suas resoluções.' }
     : f.tipo === 'pena'
@@ -1311,6 +1314,64 @@ function calculadoraQuorum(el, conf) {
     if (b) { tipo = b.getAttribute('data-qt'); Array.prototype.forEach.call(el.querySelectorAll('[data-qt]'), function (k) { k.setAttribute('aria-pressed', String(k === b)); }); desenhar(); }
   });
   ['qr-m', 'qr-p', 'qr-n', 'qr-d'].forEach(function (id) { $i(id).addEventListener('input', desenhar); });
+  desenhar();
+}
+
+/* ============================ calculadora de progressão de regime ============================ */
+/* Lei de Execução Penal, art. 112, na redação das Leis nº 15.358/2026 e 15.402/2026. "antes" = redação da Lei nº 13.964/2019 (e da Lei nº 14.994/2024 no feminicídio). */
+var REGIMES = {
+  geral: { n: 1, d: 6, nome: 'Regra geral', base: 'caput', quem: 'primário, crime sem violência ou grave ameaça', antes: [16, 100] },
+  viol1: { n: 25, d: 100, nome: 'Primário · violência', base: 'inciso I', quem: 'primário, crime com violência ou grave ameaça (salvo os crimes contra o Estado Democrático de Direito, Título XII do Código Penal)', antes: [25, 100] },
+  reinc: { n: 20, d: 100, nome: 'Reincidente · sem violência', base: 'inciso III', quem: 'reincidente em crime sem violência ou grave ameaça', antes: [20, 100] },
+  viol2: { n: 30, d: 100, nome: 'Reincidente · violência', base: 'incisos II e IV', quem: 'reincidente, crime com violência ou grave ameaça', antes: [30, 100] },
+  hed1: { n: 70, d: 100, nome: 'Hediondo · primário', base: 'inciso V', quem: 'primário, crime hediondo ou equiparado (tortura, tráfico e terrorismo)', antes: [40, 100] },
+  hed2: { n: 75, d: 100, nome: 'Hediondo com morte · primário', base: 'inciso VI, a', quem: 'primário, crime hediondo ou equiparado com resultado morte', antes: [50, 100], semLC: true },
+  orcrim: { n: 75, d: 100, nome: 'Comando de organização criminosa', base: 'inciso VI, b', quem: 'comando, individual ou coletivo, de organização criminosa ultraviolenta estruturada para a prática de crime hediondo ou equiparado', antes: [50, 100], semLC: true },
+  milicia: { n: 75, d: 100, nome: 'Milícia privada', base: 'inciso VI, c', quem: 'condenado pelo crime de constituição de milícia privada', antes: [50, 100] },
+  femin: { n: 75, d: 100, nome: 'Feminicídio · primário', base: 'inciso VI, d', quem: 'primário, condenado por feminicídio', antes: [55, 100], semLC: true },
+  hed3: { n: 80, d: 100, nome: 'Hediondo · reincidente', base: 'inciso VII', quem: 'reincidente na prática de crime hediondo ou equiparado', antes: [60, 100] },
+  hed4: { n: 85, d: 100, nome: 'Hediondo com morte · reincidente', base: 'inciso VIII', quem: 'reincidente em crime hediondo ou equiparado com resultado morte', antes: [70, 100], semLC: true },
+  mae: { n: 1, d: 8, nome: 'Gestante ou mãe (§ 3º)', base: '§ 3º', quem: 'gestante, mãe ou responsável por criança ou pessoa com deficiência que cumpra todos os requisitos do § 3º (crime sem violência, não contra o filho, primária, bom comportamento, sem integrar organização criminosa)', antes: [1, 8] }
+};
+function regimeCalcular(base, chave) {
+  var R = REGIMES[chave];
+  if (!R) throw new Error('Escolha a situação do condenado.');
+  if (!(base > 0)) throw new Error('Informe a pena (anos, meses e/ou dias).');
+  var dias = Math.floor(base * R.n / R.d + 1e-9), antes = Math.floor(base * R.antes[0] / R.antes[1] + 1e-9);
+  return { R: R, dias: dias, antes: antes, mudou: R.antes[0] / R.antes[1] !== R.n / R.d };
+}
+function calculadoraRegime(el, conf) {
+  if (!el) return;
+  conf = conf || {};
+  var chave = REGIMES[conf.regime] ? conf.regime : 'hed1', EX = conf.exemplos || [];
+  el.innerHTML =
+    '<div class="pn-grid"><label><span class="tvl-lb">Anos</span><input class="in" id="rg-a" type="number" min="0" inputmode="numeric" value="' + (conf.anos != null ? conf.anos : 6) + '"></label>' +
+    '<label><span class="tvl-lb">Meses</span><input class="in" id="rg-m" type="number" min="0" inputmode="numeric" value="0"></label>' +
+    '<label><span class="tvl-lb">Dias</span><input class="in" id="rg-d" type="number" min="0" inputmode="numeric" value="0"></label></div>' +
+    '<div class="qr-tipos rg-tipos" role="group" aria-label="Situação do condenado">' + Object.keys(REGIMES).map(function (k) { return '<button type="button" class="tvl-k tvl-w" data-rg="' + k + '" aria-pressed="' + (k === chave) + '">' + esc(REGIMES[k].nome) + '</button>'; }).join('') + '</div>' +
+    (EX.length ? '<div class="tvl-ex"><span>Situações:</span>' + EX.map(function (x, i) { return '<button type="button" class="tvl-chip" data-x="' + i + '">' + esc(x[0]) + '</button>'; }).join('') + '</div>' : '') +
+    '<div class="pn-out" aria-live="polite"></div>' +
+    '<p class="tvl-help">Requisito objetivo (tempo) do art. 112 da Lei de Execução Penal, na redação de 2026. A progressão também exige boa conduta carcerária e exame criminológico (§ 1º). O tráfico privilegiado (art. 33, § 4º, da Lei de Drogas) não é hediondo para este fim (§ 5º). Convenção das provas: ano de 12 meses e mês de 30 dias; frações de dia são desprezadas.</p>';
+  var $i = function (id) { return el.querySelector('#' + id); }, out = el.querySelector('.pn-out');
+  function frac(n, d) { return d === 100 ? n + '%' : '<span class="qf"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function desenhar() {
+    var base = penaDias($i('rg-a').value, $i('rg-m').value, $i('rg-d').value), r;
+    try { r = regimeCalcular(base, chave); } catch (err) { out.innerHTML = '<p class="tvl-erro">' + esc(err.message) + '</p>'; return; }
+    var R = r.R;
+    out.innerHTML = '<p class="tvl-res"><span class="st ok">' + frac(R.n, R.d) + ' da pena</span> ' + esc(penaTexto(r.dias)) + ' para progredir</p>' +
+      '<ol class="pn-passos"><li>Situação: <b>' + esc(R.quem) + '</b> (art. 112, ' + esc(R.base) + ', da Lei de Execução Penal).</li>' +
+      '<li>Pena: <b>' + esc(penaTexto(base)) + '</b> = ' + base.toLocaleString('pt-BR') + ' dias.</li>' +
+      '<li>' + (R.d === 100 ? R.n + '% de ' + base.toLocaleString('pt-BR') + ' = ' + base.toLocaleString('pt-BR') + ' × ' + R.n + ' ÷ 100' : R.n + '/' + R.d + ' de ' + base.toLocaleString('pt-BR') + ' = ' + base.toLocaleString('pt-BR') + ' ÷ ' + R.d) + ' = <b>' + r.dias.toLocaleString('pt-BR') + ' dias</b> = ' + esc(penaTexto(r.dias)) + '.</li>' +
+      (R.semLC ? '<li>Nesta hipótese, a lei <b>veda o livramento condicional</b>.</li>' : '') + '</ol>' +
+      '<p class="qr-usos">' + (r.mudou ? '<b>O que mudou:</b> antes das leis de 2026, eram ' + frac(R.antes[0], R.antes[1]) + ' (' + esc(penaTexto(r.antes)) + ' nesta pena). Questões de provas anteriores usam a regra antiga.' : '<b>Sem mudança:</b> a fração já era ' + frac(R.antes[0], R.antes[1]) + ' antes de 2026.') + '</p>';
+  }
+  el.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-rg]'), x = ev.target.closest('[data-x]');
+    if (x) { var e = EX[+x.getAttribute('data-x')]; $i('rg-a').value = e[1]; $i('rg-m').value = e[2]; $i('rg-d').value = 0; b = el.querySelector('[data-rg="' + e[3] + '"]'); }
+    if (b) { chave = b.getAttribute('data-rg'); Array.prototype.forEach.call(el.querySelectorAll('[data-rg]'), function (k) { k.setAttribute('aria-pressed', String(k === b)); }); }
+    if (b || x) desenhar();
+  });
+  ['rg-a', 'rg-m', 'rg-d'].forEach(function (id) { $i(id).addEventListener('input', desenhar); });
   desenhar();
 }
 

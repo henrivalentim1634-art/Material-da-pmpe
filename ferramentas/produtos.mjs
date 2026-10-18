@@ -100,6 +100,26 @@ export const PRODUTOS = {
     navExtra: [['constituicao', 'Constituição relâmpago', 'quóruns'], ['laboratorio', 'Calculadora de quóruns', 'frações']],
     vendas: 'vendas-dc',
     pasta: 'direito-constitucional'
+  },
+  lee: {
+    id: 'lee',
+    prod: 'RFLE1',
+    prefixo: 'RE',                       // chaves RE-XXXX-XXXX-XXXX
+    storage: 'rf_lee_pmpe',
+    conteudo: 'privado/lee/index.mjs',
+    licencas: 'privado/licencas-lee.csv',
+    revogadas: 'privado/revogadas-lee.txt',
+    saida: 'produto/minissimulado-legislacao-extravagante-pmpe.html',
+    titulo: 'Minissimulado de Legislação Extravagante · PMPE · Raiz de Física',
+    nojs: 'Minissimulado de Legislação Extravagante · PMPE',
+    gate: 'MINISSIMULADO<br>LEGISLAÇÃO EXTRAVAGANTE',
+    gateSub: 'PMPE 2026 · Acesso do aluno',
+    marca: 'MINISSIMULADO · LEGISLAÇÃO EXTRAVAGANTE',
+    katex: true,
+    banner: 'src/marca/banner-legislacao-extravagante.jpg',
+    navExtra: [['leiseca', 'Lei seca relâmpago', 'leis'], ['laboratorio', 'Calculadora de progressão', 'LEP 2026']],
+    vendas: 'vendas-lee',
+    pasta: 'legislacao-extravagante'
   }
 };
 
