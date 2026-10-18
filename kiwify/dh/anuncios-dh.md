@@ -65,7 +65,7 @@ Criativos em `kiwify/dh/criativos/`. As regras de anúncio, o público, o orçam
 |---|---|---|
 | 0–3 s | Você para a câmera | “O Pacto de San José protege a vida desde o nascimento? Errado.” |
 | 3–8 s | Tela: questão de assertivas do Pacto | “O art. 4º diz ‘em geral, desde a concepção’. E é a grande novidade do edital da PMPE.” |
-| 8–13 s | Tela: Calculadora de penas | “Aqui você confere conta de pena: tráfico privilegiado, tortura, progressão de 40%.” |
+| 8–13 s | Tela: Calculadora de penas | “Aqui você confere conta de pena: tráfico privilegiado, tortura, progressão de 70%.” |
 | 13–18 s | Tela: gráfico de pizza e diagnóstico | “No final, ele mostra exatamente o que você precisa estudar.” |
 | 18–20 s | Texto na tela | “Minissimulado de Direitos Humanos · R$ 10,80 · link na bio” |
 

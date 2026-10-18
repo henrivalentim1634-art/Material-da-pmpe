@@ -1211,7 +1211,7 @@ function penaCalcular(base, op, n, den) {
 function calculadoraPena(el, conf) {
   if (!el) return;
   conf = conf || {};
-  var FR = conf.fracoes || [['1/6', 1, 6], ['1/5', 1, 5], ['1/4', 1, 4], ['1/3', 1, 3], ['2/5', 2, 5], ['1/2', 1, 2], ['3/5', 3, 5], ['2/3', 2, 3], ['16%', 16, 100], ['25%', 25, 100], ['40%', 40, 100], ['50%', 50, 100], ['60%', 60, 100], ['70%', 70, 100]];
+  var FR = conf.fracoes || [['1/6', 1, 6], ['1/5', 1, 5], ['1/4', 1, 4], ['1/3', 1, 3], ['2/5', 2, 5], ['1/2', 1, 2], ['3/5', 3, 5], ['2/3', 2, 3], ['20%', 20, 100], ['25%', 25, 100], ['30%', 30, 100], ['70%', 70, 100], ['75%', 75, 100], ['80%', 80, 100], ['85%', 85, 100]];
   var EX = conf.exemplos || [];
   el.innerHTML =
     '<div class="pn-grid"><label><span class="tvl-lb">Anos</span><input class="in" id="pn-a" type="number" min="0" inputmode="numeric" value="' + (conf.anos != null ? conf.anos : 5) + '"></label>' +
