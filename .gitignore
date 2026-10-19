@@ -1,2 +1,10 @@
 # Google App Engine generated folder
 appengine-generated/
+
+# ===== Material privado: NUNCA enviar para o GitHub (repositório público) =====
+# Questões em texto aberto, gabarito e chaves de acesso.
+privado/
+*.zip
+node_modules/
+site/
+site-netlify.zip

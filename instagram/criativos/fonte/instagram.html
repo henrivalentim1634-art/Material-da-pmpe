@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Instagram · Minissimulados PMPE 2026</title>
+<link rel="stylesheet" href="../../../vendas/fontes.css">
+<style>
+/* Cada .art é uma peça de Instagram exportada em PNG no tamanho exato (ferramentas/gerar-criativos.cjs instagram). */
+:root{--bg:#05090b;--cyan:#3fefff;--cyan2:#16c2d2;--ink:#e6f5f7;--ink2:#b9d3d7;--muted:#86a7ad;--ok:#34e07e;--no:#ff5a6e;--yel:#ffd400}
+*{box-sizing:border-box}
+body{margin:0;background:#222;font-family:'Inter',Arial,sans-serif;display:flex;flex-direction:column;gap:40px;padding:40px;align-items:flex-start}
+.art{position:relative;overflow:hidden;color:var(--ink);background:
+  radial-gradient(70% 55% at 50% 0%,rgba(63,239,255,.20),transparent 70%),
+  radial-gradient(50% 40% at 0% 60%,rgba(63,239,255,.07),transparent 70%),
+  repeating-linear-gradient(45deg,rgba(180,235,240,.035) 0 2px,transparent 2px 7px),
+  repeating-linear-gradient(-45deg,rgba(180,235,240,.035) 0 2px,transparent 2px 7px),var(--bg)}
+.art::before{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 3px rgba(63,239,255,.18),inset 0 0 120px rgba(63,239,255,.10)}
+.glow-line{position:absolute;left:8%;right:8%;height:3px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 24px var(--cyan)}
+.logo{border-radius:50%;filter:drop-shadow(0 0 22px rgba(63,239,255,.55))}
+.disp{font-family:'Orbitron',sans-serif;font-weight:900;letter-spacing:.06em;color:#dffcff;text-shadow:0 0 30px rgba(63,239,255,.55);line-height:1.04;margin:0}
+.disp em{font-style:normal;color:var(--cyan)}
+.ui{font-family:'Rajdhani',sans-serif;font-weight:700}
+.eyebrow{font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan2)}
+.phone{border-radius:58px;padding:14px;background:linear-gradient(160deg,#2b3e44,#0b1215);box-shadow:0 40px 80px -20px #000,0 0 0 2px rgba(63,239,255,.3);position:relative}
+.phone img{display:block;width:100%;border-radius:46px;aspect-ratio:390/664;object-fit:cover;object-position:top}
+.phone::before{content:"";position:absolute;top:26px;left:50%;transform:translateX(-50%);width:110px;height:28px;border-radius:16px;background:#05090b;z-index:2}
+.price{display:inline-flex;align-items:baseline;gap:10px;font-family:'Rajdhani',sans-serif;font-weight:700;color:#021417;background:linear-gradient(180deg,var(--cyan),var(--cyan2));border-radius:18px;box-shadow:0 0 40px rgba(63,239,255,.45)}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chip{font-family:'Rajdhani',sans-serif;font-weight:700;border:2px solid rgba(63,239,255,.45);background:rgba(63,239,255,.08);border-radius:999px;color:#e6f5f7}
+.chk{display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
+.chk li{display:flex;gap:14px;align-items:flex-start;font-family:'Rajdhani',sans-serif;font-weight:700;color:#fff}
+.chk li::before{content:"✓";color:var(--ok);font-weight:900}
+.nota{position:absolute;font-family:'Inter',sans-serif;color:rgba(185,211,215,.75)}
+.balao{background:#fff;color:#111;border-radius:28px;font-family:'Trebuchet MS',Arial,sans-serif;position:relative}
+.banner{position:absolute;left:0;right:0;top:0;height:46%;background:url(../../../src/marca/banner-legislacao-extravagante.jpg) center top/cover no-repeat;opacity:.55;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
+.rj{font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.02em;line-height:1.02;color:#dffcff;text-shadow:0 0 26px rgba(63,239,255,.45);margin:0}
+.rj em{font-style:normal;color:var(--cyan)}
+.frase{background:#fff;color:#111;border-radius:26px;font-family:'Trebuchet MS',Arial,sans-serif;line-height:1.25}
+.op{font-family:'Rajdhani',sans-serif;font-weight:700;border:3px solid rgba(63,239,255,.45);border-radius:20px;background:rgba(5,14,17,.65);color:#e6f5f7}
+.op b{color:#3fefff;margin-right:10px}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 4px}
+.fr>span{display:block;padding:0 4px}.fr>span:first-child{border-bottom:3px solid currentColor;padding-bottom:3px}
+
+.num-sl{position:absolute;right:70px;top:70px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:30px;color:var(--cyan2);letter-spacing:.2em}
+.card{border:2px solid rgba(63,239,255,.35);background:rgba(5,14,17,.72);border-radius:28px}
+.lei{font-family:'Inter',sans-serif;color:var(--muted)}
+.big{font-family:'Orbitron',sans-serif;font-weight:900;color:#fff;text-shadow:0 0 36px rgba(63,239,255,.6);line-height:1}
+.big em{font-style:normal;color:var(--cyan)}
+.seta{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--cyan)}
+table.ig{border-collapse:separate;border-spacing:0;width:100%;font-family:'Rajdhani',sans-serif;font-weight:700;color:#fff}
+table.ig th,table.ig td{border-bottom:2px solid rgba(63,239,255,.18);padding:16px 14px;text-align:center}
+table.ig th{color:var(--cyan2);letter-spacing:.08em}
+table.ig td:first-child,table.ig th:first-child{text-align:left}
+.sim{color:var(--ok)}.nao{color:var(--no)}
+.tile{border:2px solid rgba(63,239,255,.4);background:rgba(5,14,17,.7);border-radius:26px;padding:26px 28px;display:flex;flex-direction:column;gap:8px}
+.tile b{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:40px;color:#fff;line-height:1.05}
+.tile span{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:28px;color:var(--ink2)}
+.passo{display:flex;gap:26px;align-items:flex-start}
+.passo i{flex:none;width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-family:'Orbitron',sans-serif;font-weight:900;font-size:36px;color:#021417;background:linear-gradient(180deg,var(--cyan),var(--cyan2));box-shadow:0 0 30px rgba(63,239,255,.45)}
+.passo div{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:44px;color:#fff;line-height:1.15}
+.passo div small{display:block;font-size:34px;color:var(--ink2);margin-top:6px}
+.vazio{position:absolute;border:3px dashed rgba(63,239,255,.0);border-radius:30px}
+.ce{position:absolute;left:70px;right:70px;border:2px dashed rgba(63,239,255,.45);border-radius:26px;padding:24px 30px;background:rgba(63,239,255,.05)}
+.ce .eyebrow{font-size:26px}
+.ce p{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:38px;color:#fff;line-height:1.2;margin:12px 0 0}
+.ce .res{display:inline-block;margin-top:14px;padding:4px 22px;border-radius:999px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:32px;letter-spacing:.08em}
+.ce .res.c{background:rgba(52,224,126,.16);color:var(--ok);border:2px solid var(--ok)}
+.ce .res.e{background:rgba(255,90,110,.14);color:var(--no);border:2px solid var(--no)}
+.antes{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--muted);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:6px}
+.dest{display:flex;align-items:center;justify-content:center}
+.dest .circ{width:620px;height:620px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 35%,rgba(63,239,255,.25),rgba(5,14,17,.9) 70%);box-shadow:0 0 0 6px rgba(63,239,255,.55),0 0 90px rgba(63,239,255,.45)}
+.dest svg{width:300px;height:300px;color:#dffcff;filter:drop-shadow(0 0 22px rgba(63,239,255,.8))}
+</style>
+</head>
+<body>
+
+<!-- ===================== LEGISLAÇÃO EXTRAVAGANTE · CARROSSEL “MUDOU EM 2026” (7 lâminas 1080x1350) ===================== -->
+<section class="art" id="ig-lee-carrossel-1-capa-1080x1350" style="width:1080px;height:1350px">
+  <div class="banner" style="height:45%"></div><div class="glow-line" style="top:0"></div>
+  <div class="num-sl">1/7</div>
+  <div style="position:absolute;left:70px;right:70px;top:500px">
+    <div class="eyebrow" style="font-size:30px">PMPE 2026 · LEGISLAÇÃO EXTRAVAGANTE</div>
+    <h1 class="disp" style="font-size:118px;margin-top:22px">MUDOU<br>EM <em>2026</em></h1>
+    <p class="ui" style="font-size:52px;color:#fff;margin:34px 0 0;line-height:1.15">5 mudanças nas leis penais que podem cair na sua prova</p>
+  </div>
+  <div style="position:absolute;left:70px;right:70px;bottom:80px;display:flex;justify-content:space-between;align-items:center">
+    <p class="ui" style="font-size:38px;color:var(--ink2);margin:0">Salve para revisar 📌</p>
+    <p class="seta" style="font-size:44px;margin:0">Arraste →</p>
+  </div>
+</section>
+
+<section class="art" id="ig-lee-carrossel-2-progressao-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <div class="num-sl">2/7</div>
+  <div style="position:absolute;left:70px;right:70px;top:90px">
+    <div class="eyebrow" style="font-size:30px">1 · PROGRESSÃO DE REGIME</div>
+    <p class="ui" style="font-size:46px;color:#fff;margin:26px 0 0;line-height:1.15">Crime hediondo ou equiparado, réu primário:</p>
+    <div style="display:flex;align-items:center;gap:40px;margin-top:34px"><span class="antes" style="font-size:96px">40%</span><span class="seta" style="font-size:80px">→</span><span class="big" style="font-size:170px"><em>70%</em></span></div>
+    <p class="ui" style="font-size:44px;color:var(--ink2);margin:20px 0 0;line-height:1.2">da pena cumprida para progredir de regime</p>
+    <div class="card" style="margin-top:46px;padding:30px 36px">
+      <table class="ig" style="font-size:40px">
+        <tr><td>Hediondo com morte, primário</td><td style="color:var(--cyan)">75%</td></tr>
+        <tr><td>Reincidente em hediondo</td><td style="color:var(--cyan)">80%</td></tr>
+        <tr><td>Reincidente, com morte</td><td style="color:var(--cyan)">85%</td></tr>
+        <tr><td style="border:0">Primário, crime sem violência</td><td style="border:0;color:var(--cyan)">1/6</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="lei" style="position:absolute;left:70px;right:70px;bottom:70px;font-size:28px;margin:0">LEP, art. 112 · Leis nº 15.358/2026 e 15.402/2026 · vale para fatos posteriores à lei nova</p>
+</section>
+
+<section class="art" id="ig-lee-carrossel-3-tortura-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <div class="num-sl">3/7</div>
+  <div style="position:absolute;left:70px;right:70px;top:90px">
+    <div class="eyebrow" style="font-size:30px">2 · LEI DE TORTURA</div>
+    <h2 class="rj" style="font-size:78px;margin-top:22px">Nova <em>tortura doméstica</em> contra a mulher</h2>
+    <div class="frase" style="margin-top:34px;padding:34px 40px;font-size:44px">“Submeter <b>mulher, reiteradamente</b>, a intenso sofrimento físico ou mental, no contexto de <b>violência doméstica e familiar</b>.”</div>
+    <ul class="chk" style="margin-top:34px;font-size:42px;gap:16px"><li>Pena: reclusão de 2 a 8 anos</li><li>Gestante: aumento de 1/6 a 1/3</li><li>Inafiançável e sem graça ou anistia</li></ul>
+  </div>
+  <div class="ce" style="top:895px"><div class="eyebrow">CAI ASSIM · CERTO OU ERRADO?</div><p>A nova tortura doméstica exige que a vítima seja mulher e que o sofrimento seja imposto reiteradamente.</p><span class="res c">CERTO</span></div>
+  <p class="lei" style="position:absolute;left:70px;right:70px;bottom:70px;font-size:28px;margin:0">Lei nº 9.455/1997, art. 1º, III, incluído pela Lei nº 15.410/2026</p>
+</section>
+
+<section class="art" id="ig-lee-carrossel-4-monitoracao-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <div class="num-sl">4/7</div>
+  <div style="position:absolute;left:70px;right:70px;top:90px">
+    <div class="eyebrow" style="font-size:30px">3 · MARIA DA PENHA</div>
+    <h2 class="rj" style="font-size:68px;margin-top:22px">Quem pode <em>afastar</em> o agressor e quem pode pôr a <em>tornozeleira</em>?</h2>
+    <div class="card" style="margin-top:36px;padding:10px 30px">
+      <table class="ig" style="font-size:36px">
+        <tr><th></th><th>Afastar<br>do lar</th><th>Tornozeleira</th></tr>
+        <tr><td>Juiz</td><td class="sim">SIM</td><td class="sim">SIM</td></tr>
+        <tr><td>Delegado</td><td class="sim">SIM</td><td class="sim">SIM</td></tr>
+        <tr><td style="border:0">Policial</td><td class="sim" style="border:0">SIM</td><td class="nao" style="border:0">NÃO</td></tr>
+      </table>
+    </div>
+    <p class="ui" style="font-size:34px;color:var(--ink2);margin:26px 0 0;line-height:1.25">Delegado: só se o Município não for sede de comarca. Policial: também sem delegado disponível. O juiz é avisado em 24 horas.</p>
+  </div>
+  <div class="ce" style="top:960px"><div class="eyebrow">CAI ASSIM · CERTO OU ERRADO?</div><p>Sem delegado disponível, o policial pode submeter o agressor à monitoração eletrônica.</p><span class="res e">ERRADO</span></div>
+  <p class="lei" style="position:absolute;left:70px;right:70px;bottom:70px;font-size:28px;margin:0">Lei nº 11.340/2006, art. 12-C, e art. 12-D (Lei nº 15.383/2026)</p>
+</section>
+
+<section class="art" id="ig-lee-carrossel-5-prazos-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <div class="num-sl">5/7</div>
+  <div style="position:absolute;left:70px;right:70px;top:90px">
+    <div class="eyebrow" style="font-size:30px">4 · MARIA DA PENHA</div>
+    <div class="big" style="font-size:128px;margin-top:30px;white-space:nowrap"><em>12</em> MESES</div>
+    <p class="ui" style="font-size:46px;color:#fff;margin:26px 0 0;line-height:1.2">é o prazo para a vítima oferecer queixa ou representação nos crimes de violência doméstica, contado de quando soube quem é o autor. A regra geral é de 6 meses.</p>
+    <div class="card" style="margin-top:50px;padding:34px 38px">
+      <p class="ui" style="font-size:42px;color:#fff;margin:0;line-height:1.2">Violou a tornozeleira ou a área de exclusão? O descumprimento da medida protetiva tem a pena <span style="color:var(--cyan)">aumentada de 1/3 até a metade</span>.</p>
+    </div>
+  </div>
+  <div class="ce" style="top:870px"><div class="eyebrow">CAI ASSIM · CERTO OU ERRADO?</div><p>Na violência doméstica, a vítima tem 6 meses para oferecer a representação.</p><span class="res e">ERRADO</span></div>
+  <p class="lei" style="position:absolute;left:70px;right:70px;bottom:70px;font-size:28px;margin:0">Lei nº 11.340/2006, arts. 16-A (Lei nº 15.438/2026) e 24-A, § 4º (Lei nº 15.383/2026)</p>
+</section>
+
+<section class="art" id="ig-lee-carrossel-6-drogas-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <div class="num-sl">6/7</div>
+  <div style="position:absolute;left:70px;right:70px;top:90px">
+    <div class="eyebrow" style="font-size:30px">5 · LEI DE DROGAS</div>
+    <h2 class="rj" style="font-size:86px;margin-top:22px">Tráfico de miliciano: pena em <em>dobro</em></h2>
+    <p class="ui" style="font-size:46px;color:#fff;margin:34px 0 0;line-height:1.2">Vale para quem integra milícia privada, grupo paramilitar ou organização criminosa ultraviolenta e trafica no contexto da sua atuação.</p>
+    <div class="card" style="margin-top:46px;padding:34px 38px">
+      <p class="ui" style="font-size:42px;color:#fff;margin:0;line-height:1.2">Com arma de fogo, aplica-se o <span style="color:var(--cyan)">concurso material</span>, mesmo que a arma não tenha sido usada na venda.</p>
+    </div>
+  </div>
+  <div class="ce" style="top:900px"><div class="eyebrow">CAI ASSIM · CERTO OU ERRADO?</div><p>No art. 40-A, o concurso material com o crime de arma só se aplica se a arma foi usada na venda da droga.</p><span class="res e">ERRADO</span></div>
+  <p class="lei" style="position:absolute;left:70px;right:70px;bottom:70px;font-size:28px;margin:0">Lei nº 11.343/2006, art. 40-A, incluído pela Lei nº 15.358/2026</p>
+</section>
+
+<section class="art" id="ig-lee-carrossel-7-oferta-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <img class="logo" src="../../../src/marca/logo-grande.png" style="position:absolute;left:70px;top:60px;width:120px">
+  <div class="num-sl">7/7</div>
+  <div style="position:absolute;left:70px;top:240px;width:580px">
+    <div class="eyebrow" style="font-size:26px;letter-spacing:.2em">SEU MATERIAL ESTÁ ATUALIZADO?</div>
+    <h1 class="disp" style="font-size:54px;margin-top:18px">MINISSIMULADO<br><em>LEGISLAÇÃO<br>EXTRAVAGANTE</em></h1>
+    <ul class="chk" style="margin-top:40px;font-size:40px;gap:18px"><li>40 questões comentadas</li><li>33 de provas reais</li><li>Leis conferidas até 2026</li><li>Calculadora de progressão</li><li>Diagnóstico no final</li></ul>
+  </div>
+  <div class="phone" style="position:absolute;right:60px;top:330px;width:360px;transform:rotate(4deg)"><img src="../../../vendas-lee/img/tela-real.jpg"></div>
+  <div style="position:absolute;left:70px;right:70px;bottom:80px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <p class="ui" style="font-size:40px;color:#fff;margin:0;line-height:1.2">Comente <span style="color:var(--cyan)">LEI</span> ou<br>toque no link da bio</p>
+    <div class="price" style="padding:14px 30px;font-size:64px"><span style="font-size:32px">R$</span>10,80</div>
+  </div>
+</section>
+
+<!-- ===================== LEGISLAÇÃO EXTRAVAGANTE · STORIES (1080x1920) ===================== -->
+<section class="art" id="ig-lee-story-1-teste-1080x1920" style="width:1080px;height:1920px">
+  <div class="banner" style="height:26%"></div><div class="glow-line" style="top:0"></div>
+  <div style="position:absolute;left:80px;right:80px;top:300px;text-align:center">
+    <div class="eyebrow" style="font-size:34px">TESTE RÁPIDO · PMPE 2026</div>
+    <h1 class="rj" style="font-size:84px;margin-top:30px">Réu primário, crime hediondo praticado em 2026.</h1>
+    <p class="ui" style="font-size:60px;color:#fff;margin:40px 0 0;line-height:1.15">Quanto da pena ele cumpre para progredir de regime?</p>
+  </div>
+  <p class="ui" style="position:absolute;left:80px;right:80px;bottom:330px;text-align:center;font-size:36px;color:var(--ink2);margin:0">Responda no teste 👇</p>
+</section>
+
+<section class="art" id="ig-lee-story-2-resposta-1080x1920" style="width:1080px;height:1920px">
+  <div class="glow-line" style="top:0"></div>
+  <div style="position:absolute;left:80px;right:80px;top:260px;text-align:center">
+    <div class="eyebrow" style="font-size:34px">RESPOSTA</div>
+    <div class="big" style="font-size:260px;margin-top:40px"><em>70%</em></div>
+    <p class="ui" style="font-size:52px;color:#fff;margin:40px 0 0;line-height:1.2">Desde a Lei nº 15.358/2026. Antes eram 40%.</p>
+    <div class="card" style="margin:70px auto 0;padding:30px 40px;max-width:820px;text-align:left">
+      <table class="ig" style="font-size:44px">
+        <tr><td>Com morte, primário</td><td style="color:var(--cyan)">75%</td></tr>
+        <tr><td>Reincidente</td><td style="color:var(--cyan)">80%</td></tr>
+        <tr><td style="border:0">Reincidente, com morte</td><td style="border:0;color:var(--cyan)">85%</td></tr>
+      </table>
+    </div>
+    <p class="ui" style="font-size:40px;color:var(--ink2);margin:60px 0 0">Errou? Muita questão antiga ainda ensina 40%.</p>
+  </div>
+</section>
+
+<section class="art" id="ig-lee-story-3-oferta-1080x1920" style="width:1080px;height:1920px">
+  <div class="banner" style="height:30%"></div><div class="glow-line" style="top:0"></div>
+  <div style="position:absolute;left:60px;right:60px;top:300px;text-align:center">
+    <h1 class="disp" style="font-size:62px">MINISSIMULADO<br><em>LEGISLAÇÃO<br>EXTRAVAGANTE</em></h1>
+    <p class="ui" style="font-size:44px;color:#b9d3d7;margin:24px 0 0;line-height:1.2">40 questões · 33 de provas reais<br>já com as leis de 2026</p>
+  </div>
+  <div class="phone" style="position:absolute;left:50%;top:820px;width:420px;transform:translateX(-50%)"><img src="../../../vendas-lee/img/tela-laboratorio.jpg"></div>
+  <div style="position:absolute;left:70px;right:70px;bottom:120px;display:flex;flex-direction:column;align-items:center;gap:18px">
+    <div class="price" style="padding:14px 40px;font-size:80px"><span style="font-size:38px">R$</span>10,80</div>
+    <p class="ui" style="font-size:38px;color:#fff;margin:0">Toque no link 👇</p>
+  </div>
+</section>
+
+<section class="art" id="ig-lee-reels-capa-1080x1920" style="width:1080px;height:1920px">
+  <div class="banner" style="height:34%"></div><div class="glow-line" style="top:0"></div>
+  <div style="position:absolute;left:70px;right:70px;top:380px;text-align:center">
+    <div class="eyebrow" style="font-size:36px">PMPE 2026</div>
+    <h1 class="disp" style="font-size:104px;margin-top:24px">A LEI<br>MUDOU<br>EM <em>2026</em></h1>
+    <p class="ui" style="font-size:54px;color:#fff;margin:40px 0 0">E a sua apostila?</p>
+  </div>
+  <div class="phone" style="position:absolute;left:50%;top:1080px;width:400px;transform:translateX(-50%) rotate(-3deg)"><img src="../../../vendas-lee/img/tela-progressao.jpg"></div>
+</section>
+
+<!-- ===================== PEÇAS GERAIS (todos os produtos) ===================== -->
+<section class="art" id="ig-geral-6-simulados-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <img class="logo" src="../../../src/marca/logo-grande.png" style="position:absolute;left:70px;top:60px;width:120px">
+  <div style="position:absolute;left:220px;right:70px;top:76px">
+    <div class="eyebrow" style="font-size:28px">PMPE 2026 · INSTITUTO AOCP</div>
+    <h1 class="disp" style="font-size:52px;margin-top:10px">MINISSIMULADOS</h1>
+  </div>
+  <div style="position:absolute;left:70px;right:70px;top:260px;display:grid;grid-template-columns:1fr 1fr;gap:22px">
+    <div class="tile"><b>Português</b><span>Bloco I · 40 questões</span></div>
+    <div class="tile"><b>Raciocínio Lógico</b><span>Bloco II · 40 questões</span></div>
+    <div class="tile"><b>Informática</b><span>Bloco II · 40 questões</span></div>
+    <div class="tile"><b>Direito Constitucional</b><span>Bloco III · 40 questões</span></div>
+    <div class="tile"><b>Direitos Humanos</b><span>Bloco III · 40 questões</span></div>
+    <div class="tile"><b>Legislação Extravagante</b><span>Bloco III · 40 questões</span></div>
+  </div>
+  <div style="position:absolute;left:70px;right:70px;top:880px">
+    <ul class="chk" style="font-size:40px;gap:16px"><li>Gabarito comentado de todas as alternativas</li><li>Gráfico, diagnóstico e caminho de estudo</li><li>Funciona no celular e no computador</li></ul>
+  </div>
+  <div style="position:absolute;left:70px;right:70px;bottom:70px;display:flex;align-items:center;justify-content:space-between">
+    <p class="ui" style="font-size:40px;color:#fff;margin:0">Link na bio</p>
+    <div class="price" style="padding:12px 28px;font-size:56px"><span style="font-size:28px">R$</span>10,80 <span style="font-size:30px">cada</span></div>
+  </div>
+</section>
+
+<section class="art" id="ig-geral-bloco-3-1080x1350" style="width:1080px;height:1350px">
+  <div class="glow-line" style="top:0"></div>
+  <img class="logo" src="../../../src/marca/logo-grande.png" style="position:absolute;left:70px;top:60px;width:120px">
+  <div style="position:absolute;left:70px;right:70px;top:230px">
+    <div class="eyebrow" style="font-size:30px">PMPE 2026</div>
+    <h1 class="disp" style="font-size:90px;margin-top:18px">FECHE O<br><em>BLOCO III</em></h1>
+    <p class="ui" style="font-size:46px;color:#fff;margin:28px 0 0;line-height:1.2">120 questões comentadas nas 3 matérias do bloco</p>
+  </div>
+  <div style="position:absolute;left:70px;right:70px;top:650px;display:flex;flex-direction:column;gap:20px">
+    <div class="tile"><b>Direito Constitucional</b><span>28 questões de provas reais · calculadora de quóruns</span></div>
+    <div class="tile"><b>Direitos Humanos</b><span>Pacto de San José e tratados · calculadora de penas</span></div>
+    <div class="tile"><b>Legislação Extravagante</b><span>33 questões de provas reais · leis de 2026</span></div>
+  </div>
+  <div style="position:absolute;left:70px;right:70px;bottom:70px;display:flex;align-items:center;justify-content:space-between">
+    <p class="ui" style="font-size:40px;color:#fff;margin:0">Link na bio</p>
+    <div class="price" style="padding:12px 28px;font-size:56px"><span style="font-size:28px">R$</span>10,80 <span style="font-size:30px">cada</span></div>
+  </div>
+</section>
+
+<section class="art" id="ig-geral-story-como-comprar-1080x1920" style="width:1080px;height:1920px">
+  <div class="banner" style="height:24%"></div><div class="glow-line" style="top:0"></div>
+  <div style="position:absolute;left:80px;right:80px;top:300px">
+    <div class="eyebrow" style="font-size:34px">PASSO A PASSO</div>
+    <h1 class="disp" style="font-size:84px;margin-top:20px">COMO<br><em>COMPRAR</em></h1>
+    <div style="display:flex;flex-direction:column;gap:56px;margin-top:80px">
+      <div class="passo"><i>1</i><div>Toque no link da bio<small>ou chame no direct</small></div></div>
+      <div class="passo"><i>2</i><div>Pague por Pix ou cartão<small>R$ 10,80 por simulado</small></div></div>
+      <div class="passo"><i>3</i><div>Receba o arquivo e a sua chave<small>a chave é pessoal e vale só para você</small></div></div>
+      <div class="passo"><i>4</i><div>Abra, digite nome, e-mail e chave<small>e comece a resolver</small></div></div>
+    </div>
+    <div class="card" style="margin-top:90px;padding:34px 40px"><p class="ui" style="font-size:40px;color:#fff;margin:0;line-height:1.25">Dúvidas? Chame no direct 💬</p></div>
+  </div>
+</section>
+
+<section class="art" id="ig-geral-story-como-abrir-1080x1920" style="width:1080px;height:1920px">
+  <div class="glow-line" style="top:0"></div>
+  <div style="position:absolute;left:80px;right:80px;top:200px">
+    <div class="eyebrow" style="font-size:34px">JÁ COMPROU?</div>
+    <h1 class="disp" style="font-size:76px;margin-top:20px">COMO <em>ABRIR</em><br>O SIMULADO</h1>
+    <div style="display:flex;flex-direction:column;gap:54px;margin-top:80px">
+      <div class="passo"><i>💻</i><div>Computador<small>botão direito no arquivo → Abrir com → Chrome, Edge, Firefox ou Safari</small></div></div>
+      <div class="passo"><i>🤖</i><div>Android<small>abra pelo Chrome: ⋮ → Downloads → toque no arquivo</small></div></div>
+      <div class="passo"><i>🍎</i><div>iPhone e iPad<small>a pré-visualização do Arquivos e do WhatsApp não roda o simulado: use um app leitor de HTML com JavaScript</small></div></div>
+    </div>
+    <div class="card" style="margin-top:80px;padding:34px 40px"><p class="ui" style="font-size:40px;color:#fff;margin:0;line-height:1.25">Apareceu só um texto de instruções? É a pré-visualização. Abra no navegador ou no app indicado.</p></div>
+    <p class="ui" style="font-size:38px;color:var(--ink2);margin:60px 0 0">Não conseguiu? Chame no direct que a gente ajuda 💬</p>
+  </div>
+</section>
+
+<!-- ===================== CAPAS DE DESTAQUES (1080x1920; o Instagram recorta o círculo central) ===================== -->
+<section class="art dest" id="ig-destaque-1-simulados-1080x1920" style="width:1080px;height:1920px"><div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3.5h6v2.5H9z"/><path d="M8.5 11l1.5 1.5 3-3"/><path d="M8.5 16.5l1.5 1.5 3-3"/><path d="M15 11h1M15 16.5h1"/></svg></div></section>
+<section class="art dest" id="ig-destaque-2-comprar-1080x1920" style="width:1080px;height:1920px"><div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11h10.3l2-7.5H6.4"/><circle cx="9" cy="19" r="1.4"/><circle cx="16.5" cy="19" r="1.4"/></svg></div></section>
+<section class="art dest" id="ig-destaque-3-abrir-1080x1920" style="width:1080px;height:1920px"><div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.2"/><path d="M10.5 18.5h3"/><circle cx="11" cy="10" r="2.2"/><path d="M12.6 11.6l3 3M14.6 13.6l-1 1"/></svg></div></section>
+<section class="art dest" id="ig-destaque-4-leis-2026-1080x1920" style="width:1080px;height:1920px"><div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10"/><path d="M5 7h14"/><path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/><circle cx="12" cy="4.5" r="1"/></svg></div></section>
+<section class="art dest" id="ig-destaque-5-dicas-1080x1920" style="width:1080px;height:1920px"><div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2h5c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg></div></section>
+<section class="art dest" id="ig-destaque-6-duvidas-1080x1920" style="width:1080px;height:1920px"><div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M10 8.6a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2v.4"/><circle cx="12" cy="14" r=".4" fill="currentColor"/></svg></div></section>
+
+</body>
+</html>
