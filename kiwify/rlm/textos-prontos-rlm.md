@@ -1,5 +1,7 @@
 # Textos prontos · Minissimulado de Raciocínio Lógico PMPE
 
+> **Atualização (outubro de 2026):** os materiais não têm mais site. A venda é feita pelo Instagram e pelas redes sociais, e a entrega é o arquivo `.html` + a chave, pelo WhatsApp ou por e-mail: siga `instagram/GUIA-INSTAGRAM.md`. Os links `netlify.app`, a vitrine, as páginas de vendas e as etapas de hospedagem citadas aqui não se aplicam mais; os textos de anúncio, as legendas e os criativos continuam valendo.
+
 Troque o que estiver entre colchetes. Os links usam o endereço de exemplo `raizdefisica-pmpe.netlify.app`; troque pelo seu. As seções 5 a 7 (e-mails e respostas de suporte) de `../textos-prontos.md` valem também para este produto: só troque “Português” por “Raciocínio Lógico” e o link por `…/rlm/acesso/`.
 
 ---

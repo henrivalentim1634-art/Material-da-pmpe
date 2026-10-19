@@ -1,5 +1,7 @@
 # Guia completo: do arquivo à primeira venda na Kiwify
 
+> **Atualização (outubro de 2026):** os materiais não têm mais site. A venda é feita pelo Instagram e pelas redes sociais, e a entrega é o arquivo `.html` + a chave, pelo WhatsApp ou por e-mail: siga `instagram/GUIA-INSTAGRAM.md`. Os links `netlify.app`, a vitrine, as páginas de vendas e as etapas de hospedagem citadas aqui não se aplicam mais; os textos de anúncio, as legendas e os criativos continuam valendo.
+
 Produtos: **Minissimulado de Português PMPE 2026**, **Minissimulado de Raciocínio Lógico PMPE 2026**, **Minissimulado de Informática PMPE 2026**, **Minissimulado de Direitos Humanos PMPE 2026**, **Minissimulado de Direito Constitucional PMPE 2026** e **Minissimulado de Legislação Extravagante PMPE 2026** · preço: **R$ 10,80 cada** · marca: **Raiz de Física**
 
 Os seis produtos usam o mesmo processo. Onde houver diferença, o guia mostra cada caminho; os textos e anúncios específicos do RLM estão em `kiwify/rlm/`, os de Informática em `kiwify/info/`, os de Direitos Humanos em `kiwify/dh/`, os de Direito Constitucional em `kiwify/dc/` e os de Legislação Extravagante em `kiwify/lee/`.

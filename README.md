@@ -1,6 +1,6 @@
 # Material PMPE · Raiz de Física
 
-Infoprodutos em HTML para concursos policiais (PMPE / PMAL), prontos para venda na Kiwify.
+Infoprodutos em HTML para concursos policiais (PMPE / PMAL). A venda é feita pelo Instagram e pelas redes sociais, e o cliente recebe o arquivo do simulado e uma chave pessoal: veja o **[Guia de vendas pelo Instagram](instagram/GUIA-INSTAGRAM.md)**.
 
 ## Produtos
 
@@ -13,7 +13,7 @@ Infoprodutos em HTML para concursos policiais (PMPE / PMAL), prontos para venda 
 | Minissimulado de **Direito Constitucional** PMPE 2026 | `produto/minissimulado-direito-constitucional-pmpe.html` | `vendas-dc/` | `RC-XXXX-XXXX-XXXX` |
 | Minissimulado de **Legislação Extravagante** PMPE 2026 | `produto/minissimulado-legislacao-extravagante-pmpe.html` | `vendas-lee/` | `RE-XXXX-XXXX-XXXX` |
 
-A pasta `vitrine/` tem a página inicial do site com os seis produtos.
+As páginas de vendas e a pasta `vitrine/` eram do site, que não é mais usado; ficam guardadas como referência.
 
 ## Minissimulado de Legislação Extravagante PMPE 2026
 
@@ -37,13 +37,14 @@ A pasta `vitrine/` tem a página inicial do site com os seis produtos.
 
 ## Minissimulado de Português PMPE 2026
 
-40 questões inéditas em 4 fases de dificuldade, no padrão das bancas Instituto AOCP, Cebraspe e IAUPE, com gabarito comentado de todas as alternativas, tesoura de eliminação, cartão-resposta em cores, Modo Prova/Treino, gráfico de pizza, diagnóstico (pontos fortes, fracos e a melhorar) e caminho de estudo de 14 dias. Abre no celular (inclusive iPhone), tablet e computador.
+40 questões inéditas em 4 fases de dificuldade, no padrão das bancas Instituto AOCP, Cebraspe e IAUPE, com gabarito comentado de todas as alternativas, tesoura de eliminação, cartão-resposta em cores, Modo Prova/Treino, gráfico de pizza, diagnóstico (pontos fortes, fracos e a melhorar) e caminho de estudo de 14 dias. Abre no navegador do computador, do tablet e do celular (no iPhone, veja a seção 8 do guia do Instagram).
 
 | Pasta | Conteúdo |
 |---|---|
 | `produto/` | Os produtos finais (arquivo único cada, conteúdo **criptografado**; só abrem com chave de licença) |
 | `vendas/` · `vendas-rlm/` · `vendas-info/` · `vendas-dh/` · `vendas-dc/` · `vendas-lee/` · `vitrine/` | Páginas de vendas, obrigado, termos de uso, privacidade e a vitrine |
-| `kiwify/` | **[Guia passo a passo](kiwify/GUIA-KIWIFY.md)**, textos prontos, automação das chaves, kit de anúncios e criativos em PNG |
+| `instagram/` | **[Guia de vendas pelo Instagram](instagram/GUIA-INSTAGRAM.md)** (bio, legendas, Reels, Stories, direct, entrega, calendário e impulsionamento) e as peças em PNG |
+| `kiwify/` | Textos de produto e de anúncio, roteiros e criativos em PNG de cada matéria (as partes de site e Kiwify não se aplicam mais) |
 | `src/` | Motor do simulado (HTML, CSS e JS) e identidade visual |
 | `ferramentas/` | Scripts de build: gerar chaves, criptografar e montar o produto, capturas, criativos e pasta do site |
 | `privado/` | **Não versionada.** Questões em texto aberto e chaves de licença (ficam só com o autor) |
@@ -63,7 +64,7 @@ node gerar-chaves.mjs 500 dc     # (opcional) chaves novas de Direito Constituci
 node gerar-chaves.mjs 500 lee    # (opcional) chaves novas de Legislação Extravagante (privado/licencas-lee.csv)
 node build.mjs                   # criptografa o conteúdo e gera os produtos em produto/
 node build.mjs rlm               # (ou só um produto: portugues, rlm, info, dh, dc ou lee)
-node montar-site.mjs             # monta site/ e site-netlify.zip para publicar no Netlify
+node gerar-criativos.cjs instagram  # exporta as peças de instagram/criativos/fonte/instagram.html em PNG
 ```
 
 Para revogar uma chave, escreva-a em `privado/revogadas.txt` (Português), `privado/revogadas-rlm.txt` (RLM), `privado/revogadas-info.txt` (Informática), `privado/revogadas-dh.txt` (Direitos Humanos), `privado/revogadas-dc.txt` (Direito Constitucional) ou `privado/revogadas-lee.txt` (Legislação Extravagante) e rode `node build.mjs` de novo.

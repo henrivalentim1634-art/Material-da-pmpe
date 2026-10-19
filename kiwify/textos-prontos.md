@@ -1,5 +1,7 @@
 # Textos prontos para copiar e colar
 
+> **Atualização (outubro de 2026):** os materiais não têm mais site. A venda é feita pelo Instagram e pelas redes sociais, e a entrega é o arquivo `.html` + a chave, pelo WhatsApp ou por e-mail: siga `instagram/GUIA-INSTAGRAM.md`. Os links `netlify.app`, a vitrine, as páginas de vendas e as etapas de hospedagem citadas aqui não se aplicam mais; os textos de anúncio, as legendas e os criativos continuam valendo.
+
 Troque o que estiver entre colchetes. Os links usam o endereço de exemplo `raizdefisica-pmpe.netlify.app`; troque pelo seu.
 
 ---

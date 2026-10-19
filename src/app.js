@@ -1603,7 +1603,7 @@ function gate() {
       if (!r) {
         falhas++; lsSet(SK + '_f', String(falhas));
         if (falhas % 5 === 0) { bloqAte = Date.now() + 60000; lsSet(SK + '_b', String(bloqAte)); }
-        erro('Chave inválida. Confira o e-mail que você recebeu após a compra (veja também a caixa de spam) ou a área de membros.');
+        erro('Chave inválida. Confira a chave que veio junto com o arquivo, na mensagem ou no e-mail da compra (veja também a caixa de spam).');
         return;
       }
       lsSet(SK + '_f', '0');

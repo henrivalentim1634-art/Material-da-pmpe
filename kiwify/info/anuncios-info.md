@@ -1,5 +1,7 @@
 # Kit de anúncios · Minissimulado de Informática PMPE (R$ 10,80)
 
+> **Atualização (outubro de 2026):** os materiais não têm mais site. A venda é feita pelo Instagram e pelas redes sociais, e a entrega é o arquivo `.html` + a chave, pelo WhatsApp ou por e-mail: siga `instagram/GUIA-INSTAGRAM.md`. Os links `netlify.app`, a vitrine, as páginas de vendas e as etapas de hospedagem citadas aqui não se aplicam mais; os textos de anúncio, as legendas e os criativos continuam valendo.
+
 Criativos em `kiwify/info/criativos/`. As regras de anúncio, o público, o orçamento e as metas de `../anuncios.md` valem também aqui; abaixo estão os textos e ganchos próprios de Informática.
 
 | Arquivo | Formato | Gancho |

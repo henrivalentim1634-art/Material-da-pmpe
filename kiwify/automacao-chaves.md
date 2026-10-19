@@ -1,5 +1,7 @@
 # Entrega das chaves de acesso
 
+> **Atualização (outubro de 2026):** os materiais não têm mais site. A venda é feita pelo Instagram e pelas redes sociais, e a entrega é o arquivo `.html` + a chave, pelo WhatsApp ou por e-mail: siga `instagram/GUIA-INSTAGRAM.md`. Os links `netlify.app`, a vitrine, as páginas de vendas e as etapas de hospedagem citadas aqui não se aplicam mais; os textos de anúncio, as legendas e os criativos continuam valendo.
+
 Cada chave tem o formato `RF-XXXX-XXXX-XXXX` (12 caracteres sem I, L, O e U, para não confundir na digitação) e um **número de licença**, que aparece na marca d’água do aluno. As chaves estão em `privado/licencas.csv`, que só você recebeu.
 
 > A **licença 0000** é a chave do autor, para testes. Nunca a envie.

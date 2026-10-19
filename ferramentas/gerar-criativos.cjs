@@ -5,6 +5,7 @@
 //      node gerar-criativos.cjs dh       (Direitos Humanos: kiwify/dh/criativos/)
 //      node gerar-criativos.cjs dc       (Direito Constitucional: kiwify/dc/criativos/)
 //      node gerar-criativos.cjs lee      (Legislação Extravagante: kiwify/lee/criativos/)
+//      node gerar-criativos.cjs instagram (peças de Instagram de todos os produtos: instagram/criativos/)
 const { chromium } = require('playwright');
 const path = require('path');
 const RAIZ = path.join(__dirname, '..');
@@ -15,7 +16,8 @@ const CFG = {
   info: { fonte: 'kiwify/info/criativos/fonte/criativos-info.html', out: 'kiwify/info/criativos', og: 'vendas-info/img/og-imagem.jpg' },
   dh: { fonte: 'kiwify/dh/criativos/fonte/criativos-dh.html', out: 'kiwify/dh/criativos', og: 'vendas-dh/img/og-imagem.jpg' },
   dc: { fonte: 'kiwify/dc/criativos/fonte/criativos-dc.html', out: 'kiwify/dc/criativos', og: 'vendas-dc/img/og-imagem.jpg' },
-  lee: { fonte: 'kiwify/lee/criativos/fonte/criativos-lee.html', out: 'kiwify/lee/criativos', og: 'vendas-lee/img/og-imagem.jpg' }
+  lee: { fonte: 'kiwify/lee/criativos/fonte/criativos-lee.html', out: 'kiwify/lee/criativos', og: 'vendas-lee/img/og-imagem.jpg' },
+  instagram: { fonte: 'instagram/criativos/fonte/instagram.html', out: 'instagram/criativos' }
 }[ID];
 if (!CFG) throw new Error('Produto desconhecido: ' + ID);
 (async () => {
