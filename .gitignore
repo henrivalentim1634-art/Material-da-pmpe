@@ -1,2 +1,11 @@
 # Google App Engine generated folder
 appengine-generated/
+
+# Kit do autor: NUNCA publicar (gabarito em texto puro e chaves de acesso)
+questoes*.py
+chaves.json
+chaves.csv
+CHAVES-DE-ACESSO.txt
+gabarito-do-autor.txt
+kit-do-autor/
+kit-do-autor*.zip
